@@ -22,6 +22,7 @@ Imports:
     officer,
     tools,
     knitr,
+    xfun,
     mime,
     stringi,
     xml2,

@@ -12,6 +12,8 @@
 #' @importFrom officer read_docx
 #' @importFrom tools file_path_sans_ext
 #' @importFrom rmarkdown word_document
+#' @importFrom knitr knit_print knit_global opts_chunk
+#' @importFrom xfun parse_only
 #' @export
 rdocx_reversible <- function(highlight_outputs = FALSE, wrap = 80, ...) {
 
@@ -23,6 +25,11 @@ rdocx_reversible <- function(highlight_outputs = FALSE, wrap = 80, ...) {
     # Wrap code outputs in spans and divs
     knit_hooks = list(
       #TODO: Protect inline chunks with no output
+      evaluate.inline = function(code, envir = knit_global()) {
+        v = withVisible(eval(parse_only(code), envir = envir))
+        if (is.null(v$value) || v$value == "") v$value <- "\uFEFF"
+        if (v$visible) knit_print(v$value, inline = TRUE, options = opts_chunk$get())
+      },
       inline = function(x) {
         id = paste0("inline-", inline_counter())
         paste0("[", x, "]{custom-style=\"", id, "\"}")},
