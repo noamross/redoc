@@ -3,13 +3,9 @@
 
 # redoc - reversible R Markdown/MS Word documents.
 
-Author: *Noam Ross*
-
 <!-- badges: start -->
 
-[![AppVeyor build
-status](https://ci.appveyor.com/api/projects/status/github/noamross/redoc?branch=master&svg=true)](https://ci.appveyor.com/project/noamross/redoc)
-<!-- badges: end --> [![License:
+[![License:
 MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Project Status: WIP - Initial development is in progress, but there
 has not yet been a stable, usable release suitable for the

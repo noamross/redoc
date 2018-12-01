@@ -17,11 +17,7 @@ options(width = 120)
 ```
 # redoc - reversible R Markdown/MS Word documents.
 
-Author: _Noam Ross_
-
 <!-- badges: start -->
-[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/noamross/redoc?branch=master&svg=true)](https://ci.appveyor.com/project/noamross/redoc)
-<!-- badges: end -->
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg){data-external="1"}](https://opensource.org/licenses/MIT)
 [![Project Status: WIP - Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](http://www.repostatus.org/badges/latest/wip.svg){data-external="1"}](http://www.repostatus.org/#wip)
 [![Build
@@ -30,7 +26,6 @@ Status](https://travis-ci.org/noamross/redoc.svg?branch=master)](https://travis-
 [![codecov](https://codecov.io/gh/noamross/redoc/branch/master/graph/badge.svg){data-external="1"}](https://codecov.io/gh/noamross/redoc)
 [![CRAN status](https://www.r-pkg.org/badges/version/redoc){data-external="1"}](https://cran.r-project.org/package=redoc)
 <!-- badges: end -->
-
 
 **redoc** is an experimental package to enable a two-way R-Markdown ⟷ Microsoft
 Word workflow.  It is in early design phase. Testing and feedback is welcome!
