@@ -1,0 +1,21 @@
+bootswatch: flatly
+
+navbar:
+  title: pkgdown
+  type: inverse
+  left:
+  - text: Home
+    icon: fa-home
+    href: index.html
+  - text: Package Design
+    href: articles/redoc-pacakge-design.html
+  - text: Contributing
+    href: CONTRIBUTING.html
+  - text: Release Notes
+    href: news/index.html
+  right:
+  - text: Reference
+    href: reference/index.html
+  - icon: fa-github fa-lg
+    href: https://github.com/noamross/rchie
+

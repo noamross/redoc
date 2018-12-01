@@ -1,0 +1,49 @@
+---
+title: "Your Title"
+author: "Your Name"
+date: "The Date"
+output:
+  redoc::rdocx_reversible:
+    keep_md: TRUE
+    highlight_outputs: TRUE
+---
+
+```{r setup, include = FALSE}
+# A non-included setup chunk
+knitr::opts_chunk$set(include = TRUE)
+```
+
+Reversible R Markdown Document
+------------------------------
+
+This is an example Reversible R Markdown document. 
+
+Chunk with code output
+
+```{r cars}
+summary(cars)
+```
+
+Inline text
+-----------
+
+```{r, include= FALSE}
+# A non-included chunk to provide inline chunks with values.
+a <- 2
+b <- 3
+```
+
+You can include calculations inline like so: `r a` plus
+`r b` equals `r a + b`.
+
+What about empty inline chunks?: Like `r NULL` or `r `?
+
+Chunks with plots
+-----------------
+
+You can also embed plots, for example:
+
+```{r pressure}
+plot(pressure)
+```
+

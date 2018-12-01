@@ -1,0 +1,28 @@
+Package: redoc
+Version: 0.0.0.9000
+Title: Reversible Reproducible Documents
+Description: Implements a reversible 'R Markdown' to 'Microsoft Word' pipeline.
+Authors@R: person(given = "Noam",
+                  family = "Ross",
+                  email = 'noam.ross@gmail.com',
+                  role = c('aut', 'cre'),
+                  comment = c(ORCID='0000-0002-2136-0000'))
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+ByteCompile: true
+URL: https://github.com/noamross/redoc
+BugReports: https://github.com/noamross/redoc/issues
+Suggests: 
+    testthat,
+    roxygen2
+RoxygenNote: 6.1.1
+Imports: 
+    rmarkdown,
+    officer,
+    tools,
+    knitr,
+    mime,
+    stringi,
+    xml2
+VignetteBuilder: knitr

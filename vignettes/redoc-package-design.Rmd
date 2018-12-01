@@ -1,0 +1,59 @@
+---
+title: "redoc Package Design"
+author: "Noam Ross"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This document describes the general approach and design of **redoc** for
+developers interested in contributing.
+
+Two-way R Markdown workflows are challenging because R Markdown and **knitr**
+workflows are lossy - the compiled document does not contain all of the information
+in the source.  Also, we are limited by information that can be passed via
+`pandoc` from markdown to final formats and in reverse. 
+
+To produced a Reversible Reproducible Document in Word (a "redoc"), the
+`rdocx_reversible()` format first pre-parses the source `.Rmd` file.  **knitr**
+doesn't expose its parser to developers, so I've lifted most of the code for
+this parser from **knitr** and **rmarkdown**. The parser captures YAML headers,
+code chunks, and inline code, giving names to unnaamed chunks and inline code 
+sections.  These are stored in a data frame saved to `filename.chunks.csv`.
+
+`rdocx_reversible()` then knits the Rmd file, using
+[knitr hooks](https://yihui.name/knitr/hooks/) to wrap all code chunks in
+[pandoc style `divs` and `spans`](http://pandoc.org/MANUAL.html#divs-and-spans).
+This differentiates these outputs in the compiled markdown.  These divs and spans
+are given an attribute of `custom-style="CHUNK_NAME"`. Non-included chunks are
+replaced with an empty raw `docx` element.
+
+Pandoc then converts the markdown to `docx`, and elements with `custom-style` attributes
+keep these attributes in the `docx` format, by using the `docx+styles` extension.
+
+`docx` files are just zip archives of XML files, so once the `docx` us created,
+A post-processor embeds three files for later retrieval: the original
+`*.Rmd`, the `*.chunks.csv` with chunk information, another version of the `.Rmd`
+which has been converted to `docx` and back.  These files are available for
+retrieval when reversing the complilation. If `highlight_output=TRUE` is set,
+the post-processor also modifies all the output styles to be visible.
+
+To reverse compilation via `undoc()`, the `*.chunks.csv` file is first extracted,
+then pandoc is used to convert the `docx` back to markdown.  A custom [lua filter](https://pandoc.org/lua-filters.html) converts any track-changes text
+to [Critic Markup](http://criticmarkup.com/spec.php), and another lua filter
+replaces any elements with `custom-style="CHUNK_NAME"` attributes with placeholders
+of the form `[[chunk-name]]`.  `undoc()` then uses the data in `*.chunks.csv` to
+replace these placeholders with original chunk (or inline code).  In the event
+that chunk output has been deleted, the chunk is placed immediately following
+the previous chunk (or at the top of the document).  Deleted inline elements
+are not restored. The original YAML data is prepended to the document.
