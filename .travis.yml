@@ -18,7 +18,7 @@ r_check_args: "--as-cran --run-dontrun"
 
 deploy:
   provider: script
-  script: pkgdown::deploy_site_github(new_process=FALSE)' || true
+  script: Rscript -e 'pkgdown::deploy_site_github()'
   skip_cleanup: true
   on:
     branch: master
