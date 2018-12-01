@@ -28,6 +28,8 @@ Some topics I'm mulling over include:
    are required for the workflow to be viable, especially with the idea that 
    word-using collaborators should never have to touch R or even know the origin
    of the document. 
+-  Figuring out how to make the workflow more robust.  There are a lot of ways
+   collaborators could break the workflow.
 -  Making **redoc** compatible with tools for generating richer Word Documents, such
    as [worded/officedown](https://github.com/davidgohel/worded).
 -  Making it possible to set many common document formatting properties in the
