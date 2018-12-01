@@ -4,9 +4,6 @@ navbar:
   title: pkgdown
   type: inverse
   left:
-  - text: Home
-    icon: fa-home
-    href: index.html
   - text: Contributing
     href: https://github.com/noamross/redoc/blob/master/.github/CONTRIBUTING.md
   - text: Package Design

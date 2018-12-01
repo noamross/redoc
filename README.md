@@ -5,7 +5,11 @@
 
 Author: *Noam Ross*
 
-[![License:
+<!-- badges: start -->
+
+[![AppVeyor build
+status](https://ci.appveyor.com/api/projects/status/github/noamross/redoc?branch=master&svg=true)](https://ci.appveyor.com/project/noamross/redoc)
+<!-- badges: end --> [![License:
 MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Project Status: WIP - Initial development is in progress, but there
 has not yet been a stable, usable release suitable for the
@@ -17,6 +21,7 @@ status](https://ci.appveyor.com/api/projects/status/github/noamross/redoc?branch
 [![codecov](https://codecov.io/gh/noamross/redoc/branch/master/graph/badge.svg)](https://codecov.io/gh/noamross/redoc)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/redoc)](https://cran.r-project.org/package=redoc)
+<!-- badges: end -->
 
 **redoc** is an experimental package to enable a two-way R-Markdown ⟷
 Microsoft Word workflow. It is in early design phase. Testing and
