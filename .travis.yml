@@ -12,6 +12,7 @@ pandoc_version: 2.5
 
 r_github_packages:
   - r-lib/pkgdown
+  - r-lib/covr
 
 after_success:
   - Rscript -e 'covr::codecov()'
