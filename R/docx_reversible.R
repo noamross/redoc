@@ -22,6 +22,7 @@ rdocx_reversible <- function(highlight_outputs = FALSE, wrap = 80, ...) {
   out$knitr <- rmarkdown::knitr_options(
     # Wrap code outputs in spans and divs
     knit_hooks = list(
+      #TODO: Protect inline chunks with no output
       inline = function(x) {
         id = paste0("inline-", inline_counter())
         paste0("[", x, "]{custom-style=\"", id, "\"}")},
