@@ -26,3 +26,4 @@ Imports:
     stringi,
     xml2
 VignetteBuilder: knitr
+Roxygen: list(markdown = TRUE)
