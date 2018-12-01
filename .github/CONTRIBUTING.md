@@ -49,6 +49,9 @@ Some topics I'm mulling over include:
    pandoc/lua work.
 -  Reversible Powerpoint? Whoah, nelly.  Pandoc doesn't even have a Powerpoint
    reader yet.
+-  Naming things and API/workflow. Package name, function names, etc., are
+   all malleable. 
+-  Sustainability.  If this works out, should **redoc** live in an org or be
+   absorbed into another package.  Should there be an "officeverse"?
 
-   
 If any of these interest you please do open an issue to dicuss them.
