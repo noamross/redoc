@@ -9,22 +9,20 @@ undoc(docx, to = NULL, dir = ".", track_changes = c("criticmarkup",
   orig_chunkfile = NULL, orig_docx = NULL, verbose = FALSE)
 }
 \arguments{
-\item{docx}{The `.docx file to convert`}
+\item{docx}{The \code{.docx file to convert}}
 
-\item{to}{the filename to write the resulting `.Rmd` file.  The default is to
+\item{to}{the filename to write the resulting \code{.Rmd} file.  The default is to
 use the same basename as the docx document}
 
 \item{dir}{The directory to write the `.Rmd`` to. Defaults to current working
 directory}
 
 \item{track_changes}{How to deal with tracked changes and comments in the
-`.docx` file. `"accept"` accepts all changes, and `"reject"` rejects all of
-them. The default, `"criticmarkup`, converts the tracked changes to [Critic
-Markup syntax](http://criticmarkup.com/spec.php#thebasicsyntax). `"all"`
-marks up tracked changes and comments in `<span>` tags.  See the [pandoc
-manual](http://pandoc.org/MANUAL.html#option--track-changes) for details.}
+\code{.docx} file. \code{"accept"} accepts all changes, and \code{"reject"} rejects all of
+them. The default, \code{"criticmarkup"}, converts the tracked changes to \href{http://criticmarkup.com/spec.php#thebasicsyntax}{Critic Markup syntax}. \code{"all"}
+marks up tracked changes and comments in \code{<span>} tags.  See the \href{http://pandoc.org/MANUAL.html#option--track-changes}{pandoc manual} for details.}
 
-\item{wrap}{The width at which to wrap text. If `NA`, text is not wrapped}
+\item{wrap}{The width at which to wrap text. If \code{NA}, text is not wrapped}
 
 \item{overwrite}{Whether to overwrite an existing file}
 
@@ -32,12 +30,12 @@ manual](http://pandoc.org/MANUAL.html#option--track-changes) for details.}
 created when the document was first knit.  Useful for debugging, or in
 cases where the word file has been corrupted or transformed, for instance
 by copy-and-pasting the content into a new file.  If provided, undoc will
-use this chunkfile or word file to re-create the `.Rmd` file with the text
+use this chunkfile or word file to re-create the \code{.Rmd} file with the text
 of the input.}
 
 \item{verbose}{whether to print pandoc progress text}
 }
 \description{
-Converts a document originally created with [rdocx_reversible()] back to R
+Converts a document originally created with \code{\link[=rdocx_reversible]{rdocx_reversible()}} back to R
 Markdown, including changes made to text in MS Word.
 }

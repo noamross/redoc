@@ -10,7 +10,7 @@ pipeline.
 \section{Support}{
 
 
-The development repository for the **redoc** package is found at
+The development repository for the \strong{redoc} package is found at
 \url{https://github.com/noamross/redoc}.  Please file
 bug reports or other feedback at
 \url{https://github.com/noamross/redoc/issues}

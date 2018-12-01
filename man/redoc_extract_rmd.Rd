@@ -8,11 +8,11 @@ redoc_extract_rmd(docx, type = c("original", "roundtrip"), dir = ".",
   to = NULL, overwrite = FALSE)
 }
 \arguments{
-\item{docx}{A path to a word file or a an `rdocx` object created with
-[officer::read_docx()].}
+\item{docx}{A path to a word file or a an \code{rdocx} object created with
+\code{\link[officer:read_docx]{officer::read_docx()}}.}
 
-\item{type}{One of `"original"` or `"roundtrip"`..  `"original"` extracts the
-exact document originally knit.  `"roundtrip` (default) extracts a document
+\item{type}{One of \code{"original"} or \code{"roundtrip"}. \code{"original"} extracts the
+exact document originally knit.  \code{"roundtrip"} (default) extracts a document
 that has been converted to Word and back with no edits in between.  The
 latter should be more useful for comparing against edits, as line-wrapping
 and placement of no-output chunks should match.}
@@ -20,19 +20,19 @@ and placement of no-output chunks should match.}
 \item{dir}{The directory to write the `.Rmd`` to. Defaults to current working
 directory}
 
-\item{to}{the filename to write the resulting `.Rmd` file.  The default is to
-use the the original name with either `.orignal.Rmd` or `roundtrip.Rmd`
+\item{to}{the filename to write the resulting \code{.Rmd} file.  The default is to
+use the the original name with either \code{.orignal.Rmd} or \code{roundtrip.Rmd}
 extensions.}
 
 \item{overwrite}{whether to overwite existing files}
 }
 \value{
-The path to the extracted `.Rmd`
+The path to the extracted \code{.Rmd}
 }
 \description{
-Documents produced with [docx_reversible()] store an copy of the original
-`.Rmd` files used to produce them.  This is useful for diffing against the
-version created with [undoc()], especially if tracked changes have not been
+Documents produced with \code{\link[=rdocx_reversible]{rdocx_reversible()}} store an copy of the original
+\code{.Rmd} files used to produce them.  This is useful for diffing against the
+version created with \code{\link[=undoc]{undoc()}}, especially if tracked changes have not been
 used.
 }
 \examples{

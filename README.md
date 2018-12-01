@@ -37,7 +37,7 @@ source("https://install-github.me/noamross/redoc")
 ## Usage
 
 **redoc** provides an R Markdown \[output format\] of
-`docx_reversible()`, built on top of `rmarkdown::word_document()`. You
+`rdocx_reversible()`, built on top of `rmarkdown::word_document()`. You
 will typically call it via the YAML header in your R Markdown document.
 You have the option of highlighting the outputs (both chunk and inline)
 in the Word Document.
@@ -51,7 +51,7 @@ output:
 ---
 ```
 
-Word files that have been created by `docx_reversible()` (“redocs”) can
+Word files that have been created by `rdocx_reversible()` (“redocs”) can
 be reverted to `.Rmd` with `undoc()`, *even after they are edited*.
 
 ``` r

@@ -11,11 +11,11 @@ rdocx_reversible(highlight_outputs = FALSE, wrap = 80, ...)
 code in the final document}
 
 \item{wrap}{when round-tripping the document, at what width to wrap the
-markdown output? See [undoc()].}
+markdown output? See \code{\link[=undoc]{undoc()}}.}
 
-\item{...}{other parameters passed to [rmarkdown::word_document()]}
+\item{...}{other parameters passed to \code{\link[rmarkdown:word_document]{rmarkdown::word_document()}}}
 }
 \description{
 Format for converting from R Markdown to a Microsoft Word Document that can
-be reversed using [undoc()] after editing in Word.
+be reversed using \code{\link[=undoc]{undoc()}} after editing in Word.
 }

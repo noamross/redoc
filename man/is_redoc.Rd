@@ -7,15 +7,15 @@
 is_redoc(docx)
 }
 \arguments{
-\item{docx}{A path to a `.docx` file or an `rdocx` object produced by
-[officer::read_docx()]}
+\item{docx}{A path to a \code{.docx} file or an \code{rdocx} object produced by
+\code{\link[officer:read_docx]{officer::read_docx()}}}
 }
 \value{
 a logical value
 }
 \description{
 A function for testing is the file can be un-knit.  If not, un-knitting
-may be attempted with the `orig_chunkfile` or `orig_docx` files in [undoc()].
+may be attempted with the \code{orig_chunkfile} or \code{orig_docx} files in \code{\link[=undoc]{undoc()}}.
 }
 \examples{
 is_redoc(redoc_example_docx())

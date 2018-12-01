@@ -10,7 +10,7 @@
 #'   directory
 #' @param track_changes How to deal with tracked changes and comments in the
 #'   `.docx` file. `"accept"` accepts all changes, and `"reject"` rejects all of
-#'   them. The default, `"criticmarkup`, converts the tracked changes to [Critic
+#'   them. The default, `"criticmarkup"`, converts the tracked changes to [Critic
 #'   Markup syntax](http://criticmarkup.com/spec.php#thebasicsyntax). `"all"`
 #'   marks up tracked changes and comments in `<span>` tags.  See the [pandoc
 #'   manual](http://pandoc.org/MANUAL.html#option--track-changes) for details.
@@ -59,14 +59,14 @@ undoc <- function(docx, to = NULL, dir = ".",
 
 #' Extract the Rmd used to to produce a Reversible Word Doc
 #'
-#' Documents produced with [docx_reversible()] store an copy of the original
+#' Documents produced with [rdocx_reversible()] store an copy of the original
 #' `.Rmd` files used to produce them.  This is useful for diffing against the
 #' version created with [undoc()], especially if tracked changes have not been
 #' used.
 #' @param docx A path to a word file or a an `rdocx` object created with
 #'   [officer::read_docx()].
-#' @param type One of `"original"` or `"roundtrip"`..  `"original"` extracts the
-#'   exact document originally knit.  `"roundtrip` (default) extracts a document
+#' @param type One of `"original"` or `"roundtrip"`. `"original"` extracts the
+#'   exact document originally knit.  `"roundtrip"` (default) extracts a document
 #'   that has been converted to Word and back with no edits in between.  The
 #'   latter should be more useful for comparing against edits, as line-wrapping
 #'   and placement of no-output chunks should match.
