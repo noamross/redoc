@@ -24,7 +24,7 @@ rdocx_reversible <- function(highlight_outputs = FALSE, wrap = 80, ...) {
   out$knitr <- rmarkdown::knitr_options(
     # Wrap code outputs in spans and divs
     knit_hooks = list(
-      #TODO: Protect inline chunks with no output
+      # TODO: See if its better to make empty inline output raw openxml
       evaluate.inline = function(code, envir = knit_global()) {
         v = withVisible(eval(parse_only(code), envir = envir))
         if (is.null(v$value) || v$value == "") v$value <- "\uFEFF"
@@ -37,6 +37,7 @@ rdocx_reversible <- function(highlight_outputs = FALSE, wrap = 80, ...) {
         if (isFALSE(options$redoc_include)) {
           # Special output for empty chunks
           # TODO: move empty chunk handler to a lua filter to make more general
+          # TODO: test if we need special handling for other no-result chunks
           paste0("```{=openxml}\n<w:p><w:pPr><w:pStyle w:val=\"chunk-",
                  options$label,
                  "\"/><w:rPr><w:vanish/></w:rPr></w:pPr></w:p>\n```")
