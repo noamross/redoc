@@ -24,6 +24,7 @@ Imports:
     knitr,
     mime,
     stringi,
-    xml2
+    xml2,
+    backports
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
