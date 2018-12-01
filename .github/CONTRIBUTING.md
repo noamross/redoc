@@ -29,14 +29,17 @@ Some topics I'm mulling over include:
    word-using collaborators should never have to touch R or even know the origin
    of the document. 
 -  Figuring out how to make the workflow more robust.  There are a lot of ways
-   collaborators could break the workflow.
+   collaborators could break the workflow.  For instance, if the styles are
+   changed in the word doc (something that happens rarely in my experience),
+   the blocks are lost.  Is there a better way to hold on to section metadata?
 -  Making **redoc** compatible with tools for generating richer Word Documents, such
    as [worded/officedown](https://github.com/davidgohel/worded).
 -  Making it possible to set many common document formatting properties in the
    YAML header.  These could include margins, default fonts, default paragraph
    spacing, and line numbering.  These may be features to put in
-   [worded/officedown](https://github.com/davidgohel/worded), _maybe_ some
-   of these should be un-knittable?
+   [worded/officedown](https://github.com/davidgohel/worded). _Maybe_ such changes
+   could be detected in the doc and put into the YAML?
+-  Stuff in text boxes (again a worded/officer topic)
 -  Better formatting for highlighted outputs, and maybe finding a way to add a
    header/other message about them.  (Adding headers not yet supported in 
    [**officer**](https://github.com/davidgohel/officer)).
