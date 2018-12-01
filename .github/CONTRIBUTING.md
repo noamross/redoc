@@ -1,6 +1,7 @@
 # Contributing to the redoc R package
 
-You want to contribute to **redoc**? Great! 
+You want to contribute to **redoc**? Great!  Take a look at the [roadmap](#roadmap)
+below to see what general plans for the package are.
 
 Please submit questions, bug reports, and requests in the [issues tracker](https://github.com/noamross/redoc/issues). Please submit bug
 reports with a minimal  [reprex](https://www.tidyverse.org/help/#reprex).
@@ -19,3 +20,35 @@ submitting your change.
 
 
 ## Roadmap
+
+**redoc** is pretty experimental and I'm still figuring out its scope and architecture.
+Some topics I'm mulling over include:
+
+-  Understanding what the minimum features
+   are required for the workflow to be viable, especially with the idea that 
+   word-using collaborators should never have to touch R or even know the origin
+   of the document. 
+-  Making **redoc** compatible with tools for generating richer Word Documents, such
+   as [worded/officedown](https://github.com/davidgohel/worded).
+-  Making it possible to set many common document formatting properties in the
+   YAML header.  These could include margins, default fonts, default paragraph
+   spacing, and line numbering.  These may be features to put in
+   [worded/officedown](https://github.com/davidgohel/worded), _maybe_ some
+   of these should be un-knittable?
+-  Better formatting for highlighted outputs, and maybe finding a way to add a
+   header/other message about them.  (Adding headers not yet supported in 
+   [**officer**](https://github.com/davidgohel/officer)).
+-  Finding a way to support citations, especially Endnote citations, which are
+   the general bane of _my_ existence.  Some of this may be spun off into a
+   more general Endnote package.
+-  Packaging up not just the Rmd but supporting files into the `docx` file.
+-  Supporting conversion of Critic Markup from Markdown to word (via a pandoc
+   lua filter, shouldn't be too hard.)
+-  Google Doc outputs.  Google docs has a new API in invite-only beta that exposes
+   a JSON document model, which may enable this.  It would require some considerable
+   pandoc/lua work.
+-  Reversible Powerpoint? Whoah, nelly.  Pandoc doesn't even have a Powerpoint
+   reader yet.
+
+   
+If any of these interest you please do open an issue to dicuss them.

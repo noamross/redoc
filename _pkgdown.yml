@@ -7,15 +7,15 @@ navbar:
   - text: Home
     icon: fa-home
     href: index.html
-  - text: Package Design
-    href: articles/redoc-pacakge-design.html
   - text: Contributing
-    href: CONTRIBUTING.html
+    href: https://github.com/noamross/redoc/blob/master/.github/CONTRIBUTING.md
+  - text: Package Design
+    href: articles/redoc-package-design.html
   - text: Release Notes
     href: news/index.html
   right:
   - text: Reference
     href: reference/index.html
   - icon: fa-github fa-lg
-    href: https://github.com/noamross/rchie
+    href: https://github.com/noamross/redoc
 
