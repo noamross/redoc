@@ -27,7 +27,7 @@ welcome\! Please look at
 (especially the
 [roadmap](https://github.com/noamross/redoc/blob/master/.github/CONTRIBUTING.md#roadmap))
 and the [design
-vignette](https://noamross.github.io/redoc/articles/redoc-package-design.md)
+vignette](https://noamross.github.io/redoc/articles/redoc-package-design.html)
 if you are interested in development.
 
 ## Installation

@@ -28,7 +28,7 @@ Status](https://travis-ci.org/noamross/redoc.svg?branch=master)](https://travis-
 **redoc** is an experimental package to enable a two-way R-Markdown ⟷ Microsoft
 Word workflow.  It is in early design phase; _I will certainly break things, intentionally and accidentally._ Testing and feedback is welcome!
 Please look at [CONTRIBUTING.md](https://github.com/noamross/redoc/blob/master/.github/CONTRIBUTING.md),
- (especially the [roadmap](https://github.com/noamross/redoc/blob/master/.github/CONTRIBUTING.md#roadmap)) and the [design vignette](https://noamross.github.io/redoc/articles/redoc-package-design.md)
+ (especially the [roadmap](https://github.com/noamross/redoc/blob/master/.github/CONTRIBUTING.md#roadmap)) and the [design vignette](https://noamross.github.io/redoc/articles/redoc-package-design.html)
 if you are interested in development.
 
 ## Installation
