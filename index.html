@@ -83,7 +83,7 @@
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
-<p><strong>redoc</strong> provides an R Markdown [output format] of <code><a href="reference/rdocx_reversible.html">rdocx_reversible()</a></code>, built on top of <code><a href="https://www.rdocumentation.org/packages/rmarkdown/topics/word_document">rmarkdown::word_document()</a></code>. You will typically call it via the YAML header in your R Markdown document. You have the option of highlighting the outputs (both chunk and inline) in the Word Document.</p>
+<p><strong>redoc</strong> provides an R Markdown <a href="https://bookdown.org/yihui/rmarkdown/output-formats.html">output format</a> of <code><a href="reference/rdocx_reversible.html">rdocx_reversible()</a></code>, built on top of <code><a href="https://www.rdocumentation.org/packages/rmarkdown/topics/word_document">rmarkdown::word_document()</a></code>. You will typically call it via the YAML header in your R Markdown document. You have the option of highlighting the outputs (both chunk and inline) in the Word Document.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb2-1" title="1"><span class="ot">---</span></a>
 <a class="sourceLine" id="cb2-2" title="2"><span class="fu">output:</span></a>
 <a class="sourceLine" id="cb2-3" title="3">  redoc:<span class="fu">:rdocx_reversible:</span></a>
@@ -96,7 +96,7 @@
 <a class="sourceLine" id="cb3-3" title="3"><span class="co">#&gt; [1] "./skeleton.Rmd"</span></a></code></pre></div>
 <p>If the Word document has tracked changes, <code><a href="reference/undoc.html">undoc()</a></code> will, by default, convert these to <a href="http://criticmarkup.com/spec.php#thebasicsyntax">Critic Markup syntax</a>.</p>
 <p>Undoc’ing a redoc where chunk outputs have been deleted will restore the original code chunks to the document, usually immediately after the previous chunk. If chunk outputs are moved, code chunks move with them. Inline code outputs that are deleted are not restored.</p>
-<p>Redocs also store the original <code>.Rmd</code> used to make thim internally, which can be extracted and used to diff against the original.</p>
+<p>Redocs also store the original <code>.Rmd</code> used to make them internally, which can be extracted and used to diff against the original.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="reference/redoc_extract_rmd.html">redoc_extract_rmd</a></span>(<span class="kw"><a href="reference/redoc_example_docx.html">redoc_example_docx</a></span>())</a>
 <a class="sourceLine" id="cb4-2" title="2"><span class="co">#&gt; [1] "./skeleton.original.Rmd"</span></a></code></pre></div>
 </div>
