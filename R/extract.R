@@ -142,6 +142,10 @@ replace_chunks <- function(md_lines, chunk_df) {
         last_detected <- i
         append <- ""
       }
+      if (append != "") {
+        replacements[last_detected] <-
+          paste0(c(replacements[last_detected], append), collapse = "\n\n")
+      }
     }
     for (i in seq_along(patterns)) {
       md_lines <- stri_replace_first_fixed(md_lines, patterns[i],
