@@ -39,7 +39,8 @@ source("https://install-github.me/noamross/redoc")
 
 ## Usage
 
-**redoc** provides an R Markdown \[output format\] of
+**redoc** provides an R Markdown [output
+format](https://bookdown.org/yihui/rmarkdown/output-formats.html) of
 `rdocx_reversible()`, built on top of `rmarkdown::word_document()`. You
 will typically call it via the YAML header in your R Markdown document.
 You have the option of highlighting the outputs (both chunk and inline)
@@ -72,7 +73,7 @@ original code chunks to the document, usually immediately after the
 previous chunk. If chunk outputs are moved, code chunks move with them.
 Inline code outputs that are deleted are not restored.
 
-Redocs also store the original `.Rmd` used to make thim internally,
+Redocs also store the original `.Rmd` used to make them internally,
 which can be extracted and used to diff against the original.
 
 ``` r
