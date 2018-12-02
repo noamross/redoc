@@ -20,8 +20,9 @@ status](https://www.r-pkg.org/badges/version/redoc)](https://cran.r-project.org/
 <!-- badges: end -->
 
 **redoc** is an experimental package to enable a two-way R-Markdown ⟷
-Microsoft Word workflow. It is in early design phase. Testing and
-feedback is welcome\! Please look at
+Microsoft Word workflow. It is in early design phase; *I will certainly
+break things, intentionally and accidentally.* Testing and feedback is
+welcome\! Please look at
 [CONTRIBUTING.md](https://github.com/noamross/redoc/blob/master/.github/CONTRIBUTING.md),
 (especially the
 [roadmap](https://github.com/noamross/redoc/blob/master/.github/CONTRIBUTING.md#roadmap))
