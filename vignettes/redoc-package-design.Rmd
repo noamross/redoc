@@ -38,6 +38,9 @@ This differentiates these outputs in the compiled markdown.  These divs and span
 are given an attribute of `custom-style="CHUNK_NAME"`. Non-included chunks are
 replaced with an empty raw `docx` element.
 
+A final knitr document hook processes the whole document to translate Critic
+Markup syntax into appropriate Pandoc syntax.
+
 Pandoc then converts the markdown to `docx`, and elements with `custom-style` attributes
 keep these attributes in the `docx` format, by using the `docx+styles` extension.
 

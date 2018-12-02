@@ -21,11 +21,13 @@ Imports:
     rmarkdown,
     officer,
     tools,
+    utils,
     knitr,
     xfun,
     mime,
     stringi,
     xml2,
-    backports
+    backports,
+    whoami
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)

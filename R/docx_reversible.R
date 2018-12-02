@@ -12,6 +12,8 @@
 #'   `footer`.  If NULL defaults to the reference document.
 #' @param line_numbers either TRUE or list with any of the arguments `start`,
 #'   `by`, `restart`, and `distance`
+#' @param comment_author The name to affilliate any Critic Markup tracked
+#'   changes with
 #' @param ... other parameters passed to [rmarkdown::word_document()]
 #' @importFrom rmarkdown output_format word_document
 #' @importFrom officer read_docx
@@ -21,7 +23,8 @@
 #' @importFrom xfun parse_only
 #' @export
 rdocx_reversible <- function(highlight_outputs = FALSE, wrap = 80,
-                             margins = NULL, line_numbers = NULL, ...) {
+                             margins = NULL, line_numbers = NULL,
+                             comment_author = NULL, ...) {
   out <- word_document(
     md_extensions = c("+fenced_divs", "+bracketed_spans"),
     ...
@@ -57,6 +60,10 @@ rdocx_reversible <- function(highlight_outputs = FALSE, wrap = 80,
             "\n:::"
           )
         }
+      },
+      document = function(x) {
+        x <- preprocess_criticmarkup(x, author = comment_author)
+        x
       }
     ),
     opts_hooks = list(
@@ -116,9 +123,9 @@ rdocx_reversible <- function(highlight_outputs = FALSE, wrap = 80,
         set_body_margins(docx, margins)
       }
 
-      if(isTRUE(line_numbers)) {
+      if (isTRUE(line_numbers)) {
         set_body_linenumbers(docx)
-      } else if(is.list(line_numbers)) {
+      } else if (is.list(line_numbers)) {
         do.call(set_body_linenumbers, c(list(x = docx), line_numbers))
       }
 

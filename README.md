@@ -55,6 +55,10 @@ output:
 ---
 ```
 
+[Critic Markup](http://criticmarkup.com/spec.php#thebasicsyntax) edits
+will be converted to Word tracked changes. There are a few other
+formatting options available, too.
+
 Word files that have been created by `rdocx_reversible()` (“redocs”) can
 be reverted to `.Rmd` with `undoc()`, *even after they are edited*.
 
@@ -65,13 +69,14 @@ undoc(redoc_example_docx())
 ```
 
 If the Word document has tracked changes, `undoc()` will, by default,
-convert these to [Critic Markup
-syntax](http://criticmarkup.com/spec.php#thebasicsyntax).
+convert these to back to Critic Markup syntax.
 
 Undoc’ing a redoc where chunk outputs have been deleted will restore the
 original code chunks to the document, usually immediately after the
 previous chunk. If chunk outputs are moved, code chunks move with them.
-Inline code outputs that are deleted are not restored.
+Inline code outputs that are deleted are not restored - it behooves one
+to only use inline outputs to print outputs, rather than change the
+state for upcoming chunks.
 
 Redocs also store the original `.Rmd` used to make them internally,
 which can be extracted and used to diff against the original.
