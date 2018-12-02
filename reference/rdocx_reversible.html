@@ -115,7 +115,8 @@ be reversed using <code><a href='undoc.html'>undoc()</a></code> after editing in
     
     </div>
 
-    <pre class="usage"><span class='fu'>rdocx_reversible</span>(<span class='kw'>highlight_outputs</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>80</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>rdocx_reversible</span>(<span class='kw'>highlight_outputs</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>80</span>,
+  <span class='kw'>margins</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -129,6 +130,12 @@ code in the final document</p></td>
       <th>wrap</th>
       <td><p>when round-tripping the document, at what width to wrap the
 markdown output? See <code><a href='undoc.html'>undoc()</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>margins</th>
+      <td><p>page margin size.  Can be a single value or a named
+vector with values, <code>top</code>, <code>bottom</code>, <code>left</code>, <code>right</code>, <code>gutter</code>, <code>header</code>,
+and <code>footer</code>.  If NULL defaults to the reference document.</p></td>
     </tr>
     <tr>
       <th>...</th>
