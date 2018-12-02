@@ -90,12 +90,13 @@
 <a class="sourceLine" id="cb2-4" title="4">    <span class="fu">keep_md:</span><span class="at"> </span><span class="ch">TRUE</span></a>
 <a class="sourceLine" id="cb2-5" title="5">    <span class="fu">highlight_outputs:</span><span class="at"> </span><span class="ch">TRUE</span></a>
 <a class="sourceLine" id="cb2-6" title="6"><span class="ot">---</span></a></code></pre></div>
+<p><a href="http://criticmarkup.com/spec.php#thebasicsyntax">Critic Markup</a> edits will be converted to Word tracked changes. There are a few other formatting options available, too.</p>
 <p>Word files that have been created by <code><a href="reference/rdocx_reversible.html">rdocx_reversible()</a></code> (“redocs”) can be reverted to <code>.Rmd</code> with <code><a href="reference/undoc.html">undoc()</a></code>, <em>even after they are edited</em>.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(redoc)</a>
 <a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="reference/undoc.html">undoc</a></span>(<span class="kw"><a href="reference/redoc_example_docx.html">redoc_example_docx</a></span>())</a>
 <a class="sourceLine" id="cb3-3" title="3"><span class="co">#&gt; [1] "./skeleton.Rmd"</span></a></code></pre></div>
-<p>If the Word document has tracked changes, <code><a href="reference/undoc.html">undoc()</a></code> will, by default, convert these to <a href="http://criticmarkup.com/spec.php#thebasicsyntax">Critic Markup syntax</a>.</p>
-<p>Undoc’ing a redoc where chunk outputs have been deleted will restore the original code chunks to the document, usually immediately after the previous chunk. If chunk outputs are moved, code chunks move with them. Inline code outputs that are deleted are not restored.</p>
+<p>If the Word document has tracked changes, <code><a href="reference/undoc.html">undoc()</a></code> will, by default, convert these to back to Critic Markup syntax.</p>
+<p>Undoc’ing a redoc where chunk outputs have been deleted will restore the original code chunks to the document, usually immediately after the previous chunk. If chunk outputs are moved, code chunks move with them. Inline code outputs that are deleted are not restored - it behooves one to only use inline outputs to print outputs, rather than change the state for upcoming chunks.</p>
 <p>Redocs also store the original <code>.Rmd</code> used to make them internally, which can be extracted and used to diff against the original.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="reference/redoc_extract_rmd.html">redoc_extract_rmd</a></span>(<span class="kw"><a href="reference/redoc_example_docx.html">redoc_example_docx</a></span>())</a>
 <a class="sourceLine" id="cb4-2" title="2"><span class="co">#&gt; [1] "./skeleton.original.Rmd"</span></a></code></pre></div>

@@ -116,7 +116,7 @@ be reversed using <code><a href='undoc.html'>undoc()</a></code> after editing in
     </div>
 
     <pre class="usage"><span class='fu'>rdocx_reversible</span>(<span class='kw'>highlight_outputs</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>80</span>,
-  <span class='kw'>margins</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>line_numbers</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>margins</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>line_numbers</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>comment_author</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -141,6 +141,11 @@ with values, <code>top</code>, <code>bottom</code>, <code>left</code>, <code>rig
       <th>line_numbers</th>
       <td><p>either TRUE or list with any of the arguments <code>start</code>,
 <code>by</code>, <code>restart</code>, and <code>distance</code></p></td>
+    </tr>
+    <tr>
+      <th>comment_author</th>
+      <td><p>The name to affilliate any Critic Markup tracked
+changes with</p></td>
     </tr>
     <tr>
       <th>...</th>
