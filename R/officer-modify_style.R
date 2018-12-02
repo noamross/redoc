@@ -9,14 +9,16 @@ add_to_style <- function(docx, style_id, name, attrs = NULL) {
   if (!is.null(attrs)) names(attrs) <- prepend_ns(names(attrs))
   styles_path <- file.path(docx$package_dir, "word", "styles.xml")
   styles_xml <- read_xml(styles_path)
-  style_xml <- xml_find_first(styles_xml,
-                              paste0("//w:style[@w:styleId='", style_id, "']"))
+  style_xml <- xml_find_first(
+    styles_xml,
+    paste0("//w:style[@w:styleId='", style_id, "']")
+  )
   rPr <- xml_add_child(style_xml, "w:rPr")
   pPr <- xml_add_child(style_xml, "w:pPr")
   style <- xml_add_child(rPr, name)
-  if (!is.null(attrs))  xml_set_attrs(style, attrs)
+  if (!is.null(attrs)) xml_set_attrs(style, attrs)
   style <- xml_add_child(pPr, name)
-  if (!is.null(attrs))  xml_set_attrs(style, attrs)
+  if (!is.null(attrs)) xml_set_attrs(style, attrs)
   write_xml(styles_xml, styles_path)
   return(docx)
 }
@@ -24,9 +26,11 @@ add_to_style <- function(docx, style_id, name, attrs = NULL) {
 #' @importFrom officer styles_info
 #' @importFrom stringi stri_detect_regex
 highlight_output_styles <- function(docx, name = "shd",
-                                 attrs = c(val = "clear",
-                                           color = "auto",
-                                           fill = "FFBEBF")) {
+                                    attrs = c(
+                                      val = "clear",
+                                      color = "auto",
+                                      fill = "FFBEBF"
+                                    )) {
   docx <- to_docx(docx)
   styles <- styles_info(docx)
   styles <-
@@ -39,7 +43,7 @@ highlight_output_styles <- function(docx, name = "shd",
 }
 
 #' @importFrom stringi stri_detect_regex
-prepend_ns <- function(x, ns="w") {
+prepend_ns <- function(x, ns = "w") {
   ifelse(
     stri_detect_regex(x, paste0("^", ns, ":")),
     x,

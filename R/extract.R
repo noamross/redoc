@@ -30,10 +30,10 @@ undoc <- function(docx, to = NULL, dir = ".",
                   track_changes = c("criticmarkup", "accept", "reject", "all"),
                   wrap = 80, overwrite = FALSE,
                   orig_chunkfile = NULL, orig_docx = NULL, verbose = FALSE) {
-
-  if (!is_redoc(docx) && is.null(orig_chunkfile) && is.null(orig_docx))
+  if (!is_redoc(docx) && is.null(orig_chunkfile) && is.null(orig_docx)) {
     stop("Document is not reversible and no alternate data provided via
          orig_chunkfile or orig_docx")
+  }
 
   if (is.null(to)) to <- paste0(file_path_sans_ext(basename(docx)), ".Rmd")
   to <- file.path(dir, to)
@@ -81,13 +81,14 @@ undoc <- function(docx, to = NULL, dir = ".",
 #' @examples
 #' redoc_extract_rmd(redoc_example_docx(), dir = tempdir())
 redoc_extract_rmd <- function(docx, type = c("original", "roundtrip"),
-                             dir = ".", to = NULL, overwrite = FALSE) {
+                              dir = ".", to = NULL, overwrite = FALSE) {
   docx <- to_docx(docx)
   assert_redoc(docx)
   type <- match.arg(type)
   rmdfile <- list.files(docx$package_dir,
-                        pattern = paste0("\\.", type, "\\.Rmd$"),
-                        full.names = TRUE)
+    pattern = paste0("\\.", type, "\\.Rmd$"),
+    full.names = TRUE
+  )
   if (is.null(to)) to <- basename(rmdfile)
   out <- file.path(dir, to)
   if (file.exists(out) && !overwrite) stop(out, " exists and overwrite=FALSE")
@@ -99,8 +100,10 @@ redoc_extract_rmd <- function(docx, type = c("original", "roundtrip"),
 redoc_extract_chunks <- function(docx) {
   docx <- to_docx(docx)
   assert_redoc(docx)
-  chunkfile <- list.files(docx$package_dir, pattern = "\\.chunks\\.csv$",
-                          full.names = TRUE)
+  chunkfile <- list.files(docx$package_dir,
+    pattern = "\\.chunks\\.csv$",
+    full.names = TRUE
+  )
   chunk_df <- utils::read.csv(chunkfile, stringsAsFactors = FALSE)
   chunk_df
 }
@@ -112,7 +115,8 @@ replace_inlines <- function(md_lines, chunk_df) {
     patterns <- paste0("[[", chunk_df$label, "]]")
     replacements <- paste0("`r ", chunk_df$code, "`")
     md_lines <- stri_replace_all_fixed(md_lines, patterns, replacements,
-                                       vectorize_all = FALSE)
+      vectorize_all = FALSE
+    )
   }
   md_lines
 }
@@ -148,8 +152,10 @@ replace_chunks <- function(md_lines, chunk_df) {
       }
     }
     for (i in seq_along(patterns)) {
-      md_lines <- stri_replace_first_fixed(md_lines, patterns[i],
-                                           replacements[i])
+      md_lines <- stri_replace_first_fixed(
+        md_lines, patterns[i],
+        replacements[i]
+      )
       md_lines <- stri_replace_all_fixed(md_lines, patterns[i], "")
     }
     md_lines <- stri_replace_all_regex(md_lines, "\n{3,}", "\n\n")
@@ -172,9 +178,13 @@ convert_docx_to_md <- function(docx, track_changes, wrap, verbose) {
   docx <- normalizePath(docx)
   track_changes <- match.arg(track_changes, track_changes)
   if (track_changes == "criticmarkup") {
-    track_opts <- c("--track-changes=all",
-                    paste0("--lua-filter=",
-                           system.file("criticmarkup.lua", package = "redoc")))
+    track_opts <- c(
+      "--track-changes=all",
+      paste0(
+        "--lua-filter=",
+        system.file("criticmarkup.lua", package = "redoc")
+      )
+    )
   } else {
     track_opts <- paste0("--track-changes=", track_changes)
   }
@@ -184,15 +194,18 @@ convert_docx_to_md <- function(docx, track_changes, wrap, verbose) {
   } else {
     wrap_opts <- c("--wrap=auto", paste0("--columns=", wrap))
   }
-  filter_opts <- c(paste0("--lua-filter=",
-                          system.file("revchunks.lua", package = "redoc")))
+  filter_opts <- c(paste0(
+    "--lua-filter=",
+    system.file("revchunks.lua", package = "redoc")
+  ))
   opts <- c(track_opts, filter_opts, wrap_opts)
   md_tmp <- tempfile(fileext = ".md")
   pandoc_convert(docx,
-                 from = "docx+styles+empty_paragraphs",
-                 to = "markdown",
-                 output = md_tmp,
-                 options = opts,
-                 verbose = verbose)
+    from = "docx+styles+empty_paragraphs",
+    to = "markdown",
+    output = md_tmp,
+    options = opts,
+    verbose = verbose
+  )
   return(readLines(md_tmp))
 }

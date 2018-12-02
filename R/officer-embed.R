@@ -16,7 +16,7 @@ embed_file <- function(docx, file, content_type = guess_type(file)) {
     type = paste0(
       "http://schemas.openxmlformats.org/officeDocument/2006/relationships/",
       extension
-      ),
+    ),
     target = file.path("..", basename(file))
   )
   return(docx)
