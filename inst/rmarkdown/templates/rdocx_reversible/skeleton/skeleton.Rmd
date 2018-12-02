@@ -1,11 +1,16 @@
 ---
 title: "Your Title"
+subtitle: "Your subtitle"
 author: "Your Name"
 date: "The Date"
 output:
   redoc::rdocx_reversible:
     keep_md: TRUE
     highlight_outputs: TRUE
+    margins: 0.5
+    line_numbers:
+      start: 2
+      by: 3
 ---
 
 ```{r setup, include = FALSE}
@@ -36,7 +41,7 @@ b <- 3
 You can include calculations inline like so: `r a` plus
 `r b` equals `r a + b`.
 
-What about empty inline chunks?: Like `r NULL` or `r `?
+What about empty inline chunks?: Like `r NULL`?
 
 Chunks with plots
 -----------------
@@ -47,3 +52,17 @@ You can also embed plots, for example:
 plot(pressure)
 ```
 
+Track Changes
+--------------
+
+Don't go around saying{-- to people that--} the world owes you a living. The world owes you nothing. It was here first. {~~One~>Only one~~} thing is impossible for God: To find {++any++} sense in any copyright law on the planet. {==Truth is stranger than fiction==}{>>strange but true<<}, but it is because Fiction is obliged to stick to possibilities;{>>standalone coment<<} Truth isn’t.
+
+Lorem ipsum dolor amet organic ramps hoodie air plant hella waistcoat squid knausgaard neutra intelligentsia butcher crucifix activated charcoal. Vaporware cornhole fam brooklyn authentic, kickstarter ugh selfies butcher typewriter celiac artisan. Lomo hashtag polaroid twee raclette seitan cred hella snackwave unicorn la croix humblebrag. {--Paleo master cleanse put a bird on it, polaroid direct trade actually drinking vinegar live-edge vaporware vinyl.
+
+Cornhole offal DIY, salvia deep v meditation church-key bespoke jean shorts fam. Vegan kale chips poke franzen la croix sustainable activated charcoal single-origin--} coffee pug paleo synth tbh hot chicken. Kitsch knausgaard gentrify tilde irony hexagon celiac lyft williamsburg taiyaki. Iceland man bun lo-fi distillery gluten-free migas tbh bitters neutra readymade mustache kale chips pickled. Intelligentsia pok pok mumblecore mlkshk. Microdosing biodiesel palo santo, brooklyn meggings whatever cardigan vice.
+
+{++Lorem ipsum dolor amet organic ramps hoodie air plant hella waistcoat squid knausgaard neutra intelligentsia butcher crucifix activated charcoal. Vaporware cornhole fam brooklyn authentic, kickstarter ugh selfies butcher typewriter celiac artisan. Lomo hashtag polaroid twee raclette seitan cred hella snackwave unicorn la croix humblebrag. Paleo master cleanse put a bird on it, polaroid direct trade actually drinking vinegar live-edge vaporware vinyl.
+
+Cornhole offal DIY, salvia deep v meditation church-key bespoke jean shorts fam. Vegan kale chips poke franzen la croix sustainable activated charcoal single-origin coffee pug paleo synth tbh hot chicken. Kitsch knausgaard gentrify tilde irony hexagon celiac lyft williamsburg taiyaki. Iceland man bun lo-fi distillery gluten-free migas tbh bitters neutra readymade mustache kale chips pickled. Intelligentsia pok pok mumblecore mlkshk. Microdosing biodiesel palo santo, brooklyn meggings whatever cardigan vice.++}
+
+Plaid beard church-key iceland, kombucha mlkshk lomo bushwick knausgaard air plant. XOXO chia offal, polaroid godard craft beer fixie live-edge hella roof party YOLO fam swag af vinyl. Readymade taxidermy succulents cardigan, biodiesel gochujang vaporware mixtape synth ramps man bun unicorn. Yr blog food truck tote bag mumblecore la croix knausgaard. Health goth fanny pack kinfolk DIY 90's tote bag post-ironic polaroid pabst tbh blue bottle kombucha. Selfies subway tile portland DIY raw denim, green juice pitchfork. Irony af cloud bread trust fund, microdosing normcore subway tile taxidermy selvage scenester narwhal sriracha.
