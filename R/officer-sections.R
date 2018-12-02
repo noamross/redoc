@@ -5,8 +5,10 @@ set_section_properties <- function(x, section = NULL, properties = NULL) {
   if (is.null(section)) {
     sec <- xml_find_first(doc_obj, "/w:document/w:body/w:sectPr")
     if (inherits(sec, "xml_missing")) {
-      sec <- xml_add_child(xml_find_first(doc_obj, "/w:document/w:body"),
-                           "w:sectPr")
+      sec <- xml_add_child(
+        xml_find_first(doc_obj, "/w:document/w:body"),
+        "w:sectPr"
+      )
     }
   } else {
     sec <- section
@@ -23,15 +25,37 @@ set_section_properties <- function(x, section = NULL, properties = NULL) {
   x
 }
 
-set_body_margins <- function(x, mar = c(top = 1, bottom = 1, left = 1,
-                                        right = 1, gutter = 0, header = 0,
-                                        footer = 0)) {
+set_body_margins <- function(x, mar = c(
+                               top = 1, bottom = 1, left = 1,
+                               right = 1, gutter = 0, header = 0,
+                               footer = 0
+                             )) {
   if (length(mar) == 1 && (is.null(names(mar)) || names(mar) == "all")) {
-    mar <- c(top = mar, bottom = mar, left = mar, right = mar,
-            gutter = 0, header = 0, footer = 0)
+    mar <- c(
+      top = mar, bottom = mar, left = mar, right = mar,
+      gutter = 0, header = 0, footer = 0
+    )
   }
   mar <- structure(as.character(mar * 1440), .Names = names(mar))
   set_section_properties(x, properties = list(pgMar = mar))
   x
 }
 
+set_body_linenumbers <- function(x, start = 1L, by = 1L, distance = NULL,
+                                 restart = c("page", "section", "never")) {
+  restart <- match.arg(restart)
+  lnNumType <- c(
+    start = as.character(as.integer(start)),
+    countBy = as.character(as.integer(by)),
+    restart = switch(restart,
+      page = "newPage",
+      section = "newSection",
+      never = "continuous"
+    )
+  )
+  if (!is.null(distance)) {
+    lnNumType <- c(lnNumType, distance = as.character(distance * 1440))
+  }
+  set_section_properties(x, properties = list(lnNumType = lnNumType))
+  x
+}

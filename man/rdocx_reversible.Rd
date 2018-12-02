@@ -5,7 +5,7 @@
 \title{Convert to a Reversible Microsoft Word Document}
 \usage{
 rdocx_reversible(highlight_outputs = FALSE, wrap = 80,
-  margins = NULL, ...)
+  margins = NULL, line_numbers = NULL, ...)
 }
 \arguments{
 \item{highlight_outputs}{whether to highlight outputs from chunks and inline
@@ -14,9 +14,12 @@ code in the final document}
 \item{wrap}{when round-tripping the document, at what width to wrap the
 markdown output? See \code{\link[=undoc]{undoc()}}.}
 
-\item{margins}{page margin size.  Can be a single value or a named
-vector with values, \code{top}, \code{bottom}, \code{left}, \code{right}, \code{gutter}, \code{header},
-and \code{footer}.  If NULL defaults to the reference document.}
+\item{margins}{page margin size.  Can be a single value or a named vector
+with values, \code{top}, \code{bottom}, \code{left}, \code{right}, \code{gutter}, \code{header}, and
+\code{footer}.  If NULL defaults to the reference document.}
+
+\item{line_numbers}{either TRUE or list with any of the arguments \code{start},
+\code{by}, \code{restart}, and \code{distance}}
 
 \item{...}{other parameters passed to \code{\link[rmarkdown:word_document]{rmarkdown::word_document()}}}
 }
