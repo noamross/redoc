@@ -33,8 +33,11 @@ Some topics I'm mulling over include:
    changed in the word doc (something that happens rarely in my experience),
    the blocks are lost.  Is there a better way to hold on to section metadata?
 -  Making **redoc** compatible with tools for generating richer Word Documents, such
-   as [worded/officedown](https://github.com/davidgohel/worded).  Some **redoc**
-   features will probably migrate to those other packages.
+   as [worded/officedown](https://github.com/davidgohel/worded), [papaja](https://github.com/crsh/papaja), and
+   [`bookdown::word_document2()`](https://github.com/rstudio/bookdown/blob/master/R/word.R).
+   Some **redoc** features will probably migrate to those other packages, or 
+   perhaps it will merge to create a package with a common framework building
+   rich, reversible `docx` ouptuts.
 -  Making it possible to set many common document formatting properties in the
    YAML header.  These could include margins, default fonts, default paragraph
    spacing, and line numbering.  These may be features to put in
