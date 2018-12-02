@@ -6,7 +6,10 @@
 #' @param highlight_outputs whether to highlight outputs from chunks and inline
 #'   code in the final document
 #' @param wrap when round-tripping the document, at what width to wrap the
-#' markdown output? See [undoc()].
+#'   markdown output? See [undoc()].
+#' @param margins page margin size.  Can be a single value or a named
+#'   vector with values, `top`, `bottom`, `left`, `right`, `gutter`, `header`,
+#'   and `footer`.  If NULL defaults to the reference document.
 #' @param ... other parameters passed to [rmarkdown::word_document()]
 #' @importFrom rmarkdown output_format word_document
 #' @importFrom officer read_docx
@@ -15,7 +18,8 @@
 #' @importFrom knitr knit_print knit_global opts_chunk
 #' @importFrom xfun parse_only
 #' @export
-rdocx_reversible <- function(highlight_outputs = FALSE, wrap = 80, ...) {
+rdocx_reversible <- function(highlight_outputs = FALSE, wrap = 80,
+                             margins = NULL, ...) {
 
   out <- word_document(
     md_extensions = c("+fenced_divs", "+bracketed_spans"),
@@ -92,6 +96,10 @@ rdocx_reversible <- function(highlight_outputs = FALSE, wrap = 80, ...) {
 
       if (highlight_outputs) {
         docx <- highlight_output_styles(docx)
+      }
+
+      if (!is.null(margins)) {
+        set_body_margins(docx, margins)
       }
 
       print(docx, output_file)
