@@ -47,6 +47,7 @@ Some topics I'm mulling over include:
 -  Finding a way to support citations, especially Endnote citations, which are
    the general bane of _my_ existence.  Some of this may be spun off into a
    more general Endnote package.
+-  Handling formats with figures/captions at the end of the file.
 -  Packaging up not just the Rmd but supporting files into the `docx` file.
 -  Supporting conversion of Critic Markup from Markdown to word (via a pandoc
    lua filter, shouldn't be too hard.)
