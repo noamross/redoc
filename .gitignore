@@ -4,5 +4,5 @@ doc
 .Rhistory
 .RData
 .DS_store
-inst/endnote
+inst/random
 docs
