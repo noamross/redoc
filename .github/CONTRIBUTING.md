@@ -4,7 +4,7 @@ You want to contribute to **redoc**? Great!  Take a look at the [roadmap](#roadm
 below to see what general plans for the package are.
 
 Please submit questions, bug reports, and requests in the [issues tracker](https://github.com/noamross/redoc/issues). Please submit bug
-reports with a minimal  [reprex](https://www.tidyverse.org/help/#reprex).
+reports with a minimal  [reprex](https://www.tidyverse.org/help/#reprex) and attach the associated word document. 
 
 If you plan to contribute code, go ahead and fork the repo and submit a pull request. A few notes:
 
