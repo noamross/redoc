@@ -1,6 +1,6 @@
 pandoc: '2.5'
 pkgdown: 1.2.0.9000
-pkgdown_sha: c980e84a573614087c6e151d5e6e19a22748b761
+pkgdown_sha: a56ffee40c03d21c3919280c7ba03ff0a20b2018
 articles:
   redoc-package-design: redoc-package-design.html
 
