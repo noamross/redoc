@@ -22,7 +22,7 @@ submitting your change.
 ## Roadmap
 
 **redoc** is pretty experimental and I'm still figuring out its scope and architecture.
-Some topics I'm mulling over include:
+Here are some topics I'm mulling over. Feel free to open an issue to discuss any of these:
 
 -  Understanding what the minimum features
    are required for the workflow to be viable, especially with the idea that 
