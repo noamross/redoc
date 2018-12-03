@@ -49,7 +49,7 @@ Here are some topics I'm mulling over. Feel free to open an issue to discuss any
    [**officer**](https://github.com/davidgohel/officer)).
 -  Finding a way to support citations, especially Endnote citations, which are
    the general bane of _my_ existence.  Some of this may be spun off into a
-   more general Endnote package.
+   more general Endnote package. (Hmm, [possibly useful](https://github.com/kaizhang/citeproc-endnote))
 -  Handling formats with figures/captions at the end of the file.
 -  Packaging up not just the Rmd but supporting files into the `docx` file.
 -  Supporting conversion of Critic Markup from Markdown to word (via a pandoc
