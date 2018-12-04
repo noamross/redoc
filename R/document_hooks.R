@@ -158,3 +158,16 @@ render_pandoc_highlight <- function(text, author) {
     "\" author=\"", author, "\"}", text[1], "[]{.comment-end id=\"", id, "\"}"
   )
 }
+
+#' @importFrom stringi stri_replace_first_fixed
+wrap_yaml <- function(lines, chunk_df) {
+  md <- paste(lines, collapse = "\n")
+  chunk_df <- chunk_df[chunk_df$type == "yaml" & chunk_df$label != "yaml_header"]
+  for (i in seq_along(chunk_df$label)) {
+    md <- stri_replace_first_fixed(md, chunk_df$code[i],
+                                   paste0("::: chunk-", chunk_df$label[i],
+                                          "\n\n",
+                                          chunk_df$code[i],
+                                          "\n\n:::"))
+  }
+}
