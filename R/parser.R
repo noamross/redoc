@@ -8,9 +8,8 @@ parse_rmd_to_df <- function(input_file) {
   patterns <- all_patterns$md
   chunk.begin <- patterns$chunk.begin
   chunk.end <- patterns$chunk.end
-  yaml.delim <- "^(---|\\.\\.\\.)\\s*$"
 
-  yaml <- parse_yaml(yaml.delim, lines)
+  yaml <- parse_yaml(lines)
 
   blks <- grepl(chunk.begin, lines)
   txts <- filter_chunk_end(blks, grepl(chunk.end, lines))
@@ -40,12 +39,15 @@ parse_rmd_to_df <- function(input_file) {
     }
   })
 
-  chunk_df <- do.call(rbind, c(lapply(chunks, as.data.frame, stringsAsFactors = FALSE)))
-  chunk_df <- rbind(as.data.frame(yaml, stringsAsFactors = FALSE), chunk_df, stringsAsFactors = FALSE)
+  chunks <- Filter(Negate(is.null), chunks)
+
+  chunk_df <- do.call(rbind, chunks)
+  chunk_df <- rbind(yaml, chunk_df)
   chunk_df$label <- ifelse(chunk_df$type == "block",
     paste0("chunk-", chunk_df$label),
     chunk_df$label
   )
+  rownames(chunk_df) <- NULL
   chunk_df
 }
 
@@ -107,7 +109,7 @@ parse_block <- function(code, header, params.src) {
 
   label <- params$label
 
-  list(label = label, type = "block", header = header, code = code)
+  data.frame(label = label, type = "block", header = header, code = code)
 }
 
 #' @importFrom knitr opts_knit
@@ -237,49 +239,62 @@ parse_inline <- function(input, patterns) {
   for (i in seq_along(code)) {
     labels[i] <- unnamed_inline()
   }
-  list(
+  data.frame(
     label = labels, type = rep("inline", length(code)),
-    header = rep(NA_character_, length(code)), code = code
+    header = rep(NA_character_, length(code)), code = code,
+    stringsAsFactors = FALSE
   )
 }
 
-parse_yaml <- function(yaml.delim, input_lines) {
-  # TODO Make yaml parser yaml blocks, not just front matter
-  validate_front_matter <- function(delimiters) {
-    if (length(delimiters) >= 2 &&
-      (delimiters[2] - delimiters[1] > 1) &&
-      grepl("^---\\s*$", input_lines[delimiters[1]])) {
-      # verify that it's truly front matter (not preceded by other content)
-      if (delimiters[1] == 1) {
-        TRUE
+#' @importFrom stringi stri_detect_regex
+parse_yaml <- function(lines) {
+  yaml.begin = "^---\\s*$"
+  yaml.end = "^(---|\\.\\.\\.)\\s*$"
+  i <- 1
+  n <- length(lines)
+  yaml_state <- FALSE
+  block_start <- NA_integer_
+  block_counter <- 1
+  blocks <- list()
+  is_start <- TRUE
+  while (i <= n) {
+    if (!yaml_state) {
+      if (stri_detect_regex(lines[i], yaml.begin) &&
+          (i != n) &&
+          stri_detect_regex(lines[i + 1], "^\\s*$", negate = TRUE)) {
+        yaml_state <- TRUE
+        block_start <- i
+        i <- i + 1
+        next
+      } else if (is_start) {
+        is_start <- stri_detect_regex(lines[i], "^\\s*$")
+        i <- i + 1
+        next
       } else {
-        is_blank(input_lines[1:delimiters[1] - 1])
+        i <- i + 1
+        next
       }
     } else {
-      FALSE
+      if (stri_detect_regex(lines[i], yaml.end)) {
+        blocks <- c(blocks, paste0(lines[block_start:i], collapse = "\n"))
+        if (is_start) {
+          names(blocks)[block_counter] <- "yaml-header"
+          is_start <- FALSE
+        } else {
+          names(blocks)[block_counter] <- paste0("yaml-", block_counter)
+        }
+        yaml_state <- FALSE
+        block_counter <- block_counter + 1
+        i <- i + 1
+        next
+      } else {
+        i <- i + 1
+        next
+      }
     }
   }
-
-  # is there yaml front matter?
-  delimiters <- grep(yaml.delim, input_lines)
-  if (validate_front_matter(delimiters)) {
-    front_matter <- input_lines[(delimiters[1]):(delimiters[2])]
-    return(
-      list(
-        label = NA_character_, type = "yaml",
-        header = NA_character_, code = paste(front_matter, collapse = "\n")
-      )
-    )
-  }
-  else {
-    return(list())
-  }
-}
-
-is_blank <- function(x) {
-  if (length(x)) {
-    all(grepl("^\\s*$", x))
-  } else {
-    TRUE
-  }
+  data.frame(label = names(blocks),
+             type = rep("yaml", length(blocks)),
+             header = rep(NA_character_, length(blocks)),
+             code = unlist(blocks), stringsAsFactors = FALSE)
 }

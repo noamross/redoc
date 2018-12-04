@@ -164,9 +164,10 @@ replace_chunks <- function(md_lines, chunk_df) {
   md_lines
 }
 
-# This will be need to be modified to deal with yaml at arbitrary locations
+# TODO: Re-insert non-header YAML blocks into locations in Rmd body
+# BODY: Use knitr document hook to wrap YAML blocks in divs for placement, put ones with deleted placeholders (in order) at end of doc
 prepend_yaml <- function(md_lines, chunk_df) {
-  chunk_df <- chunk_df[chunk_df$type == "yaml", ]
+  chunk_df <- chunk_df[chunk_df$label == "yaml-header", ]
   if (nrow(chunk_df)) {
     md_lines <- c(chunk_df$code, "", md_lines)
     md_lines <- stri_split_lines1(paste(md_lines, collapse = "\n"))
