@@ -52,6 +52,12 @@ You can also embed plots, for example:
 plot(pressure)
 ```
 
+---
+# Additional YAML blocks can be added
+hello: true
+---
+
+
 Track Changes
 --------------
 
