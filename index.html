@@ -100,6 +100,14 @@
 <p>Redocs also store the original <code>.Rmd</code> used to make them internally, which can be extracted and used to diff against the original.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="reference/redoc_extract_rmd.html">redoc_extract_rmd</a></span>(<span class="kw"><a href="reference/redoc_example_docx.html">redoc_example_docx</a></span>())</a>
 <a class="sourceLine" id="cb4-2" title="2"><span class="co">#&gt; [1] "./skeleton.original.Rmd"</span></a></code></pre></div>
+<div id="known-issues" class="section level3">
+<h3 class="hasAnchor">
+<a href="#known-issues" class="anchor"></a>Known Issues</h3>
+<ul>
+<li>
+<strong>redoc</strong> does not work with <code>.docx</code> files edited with LibreOffice because of differences between Word and LibreOffice files’ internal structure.</li>
+</ul>
+</div>
 </div>
 <div id="contributing" class="section level2">
 <h2 class="hasAnchor">
