@@ -1,5 +1,12 @@
 ## Parsers largely lifted from knitr and rmarkdown packages
 
+#' Extract the R and YAML chunks from an Rmd Document
+#'
+#' @param input_file An R Markdown File
+#' @return A data frame with fields `label`, `type`, `header`, and `code`
+#' @export
+#' @examples
+#' parse_rmd_to_df(redoc_example_rmd())
 #' @importFrom knitr all_patterns
 #' @importFrom stringi stri_trim_both
 parse_rmd_to_df <- function(input_file) {
