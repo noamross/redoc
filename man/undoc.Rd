@@ -39,3 +39,7 @@ of the input.}
 Converts a document originally created with \code{\link[=rdocx_reversible]{rdocx_reversible()}} back to R
 Markdown, including changes made to text in MS Word.
 }
+\details{
+Internal data storing R chunks may be lost in the editing process.
+This is known to occur with documents edited with LibreOffice.
+}

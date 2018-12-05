@@ -3,6 +3,9 @@
 #' Converts a document originally created with [rdocx_reversible()] back to R
 #' Markdown, including changes made to text in MS Word.
 #'
+#' @details Internal data storing R chunks may be lost in the editing process.
+#' This is known to occur with documents edited with LibreOffice.
+#'
 #' @param docx The `.docx file to convert`
 #' @param to the filename to write the resulting `.Rmd` file.  The default is to
 #'   use the same basename as the docx document
@@ -31,8 +34,8 @@ undoc <- function(docx, to = NULL, dir = ".",
                   wrap = 80, overwrite = FALSE,
                   orig_chunkfile = NULL, orig_docx = NULL, verbose = FALSE) {
   if (!is_redoc(docx) && is.null(orig_chunkfile) && is.null(orig_docx)) {
-    stop("Document is not reversible and no alternate data provided via
-         orig_chunkfile or orig_docx")
+    stop("Document is not reversible - no internal data on R chunks found.
+Alternate data may be provided via orig_chunkfile or orig_docx")
   }
 
   if (is.null(to)) to <- paste0(file_path_sans_ext(basename(docx)), ".Rmd")

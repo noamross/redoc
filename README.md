@@ -87,6 +87,12 @@ redoc_extract_rmd(redoc_example_docx())
 #> [1] "./skeleton.original.Rmd"
 ```
 
+### Known Issues
+
+  - **redoc** does not work with `.docx` files edited with LibreOffice
+    because of differences between Word and LibreOffice files’ internal
+    structure.
+
 ## Contributing
 
 Want have feedback or want to contribute? Great\! Please take a look at

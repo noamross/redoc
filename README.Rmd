@@ -85,6 +85,11 @@ be extracted and used to diff against the original.
 redoc_extract_rmd(redoc_example_docx())
 ```
 
+### Known Issues
+
+- **redoc** does not work with `.docx` files edited with LibreOffice because of
+  differences between Word and LibreOffice files' internal structure.
+
 ## Contributing
 
 Want have feedback or want to contribute? Great! Please take a look at the [contributing guidelines](https://github.com/noamross/redoc/blob/master/.github/CONTRIBUTING.md) before filing an issue or pull request. 
