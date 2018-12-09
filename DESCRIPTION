@@ -28,6 +28,7 @@ Imports:
     stringi,
     xml2,
     backports,
-    whoami
+    whoami,
+    yaml
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)

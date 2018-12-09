@@ -19,6 +19,7 @@
 #' @importFrom whoami fullname username
 #' @importFrom stringi stri_opts_regex stri_match_all_regex stri_replace_first_fixed
 preprocess_criticmarkup <- function(input_lines, author = NULL) {
+#This could be sped up.  Remember the stringi `dotall` option to search across lines.
   if (is.null(author)) {
     author <- fullname(fallback = username(fallback = "R User"))
   }
@@ -162,12 +163,13 @@ render_pandoc_highlight <- function(text, author) {
 #' @importFrom stringi stri_replace_first_fixed
 wrap_yaml <- function(lines, chunk_df) {
   md <- paste(lines, collapse = "\n")
-  chunk_df <- chunk_df[chunk_df$type == "yaml" & chunk_df$label != "yaml_header"]
+  chunk_df <- chunk_df[chunk_df$type == "yaml" & chunk_df$label != "yaml-header",]
   for (i in seq_along(chunk_df$label)) {
     md <- stri_replace_first_fixed(md, chunk_df$code[i],
-                                   paste0("::: chunk-", chunk_df$label[i],
+                                   paste0("::: {custom-style=\"chunk-", chunk_df$label[i], "\"}",
                                           "\n\n",
                                           chunk_df$code[i],
                                           "\n\n:::"))
   }
+  stri_split_lines1(md)
 }

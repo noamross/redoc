@@ -2,7 +2,7 @@
 title: "Your Title"
 subtitle: "Your subtitle"
 author: "Your Name"
-date: "The Date"
+date: Two plus two is `r 2 + 2`
 output:
   redoc::rdocx_reversible:
     keep_md: TRUE

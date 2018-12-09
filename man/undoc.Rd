@@ -19,8 +19,11 @@ directory}
 
 \item{track_changes}{How to deal with tracked changes and comments in the
 \code{.docx} file. \code{"accept"} accepts all changes, and \code{"reject"} rejects all of
-them. The default, \code{"criticmarkup"}, converts the tracked changes to \href{http://criticmarkup.com/spec.php#thebasicsyntax}{Critic Markup syntax}. \code{"all"}
-marks up tracked changes and comments in \code{<span>} tags.  See the \href{http://pandoc.org/MANUAL.html#option--track-changes}{pandoc manual} for details.}
+them. The default, \code{"criticmarkup"}, converts the tracked changes to
+\href{http://criticmarkup.com/spec.php#thebasicsyntax}{Critic Markup syntax}.
+\code{"all"} marks up tracked changes and comments in \code{<span>} tags.  See the
+\href{http://pandoc.org/MANUAL.html#option--track-changes}{pandoc manual} for
+details.}
 
 \item{wrap}{The width at which to wrap text. If \code{NA}, text is not wrapped}
 

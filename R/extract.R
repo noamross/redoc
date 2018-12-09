@@ -4,7 +4,7 @@
 #' Markdown, including changes made to text in MS Word.
 #'
 #' @details Internal data storing R chunks may be lost in the editing process.
-#' This is known to occur with documents edited with LibreOffice.
+#'   This is known to occur with documents edited with LibreOffice.
 #'
 #' @param docx The `.docx file to convert`
 #' @param to the filename to write the resulting `.Rmd` file.  The default is to
@@ -13,10 +13,11 @@
 #'   directory
 #' @param track_changes How to deal with tracked changes and comments in the
 #'   `.docx` file. `"accept"` accepts all changes, and `"reject"` rejects all of
-#'   them. The default, `"criticmarkup"`, converts the tracked changes to [Critic
-#'   Markup syntax](http://criticmarkup.com/spec.php#thebasicsyntax). `"all"`
-#'   marks up tracked changes and comments in `<span>` tags.  See the [pandoc
-#'   manual](http://pandoc.org/MANUAL.html#option--track-changes) for details.
+#'   them. The default, `"criticmarkup"`, converts the tracked changes to
+#'   [Critic Markup syntax](http://criticmarkup.com/spec.php#thebasicsyntax).
+#'   `"all"` marks up tracked changes and comments in `<span>` tags.  See the
+#'   [pandoc manual](http://pandoc.org/MANUAL.html#option--track-changes) for
+#'   details.
 #' @param wrap The width at which to wrap text. If `NA`, text is not wrapped
 #' @param overwrite Whether to overwrite an existing file
 #' @param orig_chunkfile,orig_docx The original chunkfile or Word document
@@ -51,9 +52,10 @@ Alternate data may be provided via orig_chunkfile or orig_docx")
   }
 
   md_lines <- convert_docx_to_md(docx, track_changes, wrap, verbose)
+  md_lines <- merge_yaml_headers(md_lines, chunk_df)
+  md_lines <- replace_yaml_blocks(md_lines, chunk_df)
   md_lines <- replace_inlines(md_lines, chunk_df)
   md_lines <- replace_chunks(md_lines, chunk_df)
-  md_lines <- prepend_yaml(md_lines, chunk_df)
 
   cat(md_lines, file = to, sep = "\n")
 
@@ -128,30 +130,39 @@ replace_inlines <- function(md_lines, chunk_df) {
 #'   stri_replace_all_regex stri_split_lines1 stri_detect_fixed
 replace_chunks <- function(md_lines, chunk_df) {
   chunk_df <- chunk_df[chunk_df$type == "block", ]
-  md_lines <- paste(md_lines, collapse = "\n")
+  md_lines <- oneline(md_lines)
   if (nrow(chunk_df)) {
     patterns <- paste0("[[", chunk_df$label, "]]")
     replacements <- paste(chunk_df$header, chunk_df$code, "```", sep = "\n")
     detected <- logical(1)
     append <- ""
-    last_detected <- 1
+    start_append <- ""
+    last_detected <- NA_integer_
     for (i in seq_along(patterns)) {
       detected <- stri_detect_fixed(md_lines, patterns[i])
       if (!detected) {
-        if (i == 1) {
-          md_lines <- paste0(c(patterns[i], md_lines), collapse = "\n\n")
-        } else {
-          append <- paste0(c(append, replacements[i]), collapse = "\n\n")
-        }
+        append <- oneline(append, replacements[i], collapse = "\n\n")
       } else {
-        replacements[last_detected] <-
-          paste0(c(replacements[last_detected], append), collapse = "\n\n")
+        if (is.na(last_detected)) {
+          start_append <- append
+        } else {
+          replacements[last_detected] <-
+            oneline(replacements[last_detected], append, collapse = "\n\n")
+        }
         last_detected <- i
         append <- ""
       }
-      if (append != "") {
-        replacements[last_detected] <-
-          paste0(c(replacements[last_detected], append), collapse = "\n\n")
+    }
+    if (start_append != "") {
+      has_yaml <- stri_detect_regex(md_lines, "(?s)^---.*---\n")
+      if (has_yaml) {
+        md_lines <- stri_replace_first_regex(
+          md_lines,
+          "(?s)(?<!^)(\n+)---\n",
+          oneline("$1---\n", escape_captures(start_append), "\n")
+        )
+      } else {
+        md_lines <- oneline(start_append, md_lines)
       }
     }
     for (i in seq_along(patterns)) {
@@ -162,21 +173,68 @@ replace_chunks <- function(md_lines, chunk_df) {
       md_lines <- stri_replace_all_fixed(md_lines, patterns[i], "")
     }
     md_lines <- stri_replace_all_regex(md_lines, "\n{3,}", "\n\n")
+  }
+  reline(md_lines)
+}
+
+
+#' @importFrom stringi stri_extract_first_regex stri_replace_first_regex
+#' @importFrom yaml yaml.load as.yaml
+merge_yaml_headers <- function(md_lines, chunk_df) {
+  chunk_df <- chunk_df[chunk_df$label == "yaml-header", ]
+  if (nrow(chunk_df)) {
+    md_lines <- paste0(md_lines, collapse = "\n")
+    new_yaml <- stri_extract_first_regex(md_lines, "(?s)^---\\n.*\\n---\\n")
+    new_metadata <- yaml.load(new_yaml)
+    old_metadata <- yaml.load(chunk_df$code)
+    for (name in names(new_metadata)) {
+      old_metadata[[name]] <- new_metadata[[name]]
+    }
+    md_lines <- stri_replace_first_regex(md_lines, "(?s)^---\\n.*\\n---\\n", "")
+    md_lines <- paste0(
+      paste0("---\n", as.yaml(old_metadata), "---\n"),
+      md_lines,
+      collapse = "\n"
+    )
     md_lines <- stri_split_lines1(md_lines)
   }
   md_lines
 }
 
-# TODO: Re-insert non-header YAML blocks into locations in Rmd body
-# BODY: Use knitr document hook to wrap YAML blocks in divs for placement, put ones with deleted placeholders (in order) at end of doc
-prepend_yaml <- function(md_lines, chunk_df) {
-  chunk_df <- chunk_df[chunk_df$label == "yaml-header", ]
+replace_yaml_blocks <- function(md_lines, chunk_df) {
+  chunk_df <- chunk_df[chunk_df$type == "yaml" & chunk_df$label != "yaml-header", ]
   if (nrow(chunk_df)) {
-    md_lines <- c(chunk_df$code, "", md_lines)
-    md_lines <- stri_split_lines1(paste(md_lines, collapse = "\n"))
+    md_lines <- paste(md_lines, collapse = "\n")
+    patterns <- paste0("[[chunk-", chunk_df$label, "]]")
+    replacements <- paste(chunk_df$code)
+    detected <- logical(1)
+    prepend <- ""
+    for (i in seq_along(patterns)) {
+      detected <- stri_detect_fixed(md_lines, patterns[i])
+      if (!detected) {
+        prepend <- paste0(c(prepend, replacements[i]), collapse = "\n\n")
+      } else {
+        replacements[i] <-
+          paste0(c(prepend, replacements[i]), collapse = "\n\n")
+        prepend <- ""
+      }
+    }
+    for (i in seq_along(patterns)) {
+      md_lines <- stri_replace_first_fixed(
+        md_lines, patterns[i],
+        replacements[i]
+      )
+      md_lines <- stri_replace_all_fixed(md_lines, patterns[i], "")
+    }
+    if (prepend != "") {
+      md_lines <- paste0(c(md_lines, prepend), collapse = "")
+    }
+    md_lines <- stri_replace_all_regex(md_lines, "\n{3,}", "\n\n")
+    md_lines <- stri_split_lines1(md_lines)
   }
   md_lines
 }
+
 
 convert_docx_to_md <- function(docx, track_changes, wrap, verbose) {
   docx <- normalizePath(docx)
@@ -202,7 +260,8 @@ convert_docx_to_md <- function(docx, track_changes, wrap, verbose) {
     "--lua-filter=",
     system.file("revchunks.lua", package = "redoc")
   ))
-  opts <- c(track_opts, filter_opts, wrap_opts)
+  other_opts <- c("--standalone") # note adding metadata args for additional title block elements here might work (possibly as title block variable), though can't control order?
+  opts <- c(track_opts, filter_opts, wrap_opts, other_opts)
   md_tmp <- tempfile(fileext = ".md")
   pandoc_convert(docx,
     from = "docx+styles+empty_paragraphs",
