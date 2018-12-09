@@ -19,50 +19,52 @@
 #' @importFrom officer read_docx
 #' @importFrom tools file_path_sans_ext
 #' @importFrom rmarkdown word_document
-#' @importFrom knitr knit_print knit_global opts_chunk
+#' @importFrom knitr knit_print knit_global opts_chunk opts_knit
 #' @importFrom xfun parse_only
 #' @export
 rdocx_reversible <- function(highlight_outputs = FALSE, wrap = 80,
                              margins = NULL, line_numbers = NULL,
                              comment_author = NULL, ...) {
-  out <- word_document(
-    md_extensions = c("+fenced_divs", "+bracketed_spans"),
-    ...
-  )
+  out <- word_document(...)
+
+
+  # Pre-parse, name inline chunks and save chunk contents to lookup table
+  out$pre_knit <- function(input, ...) {
+    chunkfile <- paste0(file_path_sans_ext(input), ".chunks.csv")
+    knitr::opts_knit$set(chunkfile = chunkfile)
+    utils::write.table(parse_rmd_to_df(input),
+      file = chunkfile,
+      sep = ",", row.names = FALSE, qmethod = "double"
+    )
+    inline_counter(reset = TRUE)
+    chunk_counter(reset = TRUE)
+  }
 
   out$knitr <- rmarkdown::knitr_options(
     # Wrap code outputs in spans and divs
     knit_hooks = list(
-      # TODO: See if its better to make empty inline output raw openxml
       evaluate.inline = function(code, envir = knit_global()) {
         v <- withVisible(eval(parse_only(code), envir = envir))
         if (is.null(v$value) || v$value == "") v$value <- "\uFEFF"
-        if (v$visible) knit_print(v$value, inline = TRUE, options = opts_chunk$get())
+        if (v$visible) {
+          knit_print(v$value, inline = TRUE, options = opts_chunk$get())
+        }
       },
       inline = function(x) {
         id <- paste0("inline-", inline_counter())
         paste0("[", x, "]{custom-style=\"", id, "\"}")
       },
       chunk = function(x, options) {
-        if (isFALSE(options$redoc_include)) {
-          # Special output for empty chunks
-          # TODO: move empty chunk handler to a lua filter to make more general
-          # TODO: test if we need special handling for other no-result chunks
-          paste0(
-            "```{=openxml}\n<w:p><w:pPr><w:pStyle w:val=\"chunk-",
-            options$label,
-            "\"/><w:rPr><w:vanish/></w:rPr></w:pPr></w:p>\n```"
-          )
-        } else {
-          paste0(
-            "::: {custom-style=\"chunk-", options$label, "\"}\n",
-            x,
-            "\n:::"
-          )
-        }
+        if (isFALSE(options$redoc_include)) x <- ""
+        paste0(
+          "::: {custom-style=\"chunk-", options$label, "\"}\n",
+          x, "\n:::"
+        )
       },
       document = function(x) {
+        chunkfile <- opts_knit$get("chunkfile")
         x <- preprocess_criticmarkup(x, author = comment_author)
+        x <- wrap_yaml(x, read.csv(chunkfile, stringsAsFactors = FALSE))
         x
       }
     ),
@@ -77,31 +79,34 @@ rdocx_reversible <- function(highlight_outputs = FALSE, wrap = 80,
     )
   )
 
-  # Pre-parse, name inline chunks and save chunk contents to lookup table
-  out$pre_knit <- function(input, ...) {
-    utils::write.table(parse_rmd_to_df(input),
-      file = paste0(file_path_sans_ext(input), ".chunks.csv"),
-      sep = ",", row.names = FALSE, qmethod = "double"
+  md_extensions <- c("+smart", "+fenced_divs", "+bracketed_spans")
+
+  out$pandoc <- rmarkdown::pandoc_options(
+    to = "docx+styles",
+    from = rmarkdown::from_rmarkdown(extensions = md_extensions),
+    args = c(
+      "--lua-filter",
+      system.file("protect-empty-divs.lua", package = "redoc")
     )
-    inline_counter(reset = TRUE)
-    chunk_counter(reset = TRUE)
-  }
+  )
 
   out$post_processor <-
     function(metadata, input_file, output_file, clean, verbose) {
       docx <- read_docx(output_file)
       rmd_input <- get(envir = parent.frame(n = 1), "original_input")
-      chunkfile <- paste0(file_path_sans_ext(rmd_input), ".chunks.csv")
+      chunkfile <- opts_knit$get("chunkfile")
+      mdfile <- paste0(basename(file_path_sans_ext(rmd_input)), ".md")
+
       tmpd <- tempdir()
 
       orig_rmd <- file.path(
-        tmpd,
-        paste0(
-          file_path_sans_ext(basename(rmd_input)),
-          ".original.Rmd"
-        )
+        tmpd, paste0(file_path_sans_ext(basename(rmd_input)), ".original.Rmd")
+      )
+      orig_md <- file.path(
+        tmpd, paste0(file_path_sans_ext(file_path_sans_ext(basename(input_file))), ".md")
       )
       file.copy(rmd_input, orig_rmd)
+      file.copy(input_file, orig_md)
 
       roundtrip_rmd <- undoc(
         output_file,
@@ -113,6 +118,7 @@ rdocx_reversible <- function(highlight_outputs = FALSE, wrap = 80,
       docx <- embed_file(docx, chunkfile)
       docx <- embed_file(docx, orig_rmd)
       docx <- embed_file(docx, roundtrip_rmd)
+      docx <- embed_file(docx, orig_md)
 
       if (highlight_outputs) {
         docx <- highlight_output_styles(docx)
