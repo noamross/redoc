@@ -24,7 +24,7 @@
 #' @export
 rdocx_reversible <- function(highlight_outputs = FALSE, wrap = 80,
                              margins = NULL, line_numbers = NULL,
-                             comment_author = NULL, ...) {
+                             comment_author = NULL, keep_md = FALSE, ...) {
   out <- word_document(...)
 
 
@@ -33,8 +33,8 @@ rdocx_reversible <- function(highlight_outputs = FALSE, wrap = 80,
     chunkfile <- paste0(file_path_sans_ext(input), ".chunks.csv")
     knitr::opts_knit$set(chunkfile = chunkfile)
     utils::write.table(parse_rmd_to_df(input),
-      file = chunkfile,
-      sep = ",", row.names = FALSE, qmethod = "double"
+                       file = chunkfile,
+                       sep = ",", row.names = FALSE, qmethod = "double"
     )
     inline_counter(reset = TRUE)
     chunk_counter(reset = TRUE)
@@ -115,9 +115,9 @@ rdocx_reversible <- function(highlight_outputs = FALSE, wrap = 80,
         orig_chunkfile = chunkfile
       )
 
+      docx <- embed_file(docx, roundtrip_rmd)
       docx <- embed_file(docx, chunkfile)
       docx <- embed_file(docx, orig_rmd)
-      docx <- embed_file(docx, roundtrip_rmd)
       docx <- embed_file(docx, orig_md)
 
       if (highlight_outputs) {
@@ -141,5 +141,6 @@ rdocx_reversible <- function(highlight_outputs = FALSE, wrap = 80,
       }
       return(output_file)
     }
+  out$keep_md <- keep_md
   out
 }

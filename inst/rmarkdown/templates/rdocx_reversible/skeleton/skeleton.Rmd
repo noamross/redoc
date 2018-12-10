@@ -7,10 +7,7 @@ output:
   redoc::rdocx_reversible:
     keep_md: TRUE
     highlight_outputs: TRUE
-    margins: 0.5
-    line_numbers:
-      start: 2
-      by: 3
+
 ---
 
 ```{r setup, include = FALSE}

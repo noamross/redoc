@@ -17,147 +17,58 @@
 #' @return A character vector of markdown, split by lines
 #' @noRd
 #' @importFrom whoami fullname username
-#' @importFrom stringi stri_opts_regex stri_match_all_regex stri_replace_first_fixed
+#' @importFrom stringi stri_replace_all_regex stri_replace_first_fixed stri_join
+#' stri_extract_all_regex
 preprocess_criticmarkup <- function(input_lines, author = NULL) {
-#This could be sped up.  Remember the stringi `dotall` option to search across lines.
+
   if (is.null(author)) {
     author <- fullname(fallback = username(fallback = "R User"))
   }
 
-  md <- paste(input_lines, collapse = "\n")
-  comment_counter(reset = TRUE)
+  md <- oneline(input_lines)
 
-  md <- replace_all_regex_with_fun_on_matches(
-    md,
-    regex = "\\{\\+\\+([\\S\\s]*?)\\+\\+\\}",
-    render_pandoc_add,
-    author
+  captures <- c(
+    insertion = "(?s)\\{\\+\\+(.*?)\\+\\+\\}",
+    deletion = "(?s)\\{--(.*?)--\\}",
+    substitution = "\\{~~(.*?)~>(.*?)~~\\}",
+    highlight = "(?s)\\{==(.*?)==\\}\\{>>(.*?)<<\\}\\[\\[(\\d+)\\]\\]",
+    comment = "(?s)\\{>>(.*?)<<\\}\\[\\[(\\d+)\\]\\]"
   )
 
-  md <- replace_all_regex_with_fun_on_matches(
-    md,
-    regex = "\\{--(.*?)--\\}",
-    render_pandoc_delete,
-    author
-  )
-
-  md <- replace_all_regex_with_fun_on_matches(
-    md,
-    regex = "\\{~~(.*?)~>(.*?)~~\\}",
-    render_pandoc_substitution,
-    author
-  )
-
-  md <- replace_all_regex_with_fun_on_matches(
-    md,
-    regex = "\\{==(.*?)==\\}\\{>>(.*?)<<\\}",
-    render_pandoc_highlight,
-    author
-  )
-
-  md <- replace_all_regex_with_fun_on_matches(
-    md,
-    regex = "\\{>>(.*?)<<\\}",
-    render_pandoc_comment,
-    author
-  )
-
-  # md <- gsub(md, pattern = "\\{\\+\\+(.*?)\\+\\+\\}",
-  #              replacement = render_pandoc_add("\\1", author))
-  # md <- gsub(md, pattern = "\\{--(.*?)--\\}",
-  #              replacement = render_pandoc_delete("\\1", author))
-  # md <- gsub(md, pattern = "\\{~~(.*?)~>(.*?)~~\\}",
-  #              replacement = render_pandoc_substitution("\\1", "\\2", author))
-  # md <- gsub(md, pattern = "\\{==(.*?)==\\}\\{>>(.*?)<<\\}",
-  #              replacement = render_pandoc_highlight("\\1", "\\2", author))
-  # md <- gsub(md, pattern = "\\{>>(.*?)<<\\}",
-  #              replacement = render_pandoc_comment("\\1", author))
-
-  comment_counter(reset = TRUE)
-
-  strsplit(md, "\n", fixed = TRUE)[[1]]
-}
-
-replace_all_regex_with_fun_on_matches <-
-  function(md, regex, render_fn, author) {
-    matches <- stri_match_all_regex(
-      str = md,
-      pattern = regex,
-      omit_no_match = TRUE,
-      opts_regex = stri_opts_regex(multiline = TRUE))[[1]]
-
-    for (i in seq_len(nrow(matches))) {
-      md <- stri_replace_first_fixed(
-        md,
-        matches[i, 1],
-        render_fn(matches[i, -1], author)
-      )
-    }
-    return(md)
+  insertions <- stri_extract_all_regex(md, captures["insertion"])[[1]]
+  deletions <- stri_extract_all_regex(md, captures["deletion"])[[1]]
+  comments <- stri_extract_all_regex(md, "(?s)\\{>>(.*?)<<\\}")[[1]]
+  #Mark paragraph breaks in insertions and deletions
+  for (i in insertions) {
+    md <- stri_replace_first_fixed(md, i,
+      stri_replace_all_regex(i, "\n{2,}",
+                             "++}[]{.paragraph-insertion}\n\n{++"))
+  }
+  for (i in deletions) {
+    md <- stri_replace_first_fixed(md, i,
+      stri_replace_all_regex(i, "\n{2,}",
+                             "++}[]{.paragraph-insertion}\n\n{++")
+    )
+  }
+  #Number comments
+  for (i in seq_along(comments)) {
+    md <- stri_replace_first_fixed(md, comments[i],
+                                   stri_join(comments[i], "[[", i, "]]"))
   }
 
-.comenv <- new.env(parent = emptyenv())
-comment_counter <- function(reset = FALSE, init_comment = 1) {
-  if (reset) {
-    return(.comenv$n <- init_comment)
-  }
-  .comenv$n <- .comenv$n + 1L
-  .comenv$n - 1L
-}
-
-render_pandoc_add <- function(text, author) {
-  texts <- strsplit(text, "\n{2,}")[[1]]
-  texts <- lapply(texts, function(text) {
-    paste0("[", text, "]{.insertion author=\"", author, "\"}")
-  })
-  if (length(texts) > 1) {
-    texts[-length(texts)] <-
-      paste0(
-        texts[-length(texts)],
-        "[]{.paragraph-insertion author=\"", author, "\"}"
-      )
-    texts <- paste0(texts, collapse = "\n\n")
-  }
-  texts
-}
-
-render_pandoc_delete <- function(text, author) {
-  texts <- strsplit(text, "\n{2,}")[[1]]
-  texts <- lapply(texts, function(text) {
-    paste0("[", text, "]{.deletion author=\"", author, "\"}")
-  })
-  if (length(texts) > 1) {
-    texts[-length(texts)] <-
-      paste0(
-        texts[-length(texts)],
-        "[]{.paragraph-deletion author=\"", author, "\"}"
-      )
-    texts <- paste0(texts, collapse = "\n\n")
-  }
-  texts
-}
-
-render_pandoc_substitution <- function(text, author) {
-  paste0(
-    "[", text[1], "]{.deletion author=\"", author, "\"}",
-    "[", text[2], "]{.insertion author=\"", author, "\"}"
+  replacements <- c(
+    insertion = stri_join("[$1]{.insertion author=\"", author, "\"}"),
+    deletion = stri_join("[$1]{.deletion author=\"", author, "\"}"),
+    substitution = stri_join("[$1]{.deletion author=\"", author, "\"}",
+                             "[$2]{.insertion author=\"", author, "\"}"),
+    highlight = stri_join("[$2]{.comment-start id=\"$3\" author=\"", author,
+                          "\"}$1[]{.comment-end id=\"$3\"}"),
+    comment = stri_join("[$1]{.comment-start id=\"$2\" author=\"", author,
+                        "\"}[]{.comment-end id=\"$2\"}")
   )
-}
 
-render_pandoc_comment <- function(comment, author) {
-  id <- comment_counter()
-  paste0(
-    "[", comment, "]{.comment-start id=\"", id,
-    "\" author=\"", author, "\"}[]{.comment-end id=\"", id, "\"}"
-  )
-}
-
-render_pandoc_highlight <- function(text, author) {
-  id <- comment_counter()
-  paste0(
-    "[", text[2], "]{.comment-start id=\"", id,
-    "\" author=\"", author, "\"}", text[1], "[]{.comment-end id=\"", id, "\"}"
-  )
+  md <- stri_replace_all_regex(md, captures, replacements,
+                               vectorize_all = FALSE)
 }
 
 #' @importFrom stringi stri_replace_first_fixed
