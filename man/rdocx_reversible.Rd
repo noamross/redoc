@@ -5,7 +5,8 @@
 \title{Convert to a Reversible Microsoft Word Document}
 \usage{
 rdocx_reversible(highlight_outputs = FALSE, wrap = 80,
-  margins = NULL, line_numbers = NULL, comment_author = NULL, ...)
+  margins = NULL, line_numbers = NULL, comment_author = NULL,
+  keep_md = FALSE, ...)
 }
 \arguments{
 \item{highlight_outputs}{whether to highlight outputs from chunks and inline
