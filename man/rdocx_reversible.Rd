@@ -25,6 +25,8 @@ with values, \code{top}, \code{bottom}, \code{left}, \code{right}, \code{gutter}
 \item{comment_author}{The name to affilliate any Critic Markup tracked
 changes with}
 
+\item{keep_md}{whether to keep the markdown document}
+
 \item{...}{other parameters passed to \code{\link[rmarkdown:word_document]{rmarkdown::word_document()}}}
 }
 \description{

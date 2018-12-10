@@ -44,7 +44,7 @@ Alternate data may be provided via orig_chunkfile or orig_docx")
   if (!overwrite && file.exists(to)) stop(to, " exists and overwrite = FALSE")
 
   if (!is.null(orig_chunkfile)) {
-    chunk_df <- utils::read.csv(orig_chunkfile, stringsAsFactors = FALSE)
+    chunk_df <- readcsv(orig_chunkfile)
   } else if (!is.null(orig_docx)) {
     chunk_df <- redoc_extract_chunks(orig_docx)
   } else {
@@ -109,7 +109,7 @@ redoc_extract_chunks <- function(docx) {
     pattern = "\\.chunks\\.csv$",
     full.names = TRUE
   )
-  chunk_df <- utils::read.csv(chunkfile, stringsAsFactors = FALSE)
+  chunk_df <- readcsv(chunkfile)
   chunk_df
 }
 

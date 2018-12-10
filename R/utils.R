@@ -11,3 +11,7 @@ reline <- function(...) {
 escape_captures <- function(str) {
   stri_replace_all_fixed(str, "$", "\\$")
 }
+
+readcsv <- function(x) {
+  utils::read.csv(x, stringsAsFactors = FALSE)
+}

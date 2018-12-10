@@ -14,6 +14,7 @@
 #'   `by`, `restart`, and `distance`
 #' @param comment_author The name to affilliate any Critic Markup tracked
 #'   changes with
+#' @param keep_md whether to keep the markdown document
 #' @param ... other parameters passed to [rmarkdown::word_document()]
 #' @importFrom rmarkdown output_format word_document
 #' @importFrom officer read_docx
@@ -64,7 +65,7 @@ rdocx_reversible <- function(highlight_outputs = FALSE, wrap = 80,
       document = function(x) {
         chunkfile <- opts_knit$get("chunkfile")
         x <- preprocess_criticmarkup(x, author = comment_author)
-        x <- wrap_yaml(x, read.csv(chunkfile, stringsAsFactors = FALSE))
+        x <- wrap_yaml(x, readcsv(chunkfile))
         x
       }
     ),
@@ -82,7 +83,7 @@ rdocx_reversible <- function(highlight_outputs = FALSE, wrap = 80,
   md_extensions <- c("+smart", "+fenced_divs", "+bracketed_spans")
 
   out$pandoc <- rmarkdown::pandoc_options(
-    to = "docx+styles",
+    to = "docx",
     from = rmarkdown::from_rmarkdown(extensions = md_extensions),
     args = c(
       "--lua-filter",
