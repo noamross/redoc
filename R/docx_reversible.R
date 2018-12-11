@@ -87,7 +87,7 @@ rdocx_reversible <- function(highlight_outputs = FALSE, wrap = 80,
     from = rmarkdown::from_rmarkdown(extensions = md_extensions),
     args = c(
       "--lua-filter",
-      system.file("protect-empty-divs.lua", package = "redoc")
+      system.file("protect-empty.lua", package = "redoc")
     )
   )
 
