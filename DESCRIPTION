@@ -15,7 +15,9 @@ URL: https://github.com/noamross/redoc
 BugReports: https://github.com/noamross/redoc/issues
 Suggests: 
     testthat,
-    roxygen2
+    roxygen2,
+    covr,
+    pkgdown
 RoxygenNote: 6.1.1
 Imports: 
     rmarkdown,
@@ -30,5 +32,8 @@ Imports:
     backports,
     whoami,
     yaml
+Remotes:
+    r-lib/pkgdown,
+    r-lib/covr
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
