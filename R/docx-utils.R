@@ -1,7 +1,7 @@
 #' Is this a reversible document?
 #'
-#' A function for testing is the file can be un-knit.  If not, un-knitting
-#' may be attempted with the `orig_chunkfile` or `orig_docx` files in [undoc()].
+#' A function for testing is the file can be de-rendered.  If not, un-knitting
+#' may be attempted with the `orig_chunkfile` or `orig_docx` files in [dedoc()].
 #'
 #' @param docx A path to a `.docx` file or an `rdocx` object produced by
 #' [officer::read_docx()]
@@ -11,8 +11,9 @@
 #' is_redoc(redoc_example_docx())
 is_redoc <- function(docx) {
   docx <- to_docx(docx)
-  chunkfile <- list.files(docx$package_dir, pattern = "\\.chunks\\.csv$")
-  return(as.logical(length(chunkfile)))
+  codefile <- list.files(file.path(docx$package_dir, "redoc"),
+                          pattern = "\\codelist\\.yml$")
+  return(as.logical(length(codefile)))
 }
 
 #' @importFrom officer read_docx
@@ -30,20 +31,31 @@ assert_redoc <- function(docx) {
   }
 }
 
-#' Path to an example R Markdown file
+#' Files for examples and testing
+#'
 #' @export
+#' @rdname redoc_examples
+#' @aliases redoc_examples
 #' @examples
 #' redoc_example_rmd()
+#' redoc_example_docx()
+#' redoc_example_edited_docx()
 redoc_example_rmd <- function() {
-  system.file("rmarkdown", "templates", "rdocx_reversible", "skeleton",
-              "skeleton.Rmd", package = "redoc")
+  system.file("examples", "example.Rmd", package = "redoc")
 }
 
-#' Path to an example Revserible Microsoft Word file
 #' @export
-#' @examples
-#' redoc_example_docx()
+#' @rdname redoc_examples
+#' @aliases redoc_examples
 redoc_example_docx <- function() {
-  system.file("rmarkdown", "templates", "rdocx_reversible", "skeleton",
-              "skeleton.docx", package = "redoc")
+  system.file("examples", "example.docx", package = "redoc")
+
+}
+
+#' @export
+#' @rdname redoc_examples
+#' @aliases redoc_examples
+redoc_example_edited_docx <- function() {
+  system.file("examples", "example-edited.docx", package = "redoc")
+
 }
