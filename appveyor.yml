@@ -20,10 +20,7 @@ cache:
 
 # Attempt to update pandoc
 before_test:
-  - ps: >-
-      if (-Not (Test-Path "C:\Program Files (x86)\Pandoc\")) {
-        cinst pandoc
-      }
+  - ps: cinst pandoc --version 2.5 --force
   - ps: $env:Path += ";C:\Program Files (x86)\Pandoc\"
   - pandoc -v
 
