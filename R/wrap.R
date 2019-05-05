@@ -48,25 +48,30 @@ hide_chunks <- function(rmd) {
   label <- "codechunk"
 
   counter <- 0
-  chunks <- lapply(
-    stri_extract_all_regex(rmd$text, chunk_regex)[[1]],
-    function(x) {
-      counter <<- counter + 1
-      list(
-        code = x,
-        label = label,
-        type = "block",
-        name = stri_join(prefix, label, "-", counter)
+  chunk_text <- stri_extract_all_regex(rmd$text, chunk_regex)[[1]]
+  if (length(chunk_text) == 1 && is.na(chunk_text)) {
+    chunks <- NULL
+  } else {
+    chunks <- lapply(
+      stri_extract_all_regex(rmd$text, chunk_regex)[[1]],
+      function(x) {
+        counter <<- counter + 1
+        list(
+          code = x,
+          label = label,
+          type = "block",
+          name = stri_join(prefix, label, "-", counter)
+        )
+      }
+    )
+    for (i in seq_along(chunks)) {
+      chunks[[i]]$lineno <- stri_lineno_first_fixed(rmd$text, chunks[[i]]$code)
+      rmd$text <- stri_replace_first_fixed(
+        rmd$text,
+        chunks[[i]]$code,
+        brkt(chunks[[i]]$name)
       )
     }
-  )
-  for (i in seq_along(chunks)) {
-    chunks[[i]]$lineno <- stri_lineno_first_fixed(rmd$text, chunks[[i]]$code)
-    rmd$text <- stri_replace_first_fixed(
-      rmd$text,
-      chunks[[i]]$code,
-      brkt(chunks[[i]]$name)
-    )
   }
   rmd$code <- c(rmd$code, chunks)
   rmd
@@ -77,26 +82,31 @@ hide_inlines <- function(rmd) {
   label <- "inlinecode"
 
   counter <- 0
-  inlines <- lapply(
-    stri_extract_all_regex(rmd$text, inline_regex)[[1]],
-    function(x) {
-      counter <<- counter + 1
-      list(
-        code = x,
-        label = label,
-        type = "inline",
-        name = stri_join(prefix, label, "-", counter)
+  inline_text <- stri_extract_all_regex(rmd$text, inline_regex)[[1]]
+  if (length(inline_text) == 1 && is.na(inline_text)) {
+    inlines <- NULL
+  } else {
+    inlines <- lapply(
+      inline_text,
+      function(x) {
+        counter <<- counter + 1
+        list(
+          code = x,
+          label = label,
+          type = "inline",
+          name = stri_join(prefix, label, "-", counter)
+        )
+      }
+    )
+
+    for (i in seq_along(inlines)) {
+      inlines[[i]]$lineno <- stri_lineno_first_fixed(rmd$text, inlines[[i]]$code)
+      rmd$text <- stri_replace_first_fixed(
+        rmd$text,
+        inlines[[i]]$code,
+        brkt(inlines[[i]]$name)
       )
     }
-  )
-
-  for (i in seq_along(inlines)) {
-    inlines[[i]]$lineno <- stri_lineno_first_fixed(rmd$text, inlines[[i]]$code)
-    rmd$text <- stri_replace_first_fixed(
-      rmd$text,
-      inlines[[i]]$code,
-      brkt(inlines[[i]]$name)
-    )
   }
   rmd$code <- c(rmd$code, inlines)
   rmd
@@ -185,9 +195,9 @@ unhide_yaml <- function(rmd) {
   yamls <- list_subset(rmd$code, label = "yaml")
   if (length(yamls)) {
     rmd$text <- stri_replace_all_fixed(rmd$text,
-      brkt(subel(yamls, "name")),
-      divwrap(subel(yamls, "code"), subel(yamls, "name")),
-      vectorize_all = FALSE
+                                       brkt(subel(yamls, "name")),
+                                       divwrap(subel(yamls, "code"), subel(yamls, "name")),
+                                       vectorize_all = FALSE
     )
   }
 
@@ -203,27 +213,31 @@ unhide_yaml <- function(rmd) {
 #' @importFrom stringi stri_detect_fixed stri_replace_all_fixed
 unhide_inlines <- function(rmd) {
   inlines <- list_subset(rmd$code, label = "inlinecode")
-  rmd$text <- stri_replace_all_fixed(rmd$text,
-    brkt(subel(inlines, "name")),
-    spanwrap(
-      subel(inlines, "code"),
-      subel(inlines, "name")
-    ),
-    vectorize_all = FALSE
-  )
+  if (length(inlines)) {
+    rmd$text <- stri_replace_all_fixed(rmd$text,
+                                       brkt(subel(inlines, "name")),
+                                       spanwrap(
+                                         subel(inlines, "code"),
+                                         subel(inlines, "name")
+                                       ),
+                                       vectorize_all = FALSE
+    )
+  }
   rmd
 }
 
 #' @importFrom stringi stri_detect_fixed stri_replace_all_fixed
 unhide_chunks <- function(rmd) {
   chunks <- list_subset(rmd$code, label = "codechunk")
-  rmd$text <- stri_replace_all_fixed(rmd$text,
-    brkt(subel(chunks, "name")),
-    divwrap(
-      subel(chunks, "code"),
-      subel(chunks, "name")
-    ),
-    vectorize_all = FALSE
-  )
+  if (length(chunks)) {
+    rmd$text <- stri_replace_all_fixed(rmd$text,
+                                       brkt(subel(chunks, "name")),
+                                       divwrap(
+                                         subel(chunks, "code"),
+                                         subel(chunks, "name")
+                                       ),
+                                       vectorize_all = FALSE
+    )
+  }
   rmd
 }

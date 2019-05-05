@@ -56,7 +56,8 @@ Returning markdown only. Alternate data may be provided via `orig_codefile or `o
     md_only <- FALSE
   }
 
-  stopifnot(track_changes %in% c("comments_only", "criticmarkup", "accept", "reject", "all"))
+  stopifnot(track_changes %in%
+              c("comments_only", "criticmarkup", "accept", "reject", "all"))
   stopifnot(block_missing %in% c("comment", "omit", "restore"))
   stopifnot(inline_missing %in% c("comment", "omit", "restore"))
 
@@ -127,9 +128,9 @@ redoc_extract_rmd <- function(docx, type = c("original", "roundtrip"),
     full.names = TRUE
   )
   if (type == "original") {
-    rmdfile <- stri_subset_regex(rmdfiles, "(?:\\.preprocessed\\.|\\.roundtrip\\.)",
-      negate = TRUE
-    )[1]
+    rmdfile <- stri_subset_regex(rmdfiles,
+                                 "(?:\\.preprocessed\\.|\\.roundtrip\\.)",
+                                 negate = TRUE)[1]
   } else if (type == "roundtrip") {
     rmdfile <- stri_subset_fixed(rmdfiles, ".roundtrip.")
   }
@@ -155,6 +156,7 @@ redoc_extract_code <- function(docx) {
 
 #' @importFrom stringi stri_replace_first_fixed stri_detect_fixed stri_join
 restore_code <- function(md, codelist, missing) {
+  if (!length(codelist)) return(md)
   codelist <- sort_by(codelist, "lineno")
   offset <- attr(md, "yaml_offset") %||% 0
 
@@ -178,22 +180,18 @@ restore_code <- function(md, codelist, missing) {
           )
         } else {
           restorecode <- stri_join(
-            "<!-- originally line ", item$lineno, "\n",
-            item$code, "\n -->\n"
+            "\n<!-- originally line ", item$lineno, "\n",
+            item$code, "\n-->\n"
           )
         }
       } else {
         restorecode <- stri_join(item$code, "\n")
       }
-      restoreline <- get_prior_empty_line_loc(
-        md,
-        max(last_detected_end, item$lineno + offset)
-      )
       md <- insert_at_prior_empty_line(
         md, restorecode,
-        item$lineno + offset
+        max(last_detected_end, item$lineno + offset)
       )
-      offset <- offset + 2
+      offset <- offset + 3
     }
   }
   return(md)
@@ -289,7 +287,8 @@ convert_docx_to_md <- function(docx,
       "--track-changes=all",
       paste0(
         "--lua-filter=",
-        system.file("lua-filters", "criticmarkup-commentsonly.lua", package = "redoc")
+        system.file("lua-filters", "criticmarkup-commentsonly.lua",
+                    package = "redoc")
       )
     )
   } else {
@@ -311,7 +310,7 @@ convert_docx_to_md <- function(docx,
     filter_opts <- character(0)
     from_format <- "docx"
   }
-  other_opts <- c("--standalone") # note adding metadata args for additional title block elements here might work (possibly as title block variable), though can't control order?
+  other_opts <- c("--standalone")
   opts <- c(filter_opts, track_opts, wrap_opts, other_opts)
   md_tmp <- tempfile(fileext = ".md")
   pandoc_convert(docx,
