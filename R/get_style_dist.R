@@ -24,8 +24,9 @@ get_style_distribution <- function(docx) {
 }
 
 #' @importFrom stringi stri_c
-get_style_property <- function(docx, style_id, sub = c("", "pPr", "rPr"), el, attr = "val") {
+get_style_property <- function(docx, style_id, sub = c("", "pPr", "rPr"),
+                               el, attr = "val") {
   docx <- "custom-reference.docx"
   sxml <- read_xml(unz(docx, filename = "word/styles.xml"))
-  st <- xml_find_all(sxml, stri_c("/w:styles/w:style[@w:styleId=\"", style_id, "\"]"))
+  xml_find_all(sxml, stri_c("/w:styles/w:style[@w:styleId=\"", style_id, "\"]"))
 }

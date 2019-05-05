@@ -71,7 +71,7 @@
 #'     type = "inline")
 
 make_wrapper <- function(label, regex, type  = c("block", "inline")) {
-  type = match.arg(type)
+  type <- match.arg(type)
   if (type == "block")
     container_wrapper <- divwrap
   else if (type == "inline")
@@ -152,4 +152,3 @@ citationwrap <- make_wrapper(
   label = "citation",
   regex = "(?:@\\w+|\\[.*?-?@\\w+.*?\\](?!\\[\\(\\{))",
   type = "inline")
-
