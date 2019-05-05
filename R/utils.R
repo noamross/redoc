@@ -20,36 +20,45 @@ readfile <- function(x) {
 
 file_with_meta_ext <- function(file, meta_ext, ext = tools::file_ext(file)) {
   paste(tools::file_path_sans_ext(file),
-        ".", meta_ext, ".", ext, sep = "")
+    ".", meta_ext, ".", ext,
+    sep = ""
+  )
 }
 
 get_parent_env_with <- function(var_names) {
   for (frame in rev(sys.frames())[-1]) {
     present <- all(vapply(
-      var_names, exists, logical(1), envir = frame, inherits = FALSE
+      var_names, exists, logical(1),
+      envir = frame, inherits = FALSE
     ))
     if (present) return(frame)
   }
-  stop("No parent environment found with ",
-       paste(var_names, collapse = ", "))
+  stop(
+    "No parent environment found with ",
+    paste(var_names, collapse = ", ")
+  )
 }
 
 add_intermediates <- function(new_intermediates) {
-  render_env <- get_parent_env_with(c("intermediates", "intermediates_loc",
-                                      "knit_input"))
+  render_env <- get_parent_env_with(c(
+    "intermediates", "intermediates_loc",
+    "knit_input"
+  ))
   old_intermediates <- get("intermediates", envir = render_env)
   assign("intermediates",
-         c(old_intermediates, new_intermediates),
-         envir = render_env)
+    c(old_intermediates, new_intermediates),
+    envir = render_env
+  )
 }
 
 list_subset <- function(list, ...) {
   filters <- list(...)
   for (i in seq_along(filters)) {
     list <- Filter(list,
-                   f = function(x) {
-                     x[[names(filters)[i]]] == filters[[i]]
-                   })
+      f = function(x) {
+        x[[names(filters)[i]]] == filters[[i]]
+      }
+    )
   }
   return(list)
 }
@@ -70,22 +79,25 @@ list_subset <- function(list, ...) {
 #' ast <- pandoc_ast(redoc_example_docx())
 pandoc_ast <- function(file, from = NULL, tolist = TRUE) {
   tmp <- tempfile()
-  if (is.null(from) && tools::file_ext(file) == "Rmd") from = "markdown"
-  rmarkdown::pandoc_convert(input = normalizePath(file),
-                            to = "json",
-                            from = from,
-                            output = tmp)
-  if (tolist)
+  if (is.null(from) && tools::file_ext(file) == "Rmd") from <- "markdown"
+  rmarkdown::pandoc_convert(
+    input = normalizePath(file),
+    to = "json",
+    from = from,
+    output = tmp
+  )
+  if (tolist) {
     return(jsonlite::fromJSON(tmp, simplifyVector = FALSE))
-  else
+  } else {
     return(readfile(tmp))
+  }
 }
 
 #' @importFrom stringi stri_subset_regex
 #' @importFrom utils unzip
 get_files_from_zip <- function(zipfile, regex, exdir = ".",
                                junkpaths = TRUE, overwrite = TRUE) {
-  files <- unzip(zipfile, list  = TRUE)$Name
+  files <- unzip(zipfile, list = TRUE)$Name
   files <- stri_subset_regex(files, regex)
   unzip(zipfile, files = files, exdir = exdir, overwrite = overwrite)
   return(file.path(exdir, basename(zipfile)))
@@ -95,10 +107,11 @@ get_files_from_zip <- function(zipfile, regex, exdir = ".",
 #' @importFrom utils unzip
 get_con_from_zip <- function(zipfile, regex, open = "",
                              encoding = getOption("encoding")) {
-  files <- utils::unzip(zipfile, list  = TRUE)$Name
+  files <- utils::unzip(zipfile, list = TRUE)$Name
   file <- stri_subset_regex(files, regex)
-  if (length(file) != 1L)
+  if (length(file) != 1L) {
     stop("regex matches ", length(file), " files. Only 1 allowed")
+  }
   unz(zipfile, files, open, encoding)
 }
 

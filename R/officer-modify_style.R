@@ -4,7 +4,7 @@
 #' @importFrom xml2 read_xml xml_find_first xml_add_child xml_set_attrs
 #'   write_xml
 add_to_style <- function(docx, style_id, name, attrs = NULL, where = c("both", "rPr", "pPr", "top")) {
-  where = match.arg(where)
+  where <- match.arg(where)
   docx <- to_docx(docx)
   name <- prepend_ns(name)
   if (!is.null(attrs)) names(attrs) <- prepend_ns(names(attrs))

@@ -28,13 +28,12 @@ redoc_diff <- function(docx,
                        target = "original",
                        current = "current",
                        track_changes = "comments_only",
-                       block_missing =  "comment",
+                       block_missing = "comment",
                        inline_missing = "omit",
                        wrap = 80,
                        mode = "sidebyside", context = "auto",
                        tar.banner = NULL, cur.banner = NULL,
                        ...) {
-
   stopifnot(target %in% c("original", "roundtrip", "current"))
   stopifnot(current %in% c("original", "roundtrip", "current"))
 
@@ -43,40 +42,45 @@ redoc_diff <- function(docx,
   tmpd <- tempdir()
   comps <- lapply(c(target, current), function(x) {
     switch(x,
-           original = redoc_extract_rmd(docx,
-                                        type = "original", dir = tmpd,
-                                        overwrite = TRUE
-           ),
-           roundtrip = redoc_extract_rmd(docx,
-                                         type = "roundtrip", dir = tmpd,
-                                         overwrite = TRUE
-           ),
-           current = dedoc(docx, to = "current.Rmd", dir = tmpd,
-                           track_changes = track_changes,
-                           inline_missing = inline_missing,
-                           wrap = wrap, overwrite = TRUE)
+      original = redoc_extract_rmd(docx,
+        type = "original", dir = tmpd,
+        overwrite = TRUE
+      ),
+      roundtrip = redoc_extract_rmd(docx,
+        type = "roundtrip", dir = tmpd,
+        overwrite = TRUE
+      ),
+      current = dedoc(docx,
+        to = "current.Rmd", dir = tmpd,
+        track_changes = track_changes,
+        inline_missing = inline_missing,
+        wrap = wrap, overwrite = TRUE
+      )
     )
   })
 
   labs <- lapply(c(target, current), function(x) {
     switch(x,
-           original = "Original R Markdown",
-           roundtrip = "Original R Markdown (roundtripped)",
-           current = "Current Word Document"
+      original = "Original R Markdown",
+      roundtrip = "Original R Markdown (roundtripped)",
+      current = "Current Word Document"
     )
   })
 
   if (is.null(tar.banner)) tar.banner <- labs[[1]]
   if (is.null(tar.banner)) tar.banner <- labs[[2]]
 
-  diff <- diffFile(target = comps[[1]], comps[[2]],
-                   mode = mode, context = context,
-                   tar.banner = labs[[1]], cur.banner = labs[[2]],
-                   pager = list(file.path = tempfile(fileext = ".html")),
-                   ...)
+  diff <- diffFile(
+    target = comps[[1]], comps[[2]],
+    mode = mode, context = context,
+    tar.banner = labs[[1]], cur.banner = labs[[2]],
+    pager = list(file.path = tempfile(fileext = ".html")),
+    ...
+  )
 
-  #Temporary workaround for diffobj issue #133
-  if (isTRUE(all.equal(readLines(comps[[1]]), readLines(comps[[2]]))))
-    diff <- diff[-c(1:2),]
+  # Temporary workaround for diffobj issue #133
+  if (isTRUE(all.equal(readLines(comps[[1]]), readLines(comps[[2]])))) {
+    diff <- diff[-c(1:2), ]
+  }
   return(diff)
 }

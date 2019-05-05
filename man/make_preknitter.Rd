@@ -31,5 +31,4 @@ this pre-processed document.
 \examples{
 
 make_preknitter(wrappers = list(htmlcommentwrap, latexwrap))
-
 }
