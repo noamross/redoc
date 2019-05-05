@@ -29,13 +29,15 @@
 #' @importFrom knitr knit_print knit_global opts_chunk opts_knit
 #' @export
 redoc <- function(highlight_outputs = TRUE, wrap = 80,
-                             margins = NULL, line_numbers = NULL,
-                             comment_author = NULL, keep_md = FALSE,
-                             wrappers = list(htmlcommentwrap, latexwrap,
-                                             rawblockwrap, rawspanwrap,
-                                             cmwrap, citationwrap),
-                             diagnostics = TRUE,
-                             ...) {
+                  margins = NULL, line_numbers = NULL,
+                  comment_author = NULL, keep_md = FALSE,
+                  wrappers = list(
+                    htmlcommentwrap, latexwrap,
+                    rawblockwrap, rawspanwrap,
+                    cmwrap, citationwrap
+                  ),
+                  diagnostics = TRUE,
+                  ...) {
 
   # Make a function to pre-process the Rmd file
 
@@ -46,17 +48,22 @@ redoc <- function(highlight_outputs = TRUE, wrap = 80,
   pandoc <- rmarkdown::pandoc_options(
     to = "docx+empty_paragraphs",
     from = rmarkdown::from_rmarkdown(extensions = md_extensions),
-    args = c("--lua-filter",
-             system.file("lua-filters", "protect-empty.lua",
-                         package = "redoc"))
+    args = c(
+      "--lua-filter",
+      system.file("lua-filters", "protect-empty.lua",
+        package = "redoc"
+      )
+    )
   )
 
   post_processor <-
     function(metadata, input_file, output_file, clean, verbose) {
       docx <- officer::read_docx(output_file)
 
-      render_env <- get_parent_env_with(c("intermediates", "intermediates_loc",
-                                          "knit_input", "original_input"))
+      render_env <- get_parent_env_with(c(
+        "intermediates", "intermediates_loc",
+        "knit_input", "original_input"
+      ))
 
       original_rmd_input <- get("original_input", envir = render_env)
       renv_intermediates <- get("intermediates", envir = render_env)
@@ -68,22 +75,23 @@ redoc <- function(highlight_outputs = TRUE, wrap = 80,
       )
       codelist <- read_yaml(codefile)
 
-        embed_files(docx, c(original_rmd_input, renv_intermediates),
-                    internal_dir = "redoc")
+      embed_files(docx, c(original_rmd_input, renv_intermediates),
+        internal_dir = "redoc"
+      )
 
-        roundtrip_rmd <- dedoc(
-          output_file,
-          to = file_with_meta_ext(
-            basename(original_rmd_input), "roundtrip", "Rmd"
-          ),
-          dir = renv_intermediates_dir,
-          wrap = wrap,
-          overwrite = TRUE,
-          orig_codefile = codefile
-        )
+      roundtrip_rmd <- dedoc(
+        output_file,
+        to = file_with_meta_ext(
+          basename(original_rmd_input), "roundtrip", "Rmd"
+        ),
+        dir = renv_intermediates_dir,
+        wrap = wrap,
+        overwrite = TRUE,
+        orig_codefile = codefile
+      )
 
-        add_intermediates(roundtrip_rmd)
-        embed_files(docx, roundtrip_rmd, internal_dir = "redoc")
+      add_intermediates(roundtrip_rmd)
+      embed_files(docx, roundtrip_rmd, internal_dir = "redoc")
 
       if (diagnostics) {
         diag_file <- renv_intermediates_loc(
@@ -121,21 +129,20 @@ redoc <- function(highlight_outputs = TRUE, wrap = 80,
 }
 
 get_diagnostics <- function() {
-  pandoc_version = as.character(rmarkdown::pandoc_version())
-  session_info = sessioninfo::session_info()
+  pandoc_version <- as.character(rmarkdown::pandoc_version())
+  session_info <- sessioninfo::session_info()
   if (requireNamespace("rstudioapi") &&
-      rstudioapi::isAvailable()) {
+    rstudioapi::isAvailable()) {
     rstudio_info <- rstudioapi::versionInfo()[c("version", "mode")]
   } else {
     rstudio_info <- NULL
   }
   list(
     redoc_version = as.list(
-      session_info$packages[session_info$packages$package == "redoc",]
+      session_info$packages[session_info$packages$package == "redoc", ]
     ),
     pandoc_version = pandoc_version,
     rstudio_info = rstudio_info,
     session_info = session_info
   )
 }
-

@@ -20,18 +20,16 @@
 #' @importFrom yaml write_yaml
 #' @export
 #' @examples
-#'
+#' 
 #' make_preknitter(wrappers = list(htmlcommentwrap, latexwrap))
-#'
 make_preknitter <- function(wrappers = list()) {
-
   pre_knit <- function(input, ...) {
     render_env <- get_parent_env_with("knit_input")
     pre_knit_input <- get("knit_input", envir = render_env)
     intermediates_loc <- get("intermediates_loc", envir = render_env)
 
     rmd_text <- readfile(input)
-    rmd <- wrap_code(rmd_text,  wrappers = wrappers)
+    rmd <- wrap_code(rmd_text, wrappers = wrappers)
 
     codefile <- intermediates_loc(
       file_with_meta_ext(basename(input), "codelist", "yml")

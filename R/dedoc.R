@@ -5,7 +5,7 @@
 #'
 #' @details R chunks may be lost in the editing process if using non-Microsoft
 #'   word processors (e.g. LibreOffice or in copy-and-pasting text into a new document.
-  #'
+#'
 #' @param docx The `.docx`` file to convert
 #' @param to the filename to write the resulting `.Rmd` file.  The default is to
 #'   use the same basename as the docx document
@@ -45,7 +45,7 @@ dedoc <- function(docx, to = NULL, dir = ".",
                   inline_missing = "omit",
                   wrap = 80, overwrite = FALSE,
                   orig_docx = NULL, orig_codefile = NULL,
-                  verbose = FALSE ) {
+                  verbose = FALSE) {
   if (!is_redoc(docx) && is.null(orig_codefile) && is.null(orig_docx)) {
     md_only <- TRUE
     if (verbose) {
@@ -77,10 +77,14 @@ Returning markdown only. Alternate data may be provided via `orig_codefile or `o
   if (!md_only) {
     codelist <- sort_by(codelist, "lineno")
     md <- merge_yaml_headers(md, codelist)
-    md <- restore_code(md, codelist = list_subset(codelist, type = "block"),
-                       missing = block_missing)
-    md <- restore_code(md, codelist = list_subset(codelist, type = "inline"),
-                       missing = inline_missing)
+    md <- restore_code(md,
+      codelist = list_subset(codelist, type = "block"),
+      missing = block_missing
+    )
+    md <- restore_code(md,
+      codelist = list_subset(codelist, type = "inline"),
+      missing = inline_missing
+    )
     md <- remove_extra_newlines(md)
   }
 
@@ -119,13 +123,16 @@ redoc_extract_rmd <- function(docx, type = c("original", "roundtrip"),
   assert_redoc(docx)
   type <- match.arg(type)
   rmdfiles <- list.files(file.path(docx$package_dir, "redoc"),
-                         pattern = "\\.(r|R)md$",
-                         full.names = TRUE)
-  if (type == "original")
+    pattern = "\\.(r|R)md$",
+    full.names = TRUE
+  )
+  if (type == "original") {
     rmdfile <- stri_subset_regex(rmdfiles, "(?:\\.preprocessed\\.|\\.roundtrip\\.)",
-                                 negate = TRUE)[1]
-  else if (type == "roundtrip")
+      negate = TRUE
+    )[1]
+  } else if (type == "roundtrip") {
     rmdfile <- stri_subset_fixed(rmdfiles, ".roundtrip.")
+  }
 
 
   if (is.null(to)) to <- basename(rmdfile)
@@ -139,8 +146,9 @@ redoc_extract_code <- function(docx) {
   docx <- to_docx(docx)
   assert_redoc(docx)
   codefile <- list.files(file.path(docx$package_dir, "redoc"),
-                         pattern = "\\.codelist\\.yml$",
-                         full.names = TRUE)
+    pattern = "\\.codelist\\.yml$",
+    full.names = TRUE
+  )
   codelist <- read_yaml(codefile)
   codelist
 }
@@ -158,25 +166,33 @@ restore_code <- function(md, codelist, missing) {
     if (!is.na(marker_line)) {
       last_detected_end <- marker_line + stri_count_lines(item$code)
       md <- stri_replace_first_fixed(md, marker, item$code,
-                                     vectorize_all = FALSE)
+        vectorize_all = FALSE
+      )
       md <- stri_replace_all_fixed(md, marker, "")
     } else if (missing != "omit") {
       if (missing == "comment") {
         if (item$type == "inline") {
-          restorecode <- stri_join("<!--", item$code, ", originally line ",
-                                   item$lineno, " -->\n")
+          restorecode <- stri_join(
+            "<!--", item$code, ", originally line ",
+            item$lineno, " -->\n"
+          )
         } else {
-          restorecode <- stri_join("<!-- originally line ", item$lineno, "\n",
-                                  item$code, "\n -->\n")
+          restorecode <- stri_join(
+            "<!-- originally line ", item$lineno, "\n",
+            item$code, "\n -->\n"
+          )
         }
       } else {
         restorecode <- stri_join(item$code, "\n")
       }
-      restoreline <- get_prior_empty_line_loc(md,
-                                              max(last_detected_end, item$lineno + offset)
+      restoreline <- get_prior_empty_line_loc(
+        md,
+        max(last_detected_end, item$lineno + offset)
       )
-      md <- insert_at_prior_empty_line(md, restorecode,
-                                       item$lineno + offset)
+      md <- insert_at_prior_empty_line(
+        md, restorecode,
+        item$lineno + offset
+      )
       offset <- offset + 2
     }
   }
@@ -190,8 +206,8 @@ merge_yaml_headers <- function(md, codelist) {
   old_header <- list_subset(codelist, label = "yamlheader")[[1]]
   new_yaml <- stri_extract_first_regex(md, "(?s)\\A\\s*---\\n.*?\\n---\\n")
   if (is.null(old_header) ||
-      all(is.na(old_header)) || length(old_header) == 0) {
-    attr(md, "yaml_offset") <- stri_count_fixed(new_yaml, '\n') - 1
+    all(is.na(old_header)) || length(old_header) == 0) {
+    attr(md, "yaml_offset") <- stri_count_fixed(new_yaml, "\n") - 1
     return(md)
   }
 
@@ -203,12 +219,16 @@ merge_yaml_headers <- function(md, codelist) {
       old_metadata[[name]] <- new_metadata[[name]]
     }
   }
-  merged_yaml <- oneline("---",
-                         stri_replace_last_fixed(
-                           as.yaml(old_metadata,
-                                    handlers = NULL),
-                           "\n", ""),
-                         "---")
+  merged_yaml <- oneline(
+    "---",
+    stri_replace_last_fixed(
+      as.yaml(old_metadata,
+        handlers = NULL
+      ),
+      "\n", ""
+    ),
+    "---"
+  )
   yaml_offset <- stri_count_lines(merged_yaml) -
     stri_count_lines(old_header$code)
 
@@ -286,20 +306,20 @@ convert_docx_to_md <- function(docx,
       "--lua-filter=",
       system.file("lua-filters", "revchunks.lua", package = "redoc")
     ))
-    from_format = "docx+styles+empty_paragraphs"
+    from_format <- "docx+styles+empty_paragraphs"
   } else {
     filter_opts <- character(0)
-    from_format = "docx"
+    from_format <- "docx"
   }
   other_opts <- c("--standalone") # note adding metadata args for additional title block elements here might work (possibly as title block variable), though can't control order?
   opts <- c(filter_opts, track_opts, wrap_opts, other_opts)
   md_tmp <- tempfile(fileext = ".md")
   pandoc_convert(docx,
-                 from = from_format,
-                 to = "markdown",
-                 output = md_tmp,
-                 options = opts,
-                 verbose = verbose
+    from = from_format,
+    to = "markdown",
+    output = md_tmp,
+    options = opts,
+    verbose = verbose
   )
   return(readfile(md_tmp))
 }

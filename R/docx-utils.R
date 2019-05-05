@@ -12,7 +12,8 @@
 is_redoc <- function(docx) {
   docx <- to_docx(docx)
   codefile <- list.files(file.path(docx$package_dir, "redoc"),
-                          pattern = "\\codelist\\.yml$")
+    pattern = "\\codelist\\.yml$"
+  )
   return(as.logical(length(codefile)))
 }
 
@@ -49,7 +50,6 @@ redoc_example_rmd <- function() {
 #' @aliases redoc_examples
 redoc_example_docx <- function() {
   system.file("examples", "example.docx", package = "redoc")
-
 }
 
 #' @export
@@ -57,5 +57,4 @@ redoc_example_docx <- function() {
 #' @aliases redoc_examples
 redoc_example_edited_docx <- function() {
   system.file("examples", "example-edited.docx", package = "redoc")
-
 }

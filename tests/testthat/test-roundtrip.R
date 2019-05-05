@@ -65,7 +65,7 @@ test_that("R Markdown is preserved in the roundtrip", {
     tar.banner = "Original", cur.banner = "Current"
   )
   cat(as.character(dast),
-      file = file.path("artifacts", "diffs", "roundtrip-ast.html"))
+    file = file.path("artifacts", "diffs", "roundtrip-ast.html")
+  )
   expect_equal(orig_ast, roundtrip_ast)
-
 })

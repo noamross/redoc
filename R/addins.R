@@ -34,8 +34,8 @@ roundtrip_active_file <- function() {
     clean = TRUE
   )
   rfile <- redoc_extract_rmd(docfile,
-                             type = "roundtrip", dir = tempdir(),
-                             overwrite = TRUE
+    type = "roundtrip", dir = tempdir(),
+    overwrite = TRUE
   )
   rstudioapi::setDocumentContents(readfile(rfile), active_file$id)
   rstudioapi::setCursorPosition(cursor_position, active_file$id)

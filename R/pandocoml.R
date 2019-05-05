@@ -17,7 +17,8 @@ md_to_openxml <- function(text, simplify = TRUE,
   oml <- (
     xml_find_first(
       read_xml(unz(tmpw, filename = "word/document.xml")),
-      "//w:body")
+      "//w:body"
+    )
   )
   if (remove_bookmarks) {
     xml_remove(xml_find_all(oml, "//w:bookmarkStart | //w:bookmarkEnd"))
