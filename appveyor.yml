@@ -10,6 +10,9 @@ init:
 install:
   ps: Bootstrap
 
+environment:
+  USE_RTOOLS: true
+
 cache:
   - C:\RLibrary
   - C:\Program Files (x86)\Pandoc\
