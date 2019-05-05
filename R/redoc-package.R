@@ -10,7 +10,7 @@
 #' bug reports or other feedback at
 #' <https://github.com/noamross/redoc/issues>
 #'
-#' @name redoc
+#' @name redoc-package
 #' @author Noam Ross \email{noam.ross@gmail.com}
 #' @keywords package
 NULL

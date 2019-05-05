@@ -15,8 +15,11 @@
 tests/testthat/token_file.enc
 ^appveyor\.yml$
 ^README\.Rmd$
+^README\.md$
 ^README-.*\.png$
 ^\.V8history$
 ^TODO\.md$
 ^CONTRIBUTING\.md$
 ^inst/endnote$
+^tests/testthat/artifacts$
+^testing$

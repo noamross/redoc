@@ -1,0 +1,14 @@
+Name: Render and Update
+Description: Render the current Rmd and update it with the round-tripped version
+Binding: roundtrip_active_file
+Interactive: true
+
+Name: Dedoc to active file
+Description: Un-renders a docx file and replaces the current file contents with it
+Binding: dedoc_to_active_file
+Interactive: true
+
+Name: Dedoc to new file
+Description: Un-renders a docx file and opens a new file with its contents
+Binding: dedoc_to_new_file
+Interactive: true

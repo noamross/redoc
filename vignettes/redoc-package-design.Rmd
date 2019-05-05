@@ -1,5 +1,5 @@
 ---
-title: "redoc Package Design"
+title: "redoc Design and Internals"
 author: "Noam Ross"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -24,39 +24,81 @@ workflows are lossy - the compiled document does not contain all of the informat
 in the source.  Also, we are limited by information that can be passed via
 `pandoc` from markdown to final formats and in reverse. 
 
+## Compiling the document: General Approach
+
 To produced a Reversible Reproducible Document in Word (a "redoc"), the
-`rdocx_reversible()` format first pre-parses the source `.Rmd` file.  **knitr**
+`redoc()` format first pre-parses the source `.Rmd` file.  **knitr**
 doesn't expose its parser to developers, so I've lifted most of the code for
 this parser from **knitr** and **rmarkdown**. The parser captures YAML headers,
-code chunks, and inline code, giving names to unnaamed chunks and inline code 
-sections.  These are stored in a data frame saved to `filename.chunks.csv`.
+code chunks, and inline code, giving names to unnamed chunks and inline code 
+sections and wrapping them in named `<div>` and `<span>` tags with unique `id`
+values and the class `"redoc"`.  The contents of
+those sections are stored in a file called `filename.codelist.yml`. 
 
-`rdocx_reversible()` then knits the Rmd file, using
-[knitr hooks](https://yihui.name/knitr/hooks/) to wrap all code chunks in
-[pandoc style `divs` and `spans`](http://pandoc.org/MANUAL.html#divs-and-spans).
-This differentiates these outputs in the compiled markdown.  These divs and spans
-are given an attribute of `custom-style="CHUNK_NAME"`. Non-included chunks are
-replaced with an empty raw `docx` element.
+`redoc()` then knits the `.Rmd` file. Code output is wrapped within the same
+`<span>` and `<div>` tags as the original chunks.  
 
-A final knitr document hook processes the whole document to translate Critic
-Markup syntax into appropriate Pandoc syntax.
+When the knitted document is converted to to a `.docx` by pandoc, `redoc`
+passes it through a series of
+[pandoc lua filters](https://pandoc.org/lua-filters.html) (found in `inst/lua-filters`).
+These do three things:
 
-Pandoc then converts the markdown to `docx`, and elements with `custom-style` attributes
-keep these attributes in the `docx` format, by using the `docx+styles` extension.
+-  Converts sections with `<span>` and `<div>` tags of class `redoc` to hidden
+   [custom styles](https://pandoc.org/MANUAL.html#custom-styles) with names
+   corresponding to their unique IDs. so that they are retained in the Word document.
+-  Inserts hidden text in the place of code sections that have no output.
+-  Converts [CriticMarkup](http://criticmarkup.com/) syntax to Word
+   tracked-changes format.
 
-`docx` files are just zip archives of XML files, so once the `docx` us created,
-A post-processor embeds three files for later retrieval: the original
-`*.Rmd`, the `*.chunks.csv` with chunk information, another version of the `.Rmd`
-which has been converted to `docx` and back.  These files are available for
-retrieval when reversing the complilation. If `highlight_output=TRUE` is set,
-the post-processor also modifies all the output styles to be visible.
+Then using `rmarkdown::output_format()`'s `post_processor` argument and
+functions from [*officer*](https://davidgohel.github.io/officer/), the original
+`.Rmd` and the `codelist.yml` file are stored in the Word document.  As `.docx`
+files are just ZIP archives, this is straightforward, except that some metadata
+must be added to ensure Word preserves these files when editing.
 
-To reverse compilation via `undoc()`, the `*.chunks.csv` file is first extracted,
-then pandoc is used to convert the `docx` back to markdown.  A custom [lua filter](https://pandoc.org/lua-filters.html) converts any track-changes text
+If the option `diagnostics=TRUE` is set, information about the R session and
+current software versions is also stored in the Word document for later
+debugging.
+
+If `highlight_output=TRUE` is set, the post-processor also modifies all Word 
+document styles to color the `redoc`-class sections.
+
+## De-Rendering Documents
+
+When the `dedoc()` function is run, it extracts the the `*.codelist.yml` file
+from the `.docx` file.  
+
+Then pandoc is used to convert the `docx` back to markdown. A custom [lua filter](https://pandoc.org/lua-filters.html) converts any track-changes text
 to [Critic Markup](http://criticmarkup.com/spec.php), and another lua filter
-replaces any elements with `custom-style="CHUNK_NAME"` attributes with placeholders
-of the form `[[chunk-name]]`.  `undoc()` then uses the data in `*.chunks.csv` to
-replace these placeholders with original chunk (or inline code).  In the event
-that chunk output has been deleted, the chunk is placed immediately following
-the previous chunk (or at the top of the document).  Deleted inline elements
-are not restored. The original YAML data is prepended to the document.
+replaces any elements with the custom `redoc` styles  with placeholders
+of the form `[[chunk-id]]`.  `dedoc()` then uses the data in the `*.chunks.yml`
+file to replace these placeholders with original chunk (or inline code).  In the
+event that chunk output has been deleted or modified beyond recognition, 
+**redoc** tries to be smart about its placement, placing it near its original
+location. Depending on the policies selected via `dedoc()`'s `block_missing` or
+`inline_missing` arguments, the restored code may be wrapped in an HTML comment
+or not restored at all. 
+
+## Customizing and developing with *redoc*
+
+`redoc()` is based on `rmarkdown::word_document()`, and can similarly be extended.
+
+The simplest form of extension is defining additional parts of the document to
+be wrapped and stored in the `*.codelist.yml` file.  These are defined in as
+a list of functions in the `wrappers` argument of `redoc()`. Each function
+captures a type of code, and by default these are R chunks and inline code,
+HTML comments, YAML blocks, some LaTeX, [pandoc-style citations](https://pandoc.org/MANUAL.html#citations),
+and [pandoc raw spans and blocks](https://pandoc.org/MANUAL.html#generic-raw-attribute).
+
+You can capture other types of code by adding additional functions, which
+are detailed in the `?wrappers` documentation. If the code is simple enough to 
+be captured with a regular expression, these functions can be generated with
+with `make_wrapper()`.
+
+When building additional formats based on `redoc()`, it is important to use
+the `base_format` option of `rmarkdown::output_format()`.  **rmarkdown** will
+then merge the `post_processor` functions of `redoc()` and your format so that
+`redoc()'s` runs _after_ your custom post-processor.
+
+Future versions of `redoc()` will include a reversible version of
+[`officedown::rdocx_document()`](https://github.com/davidgohel/officedown).

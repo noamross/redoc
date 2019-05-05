@@ -52,16 +52,12 @@ Here are some topics I'm mulling over. Feel free to open an issue to discuss any
    more general Endnote package. (Hmm, [possibly useful](https://github.com/kaizhang/citeproc-endnote))
 -  Handling formats with figures/captions at the end of the file.
 -  Packaging up not just the Rmd but supporting files into the `docx` file.
--  Supporting conversion of Critic Markup from Markdown to word (via a pandoc
-   lua filter, shouldn't be too hard.)
--  Google Doc outputs.  Google docs has a new API in invite-only beta that exposes
+-  Google Doc outputs.  Google docs has a new API that exposes
    a JSON document model, which may enable this.  It would require some considerable
    pandoc/lua work.
 -  Reversible Powerpoint? Whoah, nelly.  Pandoc doesn't even have a Powerpoint
    reader yet.
 -  Naming things and API/workflow. Package name, function names, etc., are
-   all malleable. 
+   all malleable, as are the appropriate sensible defaults.
 -  Sustainability.  If this works out, should **redoc** live in an org or be
    absorbed into another package.  Should there be an "officeverse"?
-
-If any of these interest you please do open an issue to dicuss them.
