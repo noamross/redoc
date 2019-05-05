@@ -12,6 +12,7 @@ install:
 
 environment:
   USE_RTOOLS: true
+  R_REMOTES_STANDALONE: true
 
 cache:
   - C:\RLibrary
