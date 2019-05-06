@@ -78,9 +78,5 @@ redoc_diff <- function(docx,
     ...
   )
 
-  # Temporary workaround for diffobj issue #133
-  if (isTRUE(all.equal(readLines(comps[[1]]), readLines(comps[[2]])))) {
-    diff <- diff[-c(1:2), ]
-  }
   return(diff)
 }
