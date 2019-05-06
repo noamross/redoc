@@ -103,6 +103,14 @@ with R Markdown documents:
 
 The package also contains a `dedoc` R Markdown template.
 
+## Related Work
+
+  - [**officedown**](https://github.com/davidgohel/officedown) produces
+    rich MS Word documents from R Markdown. We hope for more integration
+    between these packages in the future.
+  - [**diffobj**](https://github.com/brodieG/diffobj) visualizes
+    differences between R objects and drives **redoc**’s diff view.
+
 ## Contributing
 
 Want have feedback or want to contribute? Great\! Please take a look at
