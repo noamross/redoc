@@ -24,12 +24,18 @@ workflow. It generates Word documents that can be de-rendered back into
 R Markdown, retaining edits on the Word document, including tracked
 changes.
 
+**redoc** is not yet stable; it’s core engine and API are still subject
+to change. It’s been overhauled a few times already\! I welcome your
+[contributions and
+feedback](https://noamross.github.io/redoc/CONTRIBUTING.html).
+
 ## Installation
 
-Install the **redoc** package with this command:
+Install the **redoc** package with the **remotes** (or **devtools**)
+package:
 
 ``` r
-source("https://install-github.me/noamross/redoc")
+remotes::install_github("noamross/redoc")
 ```
 
 Note that **redoc** requires a recent version of Pandoc (\>= 2.1.2). If
@@ -57,7 +63,7 @@ key differences:
   - [Critic Markup](http://criticmarkup.com/spec.php#thebasicsyntax)
     edits will be converted to Word tracked changes.
   - By default, parts of the documented generated programmatically will
-    be highlighted. (Change this with `highlight_outputs = TRUE`)
+    be highlighted. (Change this with `highlight_outputs = FALSE`)
   - The original `.Rmd` and all code is stored internally in Word
     document for later retrieval.
 
@@ -87,7 +93,7 @@ redoc_diff(redoc_example_edited_docx())
 More details and features can be found in the vignettes for
 [users](https://noamross.github.io/redoc/articles/mixed-workflows-with-redoc.html)
 and
-[developers](https://noamross.github.io/redoc/articles/redoc-package-design.html)
+[developers](https://noamross.github.io/redoc/articles/redoc-package-design.html).
 
 ## RStudio Integration
 
@@ -96,10 +102,11 @@ with R Markdown documents:
 
   - “Render and Update” renders an R Markdown Document and the updates
     the text after round-tripping in to Word format and back. This helps
-    with cleaning up small syntax differences (e.g. white space).
+    with cleaning up small syntax differences (e.g. white space, line
+    wrapping).
   - “Dedoc to active file” and “Dedoc to new file” de-render a file and
-    place the contents in RStudio editor tabs, and also display a diff
-    changes in the RStudio viewer.
+    place the contents in RStudio editor tabs, and also display a the
+    changes from `redoc_diff()` in the RStudio viewer.
 
 The package also contains a `dedoc` R Markdown template.
 
