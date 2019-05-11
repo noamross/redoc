@@ -1,0 +1,57 @@
+---
+title: Reversible R Markdown Document
+subtitle: Your subtitle
+author: Your Name
+date: Created `r Sys.Date()`
+output:
+  redoc::redoc:
+    highlight_outputs: TRUE
+    margins: 1 
+    line_numbers: FALSE 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This is an example Reversible R Markdown document. It will preserve code
+elements for restoration in your final `.docx` file.
+
+You can use things like inline <!--- an HTML comment ---> comments.
+
+You can use code chunks to generate output and they will be restored:
+
+```{r cars}
+summary(cars)
+```
+
+Inline text
+-----------
+
+```{r, echo = FALSE, results = 'hide'}
+# A non-included chunk to provide inline chunks with values.
+a <- 2
+b <- 3
+```
+
+You can include calculations inline like so: `r a` plus
+`r b` equals `r a + b`. Even empty inline chunks `r NULL` will be stored and
+marked with hidden text in the Word document.
+
+Chunks with plots
+-----------------
+
+You can of course also embed plots, for example:
+
+```{r pressure, dev.args=list(bg='transparent')}
+plot(pressure)
+```
+
+## Track Changes
+
+**redoc** supports [Critic Markup](http://criticmarkup.com/users-guide.php)
+syntax for comments.  You can {++ include ++} edits and they will be converted
+to {~~ tacked ~> tracked ~~} changes in your {== Word document ==}{>> Neat! <<}.
+By default {-- default --}, your system username is used as the author of
+changes, but this can be set with the `comment_author` argument in `redoc()`
+or your document YAML.

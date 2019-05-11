@@ -14,8 +14,8 @@ is_redoc(docx)
 a logical value
 }
 \description{
-A function for testing is the file can be un-knit.  If not, un-knitting
-may be attempted with the \code{orig_chunkfile} or \code{orig_docx} files in \code{\link[=undoc]{undoc()}}.
+A function for testing is the file can be de-rendered.  If not, un-knitting
+may be attempted with the \code{orig_chunkfile} or \code{orig_docx} files in \code{\link[=dedoc]{dedoc()}}.
 }
 \examples{
 is_redoc(redoc_example_docx())

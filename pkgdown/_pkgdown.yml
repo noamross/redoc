@@ -1,0 +1,46 @@
+bootswatch: flatly
+
+navbar:
+  title: pkgdown
+  type: inverse
+  left:
+  - text: Usage
+    href: articles/mixed-workflows-with-redoc.html
+  - text: Package Design
+    href: articles/redoc-package-design.html
+  - text: Contributing
+    href: CONTRIBUTING.md
+  - text: Release Notes
+    href: news/index.html
+  right:
+  - text: Reference
+    href: reference/index.html
+  - text: Code of Conduct
+    href: CODE_OF_CONDUCT.html
+  - icon: fa-github fa-lg
+    href: https://github.com/noamross/redoc
+
+reference:
+  - title: Format
+    desc:  Working wit Reversible R Markdown
+    contents:
+      - redoc
+      - dedoc
+      - redoc_diff
+      - redoc_extract_rmd
+  - title: RStudio Addin functions
+    desc:  Tools for managing workflow in the IDE
+    contents:
+      - roundtrip_active_file
+      - dedoc_to_active_file
+      - dedoc_to_new_file
+  - title: Developer Functions
+    desc: Functions for making new, **redoc**-based R Markdown formats and
+      developing and testing this package.
+    contents:
+      - make_wrapper
+      - make_preknitter
+      - pandoc_ast
+      - is_redoc
+      - redoc_examples
+
