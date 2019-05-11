@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Authors • redoc</title>
+<title>Convert a document to Pandoc's abstract syntax tree format — pandoc_ast • redoc</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -26,14 +26,17 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
-<link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script>
+<link href="../pkgdown.css" rel="stylesheet">
+<script src="../pkgdown.js"></script>
 
 
 
-  <link href="extra.css" rel="stylesheet">
+  <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Authors" />
+<meta property="og:title" content="Convert a document to Pandoc's abstract syntax tree format — pandoc_ast" />
+
+<meta property="og:description" content="This is a convenience function for testing and development." />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -50,7 +53,7 @@
   </head>
 
   <body>
-    <div class="container template-authors">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
@@ -62,7 +65,7 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="index.html">redoc</a>
+        <a class="navbar-link" href="../index.html">redoc</a>
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
       </span>
     </div>
@@ -70,25 +73,25 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="articles/mixed-workflows-with-redoc.html">Usage</a>
+  <a href="../articles/mixed-workflows-with-redoc.html">Usage</a>
 </li>
 <li>
-  <a href="articles/redoc-package-design.html">Package Design</a>
+  <a href="../articles/redoc-package-design.html">Package Design</a>
 </li>
 <li>
-  <a href="CONTRIBUTING.md">Contributing</a>
+  <a href="../CONTRIBUTING.md">Contributing</a>
 </li>
 <li>
-  <a href="news/index.html">Release Notes</a>
+  <a href="../news/index.html">Release Notes</a>
 </li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="reference/index.html">Reference</a>
+  <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="CODE_OF_CONDUCT.html">Code of Conduct</a>
+  <a href="../CODE_OF_CONDUCT.html">Code of Conduct</a>
 </li>
 <li>
   <a href="https://github.com/noamross/redoc">
@@ -106,22 +109,60 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Authors</h1>
+    <h1>Convert a document to Pandoc's abstract syntax tree format</h1>
+    <small class="dont-index">Source: <a href='https://github.com/noamross/redoc/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
+    <div class="hidden name"><code>pandoc_ast.Rd</code></div>
     </div>
 
-    <ul class="list-unstyled">
-      <li>
-        <p><strong>Noam Ross</strong>. Author, maintainer. <a href='https://orcid.org/0000-0002-2136-0000' target='orcid.widget'><img src='https://members.orcid.org/sites/default/files/vector_iD_icon.svg' class='orcid' alt='ORCID' height='16'></a>
-        </p>
-      </li>
+    <div class="ref-description">
+    
+    <p>This is a convenience function for testing and development.</p>
+    
+    </div>
+
+    <pre class="usage"><span class='fu'>pandoc_ast</span>(<span class='no'>file</span>, <span class='kw'>from</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tolist</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>file</th>
+      <td><p>the file to convert using pandoc.</p></td>
+    </tr>
+    <tr>
+      <th>from</th>
+      <td><p>the format to convert from.  If <code>NULL</code> (default) File type will be
+auto-detected by extension. <code>.Rmd</code> files will be treated as <code>.md</code>.</p></td>
+    </tr>
+    <tr>
+      <th>tolist</th>
+      <td><p>whether to return the AST as an R list.  If <code>FALSE</code>, will
+return length-1 character vector of raw JSON.</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A list containing the structured document</p>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>ast</span> <span class='kw'>&lt;-</span> <span class='fu'>pandoc_ast</span>(<span class='fu'><a href='redoc_examples.html'>redoc_example_docx</a></span>())</div></pre>
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#value">Value</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
-
 </div>
-
 
       <footer>
       <div class="copyright">

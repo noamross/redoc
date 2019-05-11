@@ -16,7 +16,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -30,10 +31,12 @@
 
 
 
+  <link href="../extra.css" rel="stylesheet">
+  
 <meta property="og:title" content="Is this a reversible document? — is_redoc" />
 
-<meta property="og:description" content="A function for testing is the file can be un-knit.  If not, un-knitting
-may be attempted with the orig_chunkfile or orig_docx files in undoc()." />
+<meta property="og:description" content="A function for testing is the file can be de-rendered.  If not, un-knitting
+may be attempted with the orig_chunkfile or orig_docx files in dedoc()." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -64,17 +67,20 @@ may be attempted with the orig_chunkfile or orig_docx files in undoc()." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">redoc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="https://github.com/noamross/redoc/blob/master/.github/CONTRIBUTING.md">Contributing</a>
+  <a href="../articles/mixed-workflows-with-redoc.html">Usage</a>
 </li>
 <li>
   <a href="../articles/redoc-package-design.html">Package Design</a>
+</li>
+<li>
+  <a href="../CONTRIBUTING.md">Contributing</a>
 </li>
 <li>
   <a href="../news/index.html">Release Notes</a>
@@ -84,6 +90,9 @@ may be attempted with the orig_chunkfile or orig_docx files in undoc()." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="../CODE_OF_CONDUCT.html">Code of Conduct</a>
 </li>
 <li>
   <a href="https://github.com/noamross/redoc">
@@ -110,8 +119,8 @@ may be attempted with the orig_chunkfile or orig_docx files in undoc()." />
 
     <div class="ref-description">
     
-    <p>A function for testing is the file can be un-knit.  If not, un-knitting
-may be attempted with the <code>orig_chunkfile</code> or <code>orig_docx</code> files in <code><a href='undoc.html'>undoc()</a></code>.</p>
+    <p>A function for testing is the file can be de-rendered.  If not, un-knitting
+may be attempted with the <code>orig_chunkfile</code> or <code>orig_docx</code> files in <code><a href='dedoc.html'>dedoc()</a></code>.</p>
     
     </div>
 
@@ -123,7 +132,7 @@ may be attempted with the <code>orig_chunkfile</code> or <code>orig_docx</code> 
     <tr>
       <th>docx</th>
       <td><p>A path to a <code>.docx</code> file or an <code>rdocx</code> object produced by
-<code><a href='https://www.rdocumentation.org/packages/officer/topics/read_docx'>officer::read_docx()</a></code></p></td>
+<code><a href='https://rdrr.io/pkg/officer/man/read_docx.html'>officer::read_docx()</a></code></p></td>
     </tr>
     </table>
     
@@ -133,7 +142,7 @@ may be attempted with the <code>orig_chunkfile</code> or <code>orig_docx</code> 
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>is_redoc</span>(<span class='fu'><a href='redoc_example_docx.html'>redoc_example_docx</a></span>())</div><div class='output co'>#&gt; [1] TRUE</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>is_redoc</span>(<span class='fu'><a href='redoc_examples.html'>redoc_example_docx</a></span>())</div><div class='output co'>#&gt; [1] TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

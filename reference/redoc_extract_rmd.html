@@ -16,7 +16,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -30,11 +31,13 @@
 
 
 
+  <link href="../extra.css" rel="stylesheet">
+  
 <meta property="og:title" content="Extract the Rmd used to to produce a Reversible Word Doc — redoc_extract_rmd" />
 
-<meta property="og:description" content="Documents produced with rdocx_reversible() store an copy of the original
+<meta property="og:description" content="Documents produced with redoc() store an copy of the original
 .Rmd files used to produce them.  This is useful for diffing against the
-version created with undoc(), especially if tracked changes have not been
+version created with dedoc(), especially if tracked changes have not been
 used." />
 <meta name="twitter:card" content="summary" />
 
@@ -66,17 +69,20 @@ used." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">redoc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="https://github.com/noamross/redoc/blob/master/.github/CONTRIBUTING.md">Contributing</a>
+  <a href="../articles/mixed-workflows-with-redoc.html">Usage</a>
 </li>
 <li>
   <a href="../articles/redoc-package-design.html">Package Design</a>
+</li>
+<li>
+  <a href="../CONTRIBUTING.md">Contributing</a>
 </li>
 <li>
   <a href="../news/index.html">Release Notes</a>
@@ -86,6 +92,9 @@ used." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="../CODE_OF_CONDUCT.html">Code of Conduct</a>
 </li>
 <li>
   <a href="https://github.com/noamross/redoc">
@@ -106,20 +115,20 @@ used." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Extract the Rmd used to to produce a Reversible Word Doc</h1>
-    <small class="dont-index">Source: <a href='https://github.com/noamross/redoc/blob/master/R/extract.R'><code>R/extract.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/noamross/redoc/blob/master/R/dedoc.R'><code>R/dedoc.R</code></a></small>
     <div class="hidden name"><code>redoc_extract_rmd.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Documents produced with <code><a href='rdocx_reversible.html'>rdocx_reversible()</a></code> store an copy of the original
+    <p>Documents produced with <code><a href='redoc.html'>redoc()</a></code> store an copy of the original
 <code>.Rmd</code> files used to produce them.  This is useful for diffing against the
-version created with <code><a href='undoc.html'>undoc()</a></code>, especially if tracked changes have not been
+version created with <code><a href='dedoc.html'>dedoc()</a></code>, especially if tracked changes have not been
 used.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>redoc_extract_rmd</span>(<span class='no'>docx</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"original"</span>, <span class='st'>"roundtrip"</span>), <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"."</span>,
+    <pre class="usage"><span class='fu'>redoc_extract_rmd</span>(<span class='no'>docx</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"original"</span>, <span class='st'>"roundtrip"</span>), <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"."</span>,
   <span class='kw'>to</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -128,7 +137,7 @@ used.</p>
     <tr>
       <th>docx</th>
       <td><p>A path to a word file or a an <code>rdocx</code> object created with
-<code><a href='https://www.rdocumentation.org/packages/officer/topics/read_docx'>officer::read_docx()</a></code>.</p></td>
+<code><a href='https://rdrr.io/pkg/officer/man/read_docx.html'>officer::read_docx()</a></code>.</p></td>
     </tr>
     <tr>
       <th>type</th>
@@ -151,7 +160,7 @@ extensions.</p></td>
     </tr>
     <tr>
       <th>overwrite</th>
-      <td><p>whether to overwite existing files</p></td>
+      <td><p>whether to overwrite existing files</p></td>
     </tr>
     </table>
     
@@ -161,7 +170,7 @@ extensions.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>redoc_extract_rmd</span>(<span class='fu'><a href='redoc_example_docx.html'>redoc_example_docx</a></span>(), <span class='kw'>dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>())</div><div class='output co'>#&gt; [1] "/tmp/Rtmp388c3k/skeleton.original.Rmd"</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>redoc_extract_rmd</span>(<span class='fu'><a href='redoc_examples.html'>redoc_example_docx</a></span>(), <span class='kw'>dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>())</div><div class='output co'>#&gt; [1] "/tmp/Rtmpzg4oTs/example.Rmd"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

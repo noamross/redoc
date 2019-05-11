@@ -5,11 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>redoc Package Design • redoc</title>
+<title>redoc Design and Internals • redoc</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="redoc Package Design">
+<script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
+<meta property="og:title" content="redoc Design and Internals">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -30,17 +32,20 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">redoc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="https://github.com/noamross/redoc/blob/master/.github/CONTRIBUTING.md">Contributing</a>
+  <a href="../articles/mixed-workflows-with-redoc.html">Usage</a>
 </li>
 <li>
   <a href="../articles/redoc-package-design.html">Package Design</a>
+</li>
+<li>
+  <a href="../CONTRIBUTING.html">Contributing</a>
 </li>
 <li>
   <a href="../news/index.html">Release Notes</a>
@@ -49,6 +54,9 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="../CODE_OF_CONDUCT.html">Code of Conduct</a>
 </li>
 <li>
   <a href="https://github.com/noamross/redoc">
@@ -68,10 +76,10 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>redoc Package Design</h1>
+      <h1>redoc Design and Internals</h1>
                         <h4 class="author">Noam Ross</h4>
             
-            <h4 class="date">2018-12-11</h4>
+            <h4 class="date">2019-05-11</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/noamross/redoc/blob/master/vignettes/redoc-package-design.Rmd"><code>vignettes/redoc-package-design.Rmd</code></a></small>
       <div class="hidden name"><code>redoc-package-design.Rmd</code></div>
@@ -82,15 +90,49 @@
     
 <p>This document describes the general approach and design of <strong>redoc</strong> for developers interested in contributing.</p>
 <p>Two-way R Markdown workflows are challenging because R Markdown and <strong>knitr</strong> workflows are lossy - the compiled document does not contain all of the information in the source. Also, we are limited by information that can be passed via <code>pandoc</code> from markdown to final formats and in reverse.</p>
-<p>To produced a Reversible Reproducible Document in Word (a “redoc”), the <code><a href="../reference/rdocx_reversible.html">rdocx_reversible()</a></code> format first pre-parses the source <code>.Rmd</code> file. <strong>knitr</strong> doesn’t expose its parser to developers, so I’ve lifted most of the code for this parser from <strong>knitr</strong> and <strong>rmarkdown</strong>. The parser captures YAML headers, code chunks, and inline code, giving names to unnaamed chunks and inline code sections. These are stored in a data frame saved to <code>filename.chunks.csv</code>.</p>
-<p><code><a href="../reference/rdocx_reversible.html">rdocx_reversible()</a></code> then knits the Rmd file, using <a href="https://yihui.name/knitr/hooks/">knitr hooks</a> to wrap all code chunks in <a href="http://pandoc.org/MANUAL.html#divs-and-spans">pandoc style <code>divs</code> and <code>spans</code></a>. This differentiates these outputs in the compiled markdown. These divs and spans are given an attribute of <code>custom-style="CHUNK_NAME"</code>. Non-included chunks are replaced with an empty raw <code>docx</code> element.</p>
-<p>A final knitr document hook processes the whole document to translate Critic Markup syntax into appropriate Pandoc syntax.</p>
-<p>Pandoc then converts the markdown to <code>docx</code>, and elements with <code>custom-style</code> attributes keep these attributes in the <code>docx</code> format, by using the <code>docx+styles</code> extension.</p>
-<p><code>docx</code> files are just zip archives of XML files, so once the <code>docx</code> us created, A post-processor embeds three files for later retrieval: the original <code>*.Rmd</code>, the <code>*.chunks.csv</code> with chunk information, another version of the <code>.Rmd</code> which has been converted to <code>docx</code> and back. These files are available for retrieval when reversing the complilation. If <code>highlight_output=TRUE</code> is set, the post-processor also modifies all the output styles to be visible.</p>
-<p>To reverse compilation via <code><a href="../reference/undoc.html">undoc()</a></code>, the <code>*.chunks.csv</code> file is first extracted, then pandoc is used to convert the <code>docx</code> back to markdown. A custom <a href="https://pandoc.org/lua-filters.html">lua filter</a> converts any track-changes text to <a href="http://criticmarkup.com/spec.php">Critic Markup</a>, and another lua filter replaces any elements with <code>custom-style="CHUNK_NAME"</code> attributes with placeholders of the form <code>[[chunk-name]]</code>. <code><a href="../reference/undoc.html">undoc()</a></code> then uses the data in <code>*.chunks.csv</code> to replace these placeholders with original chunk (or inline code). In the event that chunk output has been deleted, the chunk is placed immediately following the previous chunk (or at the top of the document). Deleted inline elements are not restored. The original YAML data is prepended to the document.</p>
+<div id="compiling-the-document-general-approach" class="section level2">
+<h2 class="hasAnchor">
+<a href="#compiling-the-document-general-approach" class="anchor"></a>Compiling the document: General Approach</h2>
+<p>To produced a Reversible Reproducible Document in Word (a “redoc”), the <code><a href="../reference/redoc.html">redoc()</a></code> format first pre-parses the source <code>.Rmd</code> file. <strong>knitr</strong> doesn’t expose its parser to developers, so I’ve lifted most of the code for this parser from <strong>knitr</strong> and <strong>rmarkdown</strong>. The parser captures YAML headers, code chunks, and inline code, giving names to unnamed chunks and inline code sections and wrapping them in named <code>&lt;div&gt;</code> and <code>&lt;span&gt;</code> tags with unique <code>id</code> values and the class <code>"redoc"</code>. The contents of those sections are stored in a file called <code>filename.codelist.yml</code>.</p>
+<p><code><a href="../reference/redoc.html">redoc()</a></code> then knits the <code>.Rmd</code> file. Code output is wrapped within the same <code>&lt;span&gt;</code> and <code>&lt;div&gt;</code> tags as the original chunks.</p>
+<p>When the knitted document is converted to to a <code>.docx</code> by pandoc, <code>redoc</code> passes it through a series of <a href="https://pandoc.org/lua-filters.html">pandoc lua filters</a> (found in <code>inst/lua-filters</code>). These do three things:</p>
+<ul>
+<li>Converts sections with <code>&lt;span&gt;</code> and <code>&lt;div&gt;</code> tags of class <code>redoc</code> to hidden <a href="https://pandoc.org/MANUAL.html#custom-styles">custom styles</a> with names corresponding to their unique IDs. so that they are retained in the Word document.</li>
+<li>Inserts hidden text in the place of code sections that have no output.</li>
+<li>Converts <a href="http://criticmarkup.com/">CriticMarkup</a> syntax to Word tracked-changes format.</li>
+</ul>
+<p>Then using <code><a href="https://rdrr.io/pkg/rmarkdown/man/output_format.html">rmarkdown::output_format()</a></code>’s <code>post_processor</code> argument and functions from <a href="https://davidgohel.github.io/officer/"><em>officer</em></a>, the original <code>.Rmd</code> and the <code>codelist.yml</code> file are stored in the Word document. As <code>.docx</code> files are just ZIP archives, this is straightforward, except that some metadata must be added to ensure Word preserves these files when editing.</p>
+<p>If the option <code>diagnostics=TRUE</code> is set, information about the R session and current software versions is also stored in the Word document for later debugging.</p>
+<p>If <code>highlight_output=TRUE</code> is set, the post-processor also modifies all Word document styles to color the <code>redoc</code>-class sections.</p>
+</div>
+<div id="de-rendering-documents" class="section level2">
+<h2 class="hasAnchor">
+<a href="#de-rendering-documents" class="anchor"></a>De-Rendering Documents</h2>
+<p>When the <code><a href="../reference/dedoc.html">dedoc()</a></code> function is run, it extracts the the <code>*.codelist.yml</code> file from the <code>.docx</code> file.</p>
+<p>Then pandoc is used to convert the <code>docx</code> back to markdown. A custom <a href="https://pandoc.org/lua-filters.html">lua filter</a> converts any track-changes text to <a href="http://criticmarkup.com/spec.php">Critic Markup</a>, and another lua filter replaces any elements with the custom <code>redoc</code> styles with placeholders of the form <code>[[chunk-id]]</code>. <code><a href="../reference/dedoc.html">dedoc()</a></code> then uses the data in the <code>*.chunks.yml</code> file to replace these placeholders with original chunk (or inline code). In the event that chunk output has been deleted or modified beyond recognition, <strong>redoc</strong> tries to be smart about its placement, placing it near its original location. Depending on the policies selected via <code><a href="../reference/dedoc.html">dedoc()</a></code>’s <code>block_missing</code> or <code>inline_missing</code> arguments, the restored code may be wrapped in an HTML comment or not restored at all.</p>
+</div>
+<div id="customizing-and-developing-with-redoc" class="section level2">
+<h2 class="hasAnchor">
+<a href="#customizing-and-developing-with-redoc" class="anchor"></a>Customizing and developing with <em>redoc</em>
+</h2>
+<p><code><a href="../reference/redoc.html">redoc()</a></code> is based on <code><a href="https://rdrr.io/pkg/rmarkdown/man/word_document.html">rmarkdown::word_document()</a></code>, and can similarly be extended.</p>
+<p>The simplest form of extension is defining additional parts of the document to be wrapped and stored in the <code>*.codelist.yml</code> file. These are defined in as a list of functions in the <code>wrappers</code> argument of <code><a href="../reference/redoc.html">redoc()</a></code>. Each function captures a type of code, and by default these are R chunks and inline code, HTML comments, YAML blocks, some LaTeX, <a href="https://pandoc.org/MANUAL.html#citations">pandoc-style citations</a>, and <a href="https://pandoc.org/MANUAL.html#generic-raw-attribute">pandoc raw spans and blocks</a>.</p>
+<p>You can capture other types of code by adding additional functions, which are detailed in the <code><a href="../reference/make_wrapper.html">?wrappers</a></code> documentation. If the code is simple enough to be captured with a regular expression, these functions can be generated with with <code><a href="../reference/make_wrapper.html">make_wrapper()</a></code>.</p>
+<p>When building additional formats based on <code><a href="../reference/redoc.html">redoc()</a></code>, it is important to use the <code>base_format</code> option of <code><a href="https://rdrr.io/pkg/rmarkdown/man/output_format.html">rmarkdown::output_format()</a></code>. <strong>rmarkdown</strong> will then merge the <code>post_processor</code> functions of <code><a href="../reference/redoc.html">redoc()</a></code> and your format so that <code>redoc()'s</code> runs <em>after</em> your custom post-processor.</p>
+<p>Future versions of <code><a href="../reference/redoc.html">redoc()</a></code> will include a reversible version of <a href="https://github.com/davidgohel/officedown"><code>officedown::rdocx_document()</code></a>.</p>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+        <div id="tocnav">
+      <h2 class="hasAnchor">
+<a href="#tocnav" class="anchor"></a>Contents</h2>
+      <ul class="nav nav-pills nav-stacked">
+<li><a href="#compiling-the-document-general-approach">Compiling the document: General Approach</a></li>
+      <li><a href="#de-rendering-documents">De-Rendering Documents</a></li>
+      <li><a href="#customizing-and-developing-with-redoc">Customizing and developing with <em>redoc</em></a></li>
+      </ul>
+</div>
       </div>
 
 </div>

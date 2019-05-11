@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • redoc</title>
+<title>Generate a function to run prior to knitting — make_preknitter • redoc</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -33,7 +33,14 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Generate a function to run prior to knitting — make_preknitter" />
+
+<meta property="og:description" content="redoc modifies R Markdown documents prior to knitting to
+capture and store document elements that will need to be restored later.  It
+does this via a function passed to the pre_knit argument of
+rmarkdown::output_format().  make_preknitter generates this function from
+a list of wrapper functions." />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -50,7 +57,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
@@ -106,114 +113,85 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Generate a function to run prior to knitting</h1>
+    <small class="dont-index">Source: <a href='https://github.com/noamross/redoc/blob/master/R/preprocessor.R'><code>R/preprocessor.R</code></a></small>
+    <div class="hidden name"><code>make_preknitter.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    
+    <p><strong>redoc</strong> modifies R Markdown documents prior to knitting to
+capture and store document elements that will need to be restored later.  It
+does this via a function passed to the <code>pre_knit</code> argument of
+<code><a href='https://rdrr.io/pkg/rmarkdown/man/output_format.html'>rmarkdown::output_format()</a></code>.  <code>make_preknitter</code> generates this function from
+a list of <a href='make_wrapper.html'>wrapper functions</a>.</p>
+    
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
-
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-format" class="hasAnchor"><a href="#section-format" class="anchor"></a>Format</h2>
-          <p class="section-desc"><p>Working wit Reversible R Markdown</p></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="redoc.html">redoc()</a></code> </p>
-        </td>
-        <td><p>R Markdown format for Reversible Reproducible Word Documents</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="dedoc.html">dedoc()</a></code> </p>
-        </td>
-        <td><p>Convert an Reversible Document back to R Markdown</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="redoc_diff.html">redoc_diff()</a></code> </p>
-        </td>
-        <td><p>Compare changes in an edited redoc Word Document against the original</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="redoc_extract_rmd.html">redoc_extract_rmd()</a></code> </p>
-        </td>
-        <td><p>Extract the Rmd used to to produce a Reversible Word Doc</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-rstudio-addin-functions" class="hasAnchor"><a href="#section-rstudio-addin-functions" class="anchor"></a>RStudio Addin functions</h2>
-          <p class="section-desc"><p>Tools for managing workflow in the IDE</p></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="addins.html">roundtrip_active_file()</a></code> <code><a href="addins.html">dedoc_to_active_file()</a></code> <code><a href="addins.html">dedoc_to_new_file()</a></code> </p>
-        </td>
-        <td><p>RStudio Addin Functions</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-developer-functions" class="hasAnchor"><a href="#section-developer-functions" class="anchor"></a>Developer Functions</h2>
-          <p class="section-desc"><p>Functions for making new, <strong>redoc</strong>-based R Markdown formats and developing and testing this package.</p></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="make_wrapper.html">make_wrapper()</a></code> </p>
-        </td>
-        <td><p>Make a wrapper function</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="make_preknitter.html">make_preknitter()</a></code> </p>
-        </td>
-        <td><p>Generate a function to run prior to knitting</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="pandoc_ast.html">pandoc_ast()</a></code> </p>
-        </td>
-        <td><p>Convert a document to Pandoc's abstract syntax tree format</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="is_redoc.html">is_redoc()</a></code> </p>
-        </td>
-        <td><p>Is this a reversible document?</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="redoc_examples.html">redoc_example_rmd()</a></code> <code><a href="redoc_examples.html">redoc_example_docx()</a></code> <code><a href="redoc_examples.html">redoc_example_edited_docx()</a></code> </p>
-        </td>
-        <td><p>Files for examples and testing</p></td>
-      </tr>
-    </tbody>
+    <pre class="usage"><span class='fu'>make_preknitter</span>(<span class='kw'>wrappers</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>())</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>wrappers</th>
+      <td><p>a list of <a href='make_wrapper.html'>wrapper functions</a>.</p></td>
+    </tr>
     </table>
-  </div>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
+    <p>A function to be used in `output_format(pre_knit = ...)``</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p><strong>rmarkdown</strong> does not provide a mechanism to modify the file prior
+to knitting, so <strong>redoc</strong> accomplishes this by reaching up the call stack and
+modifying the environment in the <code><a href='https://rdrr.io/pkg/rmarkdown/man/render.html'>rmarkdown::render()</a></code> function.  The
+function generated by <code>make_preknitter</code> will do this by generating the
+pre-processed R Markdown file and associated list of code chunks, adding these
+the list of intermediates for cleanup, and switching the document input to
+this pre-processed document.</p>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>
+<span class='fu'>make_preknitter</span>(<span class='kw'>wrappers</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>htmlcommentwrap</span>, <span class='no'>latexwrap</span>))</div><div class='output co'>#&gt; function(input, ...) {
+#&gt;     render_env &lt;- get_parent_env_with("knit_input")
+#&gt;     pre_knit_input &lt;- get("knit_input", envir = render_env)
+#&gt;     intermediates_loc &lt;- get("intermediates_loc", envir = render_env)
+#&gt; 
+#&gt;     rmd_text &lt;- readfile(input)
+#&gt;     rmd &lt;- wrap_code(rmd_text, wrappers = wrappers)
+#&gt; 
+#&gt;     codefile &lt;- intermediates_loc(
+#&gt;       file_with_meta_ext(basename(input), "codelist", "yml")
+#&gt;     )
+#&gt; 
+#&gt;     preprocessed_rmd_file &lt;- intermediates_loc(
+#&gt;       file_with_meta_ext(pre_knit_input, "preprocessed")
+#&gt;     )
+#&gt;     write_yaml(rmd$code, codefile)
+#&gt;     cat(rmd$text, file = preprocessed_rmd_file)
+#&gt;     assign("knit_input", preprocessed_rmd_file, envir = render_env)
+#&gt;     add_intermediates(c(codefile, preprocessed_rmd_file))
+#&gt;   }
+#&gt; &lt;environment: 0x9860658&gt;</div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-format">Format</a></li>
-      <li><a href="#section-rstudio-addin-functions">RStudio Addin functions</a></li>
-      <li><a href="#section-developer-functions">Developer Functions</a></li>
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
     </ul>
+
   </div>
 </div>
 

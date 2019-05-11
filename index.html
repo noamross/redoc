@@ -7,9 +7,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Reversible Reproducible Documents • redoc</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Reversible Reproducible Documents">
+<script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
+<meta property="og:title" content="Reversible Reproducible Documents">
 <meta property="og:description" content="Implements a reversible 'R Markdown' to 'Microsoft Word' pipeline.">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -30,17 +32,20 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">redoc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="https://github.com/noamross/redoc/blob/master/.github/CONTRIBUTING.md">Contributing</a>
+  <a href="articles/mixed-workflows-with-redoc.html">Usage</a>
 </li>
 <li>
   <a href="articles/redoc-package-design.html">Package Design</a>
+</li>
+<li>
+  <a href="CONTRIBUTING.html">Contributing</a>
 </li>
 <li>
   <a href="news/index.html">Release Notes</a>
@@ -49,6 +54,9 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="CODE_OF_CONDUCT.html">Code of Conduct</a>
 </li>
 <li>
   <a href="https://github.com/noamross/redoc">
@@ -72,46 +80,65 @@
     
     
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-<div id="redoc---reversible-r-markdownms-word-documents-" class="section level1">
+<div id="redoc---reversible-reproducible-documents" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#redoc---reversible-r-markdownms-word-documents-" class="anchor"></a>redoc - reversible R Markdown/MS Word documents.</h1></div>
+<a href="#redoc---reversible-reproducible-documents" class="anchor"></a>redoc - Reversible Reproducible Documents</h1></div>
 <!-- badges: start -->
 
-<p><strong>redoc</strong> is an experimental package to enable a two-way R-Markdown ⟷ Microsoft Word workflow. It is in early design phase; <em>I will certainly break things, intentionally and accidentally.</em> Testing and feedback is welcome! Please look at <a href="https://github.com/noamross/redoc/blob/master/.github/CONTRIBUTING.md">CONTRIBUTING.md</a>, (especially the <a href="https://github.com/noamross/redoc/blob/master/.github/CONTRIBUTING.md#roadmap">roadmap</a>) and the <a href="https://noamross.github.io/redoc/articles/redoc-package-design.html">design vignette</a> if you are interested in development.</p>
+<p><strong>redoc</strong> is a package to enable a two-way R Markdown Microsoft Word workflow. It generates Word documents that can be de-rendered back into R Markdown, retaining edits on the Word document, including tracked changes.</p>
+<p><strong>redoc</strong> is not yet stable; it’s core engine and API are still subject to change. It’s been overhauled a few times already! I welcome your <a href="https://noamross.github.io/redoc/CONTRIBUTING.html">contributions and feedback</a>.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>Install the <strong>redoc</strong> package with this command:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/source">source</a></span>(<span class="st">"https://install-github.me/noamross/redoc"</span>)</a></code></pre></div>
+<p>Install the <strong>redoc</strong> package with the <strong>remotes</strong> (or <strong>devtools</strong>) package:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">remotes<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/remotes/man/install_github.html">install_github</a></span>(<span class="st">"noamross/redoc"</span>)</a></code></pre></div>
+<p>Note that <strong>redoc</strong> requires a recent version of Pandoc (&gt;= 2.1.2). If you have RStudio version 1.2 or higher, you should have this by default.</p>
 </div>
-<div id="usage" class="section level2">
+<div id="basic-usage" class="section level2">
 <h2 class="hasAnchor">
-<a href="#usage" class="anchor"></a>Usage</h2>
-<p><strong>redoc</strong> provides an R Markdown <a href="https://bookdown.org/yihui/rmarkdown/output-formats.html">output format</a> of <code><a href="reference/rdocx_reversible.html">rdocx_reversible()</a></code>, built on top of <code><a href="https://www.rdocumentation.org/packages/rmarkdown/topics/word_document">rmarkdown::word_document()</a></code>. You will typically call it via the YAML header in your R Markdown document. You have the option of highlighting the outputs (both chunk and inline) in the Word Document.</p>
+<a href="#basic-usage" class="anchor"></a>Basic Usage</h2>
+<p><strong>redoc</strong> provides an R Markdown <a href="https://bookdown.org/yihui/rmarkdown/output-formats.html">output format</a>, <code><a href="reference/redoc.html">redoc()</a></code>, built on top of <code><a href="https://rdrr.io/pkg/rmarkdown/man/word_document.html">rmarkdown::word_document()</a></code>. You will typically call it via the YAML header in your R Markdown document. You have the option of highlighting the outputs (both chunk and inline) in the Word Document.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb2-1" title="1"><span class="ot">---</span></a>
 <a class="sourceLine" id="cb2-2" title="2"><span class="fu">output:</span></a>
-<a class="sourceLine" id="cb2-3" title="3">  redoc:<span class="fu">:rdocx_reversible:</span></a>
-<a class="sourceLine" id="cb2-4" title="4">    <span class="fu">keep_md:</span><span class="at"> </span><span class="ch">TRUE</span></a>
-<a class="sourceLine" id="cb2-5" title="5">    <span class="fu">highlight_outputs:</span><span class="at"> </span><span class="ch">TRUE</span></a>
-<a class="sourceLine" id="cb2-6" title="6"><span class="ot">---</span></a></code></pre></div>
-<p><a href="http://criticmarkup.com/spec.php#thebasicsyntax">Critic Markup</a> edits will be converted to Word tracked changes. There are a few other formatting options available, too.</p>
-<p>Word files that have been created by <code><a href="reference/rdocx_reversible.html">rdocx_reversible()</a></code> (“redocs”) can be reverted to <code>.Rmd</code> with <code><a href="reference/undoc.html">undoc()</a></code>, <em>even after they are edited</em>.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(redoc)</a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="reference/undoc.html">undoc</a></span>(<span class="kw"><a href="reference/redoc_example_docx.html">redoc_example_docx</a></span>())</a>
-<a class="sourceLine" id="cb3-3" title="3"><span class="co">#&gt; [1] "./skeleton.Rmd"</span></a></code></pre></div>
-<p>If the Word document has tracked changes, <code><a href="reference/undoc.html">undoc()</a></code> will, by default, convert these to back to Critic Markup syntax.</p>
-<p>Undoc’ing a redoc where chunk outputs have been deleted will restore the original code chunks to the document, usually immediately after the previous chunk. If chunk outputs are moved, code chunks move with them. Inline code outputs that are deleted are not restored - it behooves one to only use inline outputs to print outputs, rather than change the state for upcoming chunks.</p>
-<p>Redocs also store the original <code>.Rmd</code> used to make them internally, which can be extracted and used to diff against the original.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="reference/redoc_extract_rmd.html">redoc_extract_rmd</a></span>(<span class="kw"><a href="reference/redoc_example_docx.html">redoc_example_docx</a></span>())</a>
-<a class="sourceLine" id="cb4-2" title="2"><span class="co">#&gt; [1] "./skeleton.original.Rmd"</span></a></code></pre></div>
-<div id="known-issues" class="section level3">
-<h3 class="hasAnchor">
-<a href="#known-issues" class="anchor"></a>Known Issues</h3>
+<a class="sourceLine" id="cb2-3" title="3">  redoc::redoc</a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="ot">---</span></a></code></pre></div>
+<p><code><a href="reference/redoc.html">redoc()</a></code> output resembles typical R Markdown Word output, but has some key differences:</p>
 <ul>
 <li>
-<strong>redoc</strong> does not work with <code>.docx</code> files edited with LibreOffice because of differences between Word and LibreOffice files’ internal structure.</li>
+<a href="http://criticmarkup.com/spec.php#thebasicsyntax">Critic Markup</a> edits will be converted to Word tracked changes.</li>
+<li>By default, parts of the documented generated programmatically will be highlighted. (Change this with <code>highlight_outputs = FALSE</code>)</li>
+<li>The original <code>.Rmd</code> and all code is stored internally in Word document for later retrieval.</li>
 </ul>
+<p>Word files that have been created by <code><a href="reference/redoc.html">redoc()</a></code> can be reverted to <code>.Rmd</code> with the <code><a href="reference/dedoc.html">dedoc()</a></code> function, <em>even after they are edited</em>. <code><a href="reference/dedoc.html">dedoc()</a></code> will return the path of the de-rendered document.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(redoc)</a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/basename.html">basename</a></span>(<span class="kw"><a href="reference/redoc_examples.html">redoc_example_docx</a></span>()))</a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="co">#&gt; [1] "example.docx"</span></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="kw"><a href="reference/dedoc.html">dedoc</a></span>(<span class="kw"><a href="reference/redoc_examples.html">redoc_example_docx</a></span>())</a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="co">#&gt; [1] "./example.Rmd"</span></a></code></pre></div>
+<p>If the Word document has tracked changes, <code><a href="reference/dedoc.html">dedoc()</a></code> will, by default, convert these to back to Critic Markup syntax. However, tracked changes are not necessary. You can view the changes between the original R Markdown file and the de-rendered one using the <code><a href="reference/redoc_diff.html">redoc_diff()</a></code> function.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="reference/redoc_diff.html">redoc_diff</a></span>(<span class="kw"><a href="reference/redoc_examples.html">redoc_example_edited_docx</a></span>())</a></code></pre></div>
+<p><img src="reference/figures/readme-diff.png"></p>
+<p>More details and features can be found in the vignettes for <a href="https://noamross.github.io/redoc/articles/mixed-workflows-with-redoc.html">users</a> and <a href="https://noamross.github.io/redoc/articles/redoc-package-design.html">developers</a>.</p>
 </div>
+<div id="rstudio-integration" class="section level2">
+<h2 class="hasAnchor">
+<a href="#rstudio-integration" class="anchor"></a>RStudio Integration</h2>
+<p><strong>redoc</strong> has three RStudio Addins to simplify workflow when working with R Markdown documents:</p>
+<ul>
+<li>“Render and Update” renders an R Markdown Document and the updates the text after round-tripping in to Word format and back. This helps with cleaning up small syntax differences (e.g. white space, line wrapping).</li>
+<li>“Dedoc to active file” and “Dedoc to new file” de-render a file and place the contents in RStudio editor tabs, and also display a the changes from <code><a href="reference/redoc_diff.html">redoc_diff()</a></code> in the RStudio viewer.</li>
+</ul>
+<p>The package also contains a <code>dedoc</code> R Markdown template.</p>
+</div>
+<div id="related-work" class="section level2">
+<h2 class="hasAnchor">
+<a href="#related-work" class="anchor"></a>Related Work</h2>
+<ul>
+<li>
+<a href="https://github.com/davidgohel/officedown"><strong>officedown</strong></a> produces rich MS Word documents from R Markdown. We hope for more integration between these packages in the future.</li>
+<li>
+<a href="https://github.com/brodieG/diffobj"><strong>diffobj</strong></a> visualizes differences between R objects and drives <strong>redoc</strong>’s diff view.</li>
+</ul>
 </div>
 <div id="contributing" class="section level2">
 <h2 class="hasAnchor">

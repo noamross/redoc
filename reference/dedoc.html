@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>R Markdown format for Reversible Reproducible Word Documents — redoc • redoc</title>
+<title>Convert an Reversible Document back to R Markdown — dedoc • redoc</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -33,10 +33,10 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="R Markdown format for Reversible Reproducible Word Documents — redoc" />
+<meta property="og:title" content="Convert an Reversible Document back to R Markdown — dedoc" />
 
-<meta property="og:description" content="Format for converting from R Markdown to a Microsoft Word Document that can
-be reversed using dedoc() after editing in Word." />
+<meta property="og:description" content="Converts a document originally created with redoc() back to R
+Markdown, including changes made to text in MS Word." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -112,73 +112,88 @@ be reversed using dedoc() after editing in Word." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>R Markdown format for Reversible Reproducible Word Documents</h1>
-    <small class="dont-index">Source: <a href='https://github.com/noamross/redoc/blob/master/R/redoc.R'><code>R/redoc.R</code></a></small>
-    <div class="hidden name"><code>redoc.Rd</code></div>
+    <h1>Convert an Reversible Document back to R Markdown</h1>
+    <small class="dont-index">Source: <a href='https://github.com/noamross/redoc/blob/master/R/dedoc.R'><code>R/dedoc.R</code></a></small>
+    <div class="hidden name"><code>dedoc.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Format for converting from R Markdown to a Microsoft Word Document that can
-be reversed using <code><a href='dedoc.html'>dedoc()</a></code> after editing in Word.</p>
+    <p>Converts a document originally created with <code><a href='redoc.html'>redoc()</a></code> back to R
+Markdown, including changes made to text in MS Word.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>redoc</span>(<span class='kw'>highlight_outputs</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>80</span>, <span class='kw'>margins</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>line_numbers</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>comment_author</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keep_md</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>wrappers</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>htmlcommentwrap</span>, <span class='no'>latexwrap</span>, <span class='no'>rawblockwrap</span>, <span class='no'>rawspanwrap</span>,
-  <span class='no'>cmwrap</span>, <span class='no'>citationwrap</span>), <span class='kw'>diagnostics</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>dedoc</span>(<span class='no'>docx</span>, <span class='kw'>to</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"."</span>, <span class='kw'>track_changes</span> <span class='kw'>=</span> <span class='st'>"comments_only"</span>,
+  <span class='kw'>block_missing</span> <span class='kw'>=</span> <span class='st'>"comment"</span>, <span class='kw'>inline_missing</span> <span class='kw'>=</span> <span class='st'>"omit"</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>80</span>,
+  <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>orig_docx</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>orig_codefile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>highlight_outputs</th>
-      <td><p>whether to highlight outputs from chunks and inline
-code in the final document</p></td>
+      <th>docx</th>
+      <td><p>The `.docx`` file to convert</p></td>
+    </tr>
+    <tr>
+      <th>to</th>
+      <td><p>the filename to write the resulting <code>.Rmd</code> file.  The default is to
+use the same basename as the docx document</p></td>
+    </tr>
+    <tr>
+      <th>dir</th>
+      <td><p>The directory to write the `.Rmd`` to. Defaults to current working
+directory</p></td>
+    </tr>
+    <tr>
+      <th>track_changes</th>
+      <td><p>How to deal with tracked changes and comments in the
+<code>.docx</code> file. <code>"accept"</code> accepts all changes, and <code>"reject"</code> rejects all of
+them. The default, <code>"criticmarkup"</code>, converts the tracked changes to
+<a href='http://criticmarkup.com/spec.php#thebasicsyntax'>Critic Markup syntax</a>.
+"comments_only" will only convert comments, as other changes can be
+viewed with <code><a href='redoc_diff.html'>redoc_diff()</a></code>.
+<code>"all"</code> marks up tracked changes and comments in <code>&lt;span&gt;</code> tags and is
+useful for debugging.  See the
+<a href='http://pandoc.org/MANUAL.html#option--track-changes'>pandoc manual</a> for
+details.</p></td>
+    </tr>
+    <tr>
+      <th>block_missing, inline_missing</th>
+      <td><p>What to do about code blocks or inline code
+whose output has been removed in the editing of the Word document. "restore"
+attempts to restore the code as close to its original location in the document
+as possible. "comment" will do so but wrap it in HTML comments. "omit" will
+not restore the code at all.</p></td>
     </tr>
     <tr>
       <th>wrap</th>
-      <td><p>when round-tripping the document, at what width to wrap the
-markdown output? See <code><a href='dedoc.html'>dedoc()</a></code>.</p></td>
+      <td><p>The width at which to wrap text. If <code>NA</code>, text is not wrapped</p></td>
     </tr>
     <tr>
-      <th>margins</th>
-      <td><p>page margin size.  Can be a single value or a named vector
-with values, <code>top</code>, <code>bottom</code>, <code>left</code>, <code>right</code>, <code>gutter</code>, <code>header</code>, and
-<code>footer</code>.  If NULL defaults to the reference document.</p></td>
+      <th>overwrite</th>
+      <td><p>Whether to overwrite an existing file</p></td>
     </tr>
     <tr>
-      <th>line_numbers</th>
-      <td><p>either TRUE or list with any of the arguments <code>start</code>,
-<code>by</code>, <code>restart</code>, and <code>distance</code></p></td>
+      <th>orig_codefile, orig_docx</th>
+      <td><p>The original <code>.codelist.yml</code> or Word document
+created when the document was first knit.  Useful for debugging, or in
+cases where the word file has been corrupted or transformed, for instance,
+by copy-and-pasting the content into a new file.  If provided, <code>dedoc</code> will
+use this codefile or word file to re-create the <code>.Rmd</code> file with the text
+of the input.</p></td>
     </tr>
     <tr>
-      <th>comment_author</th>
-      <td><p>The name to attribute any CriticMarkup tracked
-changes to. Defaults to <code><a href='https://rdrr.io/pkg/whoami/man/fullname.html'>whoami::fullname()</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>keep_md</th>
-      <td><p>whether to keep the intermediate markdown document</p></td>
-    </tr>
-    <tr>
-      <th>wrappers</th>
-      <td><p>a list of wrapper functions to capture text to protect when
-rendering and de-rendering.  See <code><a href='make_wrapper.html'>make_wrapper()</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>diagnostics</th>
-      <td><p>Whether to embed diagnostic information in the output
-file.  If TRUE, this will save session information and the current
-pandoc and (if used) RStudio versions inside the Word document for later
-bug-checking.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>other parameters passed to <code><a href='https://rdrr.io/pkg/rmarkdown/man/word_document.html'>rmarkdown::word_document()</a></code></p></td>
+      <th>verbose</th>
+      <td><p>whether to print pandoc progress text</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>R chunks may be lost in the editing process if using non-Microsoft
+word processors (e.g. LibreOffice or in copy-and-pasting text into a new document.</p>
     
 
   </div>
@@ -186,7 +201,9 @@ bug-checking.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#details">Details</a></li>
+          </ul>
 
   </div>
 </div>
