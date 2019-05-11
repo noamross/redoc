@@ -3,7 +3,8 @@
 
 #' @importFrom xml2 read_xml xml_find_first xml_add_child xml_set_attrs
 #'   write_xml
-add_to_style <- function(docx, style_id, name, attrs = NULL) {
+add_to_style <- function(docx, style_id, name, attrs = NULL, where = c("both", "rPr", "pPr", "top")) {
+  where <- match.arg(where)
   docx <- to_docx(docx)
   name <- prepend_ns(name)
   if (!is.null(attrs)) names(attrs) <- prepend_ns(names(attrs))
@@ -13,12 +14,23 @@ add_to_style <- function(docx, style_id, name, attrs = NULL) {
     styles_xml,
     paste0("//w:style[@w:styleId='", style_id, "']")
   )
-  rPr <- xml_add_child(style_xml, "w:rPr")
-  pPr <- xml_add_child(style_xml, "w:pPr")
-  style <- xml_add_child(rPr, name)
-  if (!is.null(attrs)) xml_set_attrs(style, attrs)
-  style <- xml_add_child(pPr, name)
-  if (!is.null(attrs)) xml_set_attrs(style, attrs)
+
+  if (where %in% c("rPr", "both")) {
+    rPr <- xml_add_child(style_xml, "w:rPr")
+    style <- xml_add_child(rPr, name)
+    if (!is.null(attrs)) xml_set_attrs(style, attrs)
+  }
+
+  if (where %in% c("pPr", "both")) {
+    pPr <- xml_add_child(style_xml, "w:pPr")
+    style <- xml_add_child(pPr, name)
+    if (!is.null(attrs)) xml_set_attrs(style, attrs)
+  }
+
+  if (where == "top") {
+    topstyle <- xml_add_child(style_xml, name)
+    if (!is.null(attrs)) xml_set_attrs(topstyle, attrs)
+  }
   write_xml(styles_xml, styles_path)
   return(docx)
 }
@@ -34,10 +46,27 @@ highlight_output_styles <- function(docx, name = "shd",
   docx <- to_docx(docx)
   styles <- styles_info(docx)
   styles <-
-    styles$style_id[stri_detect_regex(styles$style_id, "^(inline|chunk)-")]
+    styles$style_id[stri_detect_regex(styles$style_id, "^redoc-")]
   lapply(styles, function(s) {
     add_to_style(docx, s, name = name, attrs = attrs)
-    add_to_style(docx, s, name = "hidden")
+  })
+  return(docx)
+}
+
+#' @importFrom officer styles_info
+#' @importFrom stringi stri_detect_regex
+hide_output_styles <- function(docx, name = "shd",
+                               attrs = c(
+                                 val = "clear",
+                                 color = "auto",
+                                 fill = "FFBEBF"
+                               )) {
+  docx <- to_docx(docx)
+  styles <- styles_info(docx)
+  styles <-
+    styles$style_id[stri_detect_regex(styles$style_id, "^redoc-")]
+  lapply(styles, function(s) {
+    add_to_style(docx, s, name = "hidden", where = "top")
   })
   return(docx)
 }

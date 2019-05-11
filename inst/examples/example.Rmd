@@ -1,0 +1,47 @@
+---
+title: My Title
+date: Created `r Sys.Date()`
+output: redoc::redoc
+---
+
+Reversible R Markdown Document
+------------------------------
+
+This is an example Reversible R Markdown document. It will preserve code
+elements for restoration in your final `.docx` file.
+
+You can use things like inline <!--- an HTML comment ---> comments.
+
+You can use code chunks to generate output and they will be restored:
+
+```{r cars}
+summary(cars)
+```
+
+Inline text
+-----------
+
+```{r, include= FALSE}
+# A non-included chunk to provide inline chunks with values.
+a <- 2
+b <- 3
+```
+
+You can include calculations inline like so: `r a` plus
+`r b` equals `r a + b`. Even empty inline
+chunks `r NULL` will be stored and marked with hidden text in
+the Word document.
+
+Chunks with plots
+-----------------
+
+You can of course also embed plots, for example:
+
+```{r pressure, dev.args=list(bg='transparent')}
+plot(pressure)
+```
+
+---
+# Additional YAML blocks can be added and will be restored
+hello: there
+---

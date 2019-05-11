@@ -1,3 +1,4 @@
+inst/doc
 Meta
 doc
 .Rproj.user
@@ -6,3 +7,6 @@ doc
 .DS_store
 inst/random
 docs
+TODO.md
+tests/testthat/artifacts
+testing

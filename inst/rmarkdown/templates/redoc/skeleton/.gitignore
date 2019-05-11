@@ -1,0 +1,6 @@
+*.md
+*_files/
+*.original.Rmd
+*.roundtrip.Rmd
+*.chunks.csv
+*.docx

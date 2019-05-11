@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# redoc - reversible R Markdown/MS Word documents.
+# redoc - Reversible Reproducible Documents
 
 <!-- badges: start -->
 
@@ -19,79 +19,104 @@ status](https://ci.appveyor.com/api/projects/status/github/noamross/redoc?branch
 status](https://www.r-pkg.org/badges/version/redoc)](https://cran.r-project.org/package=redoc)
 <!-- badges: end -->
 
-**redoc** is an experimental package to enable a two-way R-Markdown ⟷
-Microsoft Word workflow. It is in early design phase; *I will certainly
-break things, intentionally and accidentally.* Testing and feedback is
-welcome\! Please look at
-[CONTRIBUTING.md](https://github.com/noamross/redoc/blob/master/.github/CONTRIBUTING.md),
-(especially the
-[roadmap](https://github.com/noamross/redoc/blob/master/.github/CONTRIBUTING.md#roadmap))
-and the [design
-vignette](https://noamross.github.io/redoc/articles/redoc-package-design.html)
-if you are interested in development.
+**redoc** is a package to enable a two-way R Markdown Microsoft Word
+workflow. It generates Word documents that can be de-rendered back into
+R Markdown, retaining edits on the Word document, including tracked
+changes.
+
+**redoc** is not yet stable; it’s core engine and API are still subject
+to change. It’s been overhauled a few times already\! I welcome your
+[contributions and
+feedback](https://noamross.github.io/redoc/CONTRIBUTING.html).
 
 ## Installation
 
-Install the **redoc** package with this command:
+Install the **redoc** package with the **remotes** (or **devtools**)
+package:
 
 ``` r
-source("https://install-github.me/noamross/redoc")
+remotes::install_github("noamross/redoc")
 ```
 
-## Usage
+Note that **redoc** requires a recent version of Pandoc (\>= 2.1.2). If
+you have RStudio version 1.2 or higher, you should have this by default.
+
+## Basic Usage
 
 **redoc** provides an R Markdown [output
-format](https://bookdown.org/yihui/rmarkdown/output-formats.html) of
-`rdocx_reversible()`, built on top of `rmarkdown::word_document()`. You
-will typically call it via the YAML header in your R Markdown document.
-You have the option of highlighting the outputs (both chunk and inline)
-in the Word Document.
+format](https://bookdown.org/yihui/rmarkdown/output-formats.html),
+`redoc()`, built on top of `rmarkdown::word_document()`. You will
+typically call it via the YAML header in your R Markdown document. You
+have the option of highlighting the outputs (both chunk and inline) in
+the Word Document.
 
 ``` yaml
 ---
 output:
-  redoc::rdocx_reversible:
-    keep_md: TRUE
-    highlight_outputs: TRUE
+  redoc::redoc
 ---
 ```
 
-[Critic Markup](http://criticmarkup.com/spec.php#thebasicsyntax) edits
-will be converted to Word tracked changes. There are a few other
-formatting options available, too.
+`redoc()` output resembles typical R Markdown Word output, but has some
+key differences:
 
-Word files that have been created by `rdocx_reversible()` (“redocs”) can
-be reverted to `.Rmd` with `undoc()`, *even after they are edited*.
+  - [Critic Markup](http://criticmarkup.com/spec.php#thebasicsyntax)
+    edits will be converted to Word tracked changes.
+  - By default, parts of the documented generated programmatically will
+    be highlighted. (Change this with `highlight_outputs = FALSE`)
+  - The original `.Rmd` and all code is stored internally in Word
+    document for later retrieval.
+
+Word files that have been created by `redoc()` can be reverted to `.Rmd`
+with the `dedoc()` function, *even after they are edited*. `dedoc()`
+will return the path of the de-rendered document.
 
 ``` r
 library(redoc)
-undoc(redoc_example_docx())
-#> [1] "./skeleton.Rmd"
+print(basename(redoc_example_docx()))
+#> [1] "example.docx"
+dedoc(redoc_example_docx())
+#> [1] "./example.Rmd"
 ```
 
-If the Word document has tracked changes, `undoc()` will, by default,
-convert these to back to Critic Markup syntax.
-
-Undoc’ing a redoc where chunk outputs have been deleted will restore the
-original code chunks to the document, usually immediately after the
-previous chunk. If chunk outputs are moved, code chunks move with them.
-Inline code outputs that are deleted are not restored - it behooves one
-to only use inline outputs to print outputs, rather than change the
-state for upcoming chunks.
-
-Redocs also store the original `.Rmd` used to make them internally,
-which can be extracted and used to diff against the original.
+If the Word document has tracked changes, `dedoc()` will, by default,
+convert these to back to Critic Markup syntax. However, tracked changes
+are not necessary. You can view the changes between the original R
+Markdown file and the de-rendered one using the `redoc_diff()` function.
 
 ``` r
-redoc_extract_rmd(redoc_example_docx())
-#> [1] "./skeleton.original.Rmd"
+redoc_diff(redoc_example_edited_docx())
 ```
 
-### Known Issues
+![](man/figures/readme-diff.png)
 
-  - **redoc** does not work with `.docx` files edited with LibreOffice
-    because of differences between Word and LibreOffice files’ internal
-    structure.
+More details and features can be found in the vignettes for
+[users](https://noamross.github.io/redoc/articles/mixed-workflows-with-redoc.html)
+and
+[developers](https://noamross.github.io/redoc/articles/redoc-package-design.html).
+
+## RStudio Integration
+
+**redoc** has three RStudio Addins to simplify workflow when working
+with R Markdown documents:
+
+  - “Render and Update” renders an R Markdown Document and the updates
+    the text after round-tripping in to Word format and back. This helps
+    with cleaning up small syntax differences (e.g. white space, line
+    wrapping).
+  - “Dedoc to active file” and “Dedoc to new file” de-render a file and
+    place the contents in RStudio editor tabs, and also display a the
+    changes from `redoc_diff()` in the RStudio viewer.
+
+The package also contains a `dedoc` R Markdown template.
+
+## Related Work
+
+  - [**officedown**](https://github.com/davidgohel/officedown) produces
+    rich MS Word documents from R Markdown. We hope for more integration
+    between these packages in the future.
+  - [**diffobj**](https://github.com/brodieG/diffobj) visualizes
+    differences between R objects and drives **redoc**’s diff view.
 
 ## Contributing
 

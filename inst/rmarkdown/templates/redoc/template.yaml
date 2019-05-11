@@ -1,0 +1,5 @@
+name: Reversible Microsoft Word Document
+description: >
+   Example of a `redoc`: An R Markdown document that can be rendered to
+   a Microsoft Word `.docx` file and then reversed, following editing.
+create_dir: FALSE
