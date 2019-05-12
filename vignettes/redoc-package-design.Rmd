@@ -38,7 +38,7 @@ those sections are stored in a file called `filename.codelist.yml`.
 `redoc()` then knits the `.Rmd` file. Code output is wrapped within the same
 `<span>` and `<div>` tags as the original chunks.  
 
-When the knitted document is converted to to a `.docx` by pandoc, `redoc`
+When the knitted document is converted to a `.docx` by pandoc, `redoc`
 passes it through a series of
 [pandoc lua filters](https://pandoc.org/lua-filters.html) (found in `inst/lua-filters`).
 These do three things:
