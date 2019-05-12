@@ -79,7 +79,7 @@
       <h1>redoc Design and Internals</h1>
                         <h4 class="author">Noam Ross</h4>
             
-            <h4 class="date">2019-05-11</h4>
+            <h4 class="date">2019-05-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/noamross/redoc/blob/master/vignettes/redoc-package-design.Rmd"><code>vignettes/redoc-package-design.Rmd</code></a></small>
       <div class="hidden name"><code>redoc-package-design.Rmd</code></div>
@@ -95,9 +95,9 @@
 <a href="#compiling-the-document-general-approach" class="anchor"></a>Compiling the document: General Approach</h2>
 <p>To produced a Reversible Reproducible Document in Word (a “redoc”), the <code><a href="../reference/redoc.html">redoc()</a></code> format first pre-parses the source <code>.Rmd</code> file. <strong>knitr</strong> doesn’t expose its parser to developers, so I’ve lifted most of the code for this parser from <strong>knitr</strong> and <strong>rmarkdown</strong>. The parser captures YAML headers, code chunks, and inline code, giving names to unnamed chunks and inline code sections and wrapping them in named <code>&lt;div&gt;</code> and <code>&lt;span&gt;</code> tags with unique <code>id</code> values and the class <code>"redoc"</code>. The contents of those sections are stored in a file called <code>filename.codelist.yml</code>.</p>
 <p><code><a href="../reference/redoc.html">redoc()</a></code> then knits the <code>.Rmd</code> file. Code output is wrapped within the same <code>&lt;span&gt;</code> and <code>&lt;div&gt;</code> tags as the original chunks.</p>
-<p>When the knitted document is converted to to a <code>.docx</code> by pandoc, <code>redoc</code> passes it through a series of <a href="https://pandoc.org/lua-filters.html">pandoc lua filters</a> (found in <code>inst/lua-filters</code>). These do three things:</p>
+<p>When the knitted document is converted to a <code>.docx</code> by pandoc, <code>redoc</code> passes it through a series of <a href="https://pandoc.org/lua-filters.html">pandoc lua filters</a> (found in <code>inst/lua-filters</code>). These do three things:</p>
 <ul>
-<li>Converts sections with <code>&lt;span&gt;</code> and <code>&lt;div&gt;</code> tags of class <code>redoc</code> to hidden <a href="https://pandoc.org/MANUAL.html#custom-styles">custom styles</a> with names corresponding to their unique IDs. so that they are retained in the Word document.</li>
+<li>Converts sections with <code>&lt;span&gt;</code> and <code>&lt;div&gt;</code> tags of class <code>redoc</code> to hidden <a href="https://pandoc.org/MANUAL.html#custom-styles">custom styles</a> with names corresponding to their unique IDs so that they are retained in the Word document.</li>
 <li>Inserts hidden text in the place of code sections that have no output.</li>
 <li>Converts <a href="http://criticmarkup.com/">CriticMarkup</a> syntax to Word tracked-changes format.</li>
 </ul>
@@ -108,7 +108,7 @@
 <div id="de-rendering-documents" class="section level2">
 <h2 class="hasAnchor">
 <a href="#de-rendering-documents" class="anchor"></a>De-Rendering Documents</h2>
-<p>When the <code><a href="../reference/dedoc.html">dedoc()</a></code> function is run, it extracts the the <code>*.codelist.yml</code> file from the <code>.docx</code> file.</p>
+<p>When the <code><a href="../reference/dedoc.html">dedoc()</a></code> function is run, it extracts the <code>*.codelist.yml</code> file from the <code>.docx</code> file.</p>
 <p>Then pandoc is used to convert the <code>docx</code> back to markdown. A custom <a href="https://pandoc.org/lua-filters.html">lua filter</a> converts any track-changes text to <a href="http://criticmarkup.com/spec.php">Critic Markup</a>, and another lua filter replaces any elements with the custom <code>redoc</code> styles with placeholders of the form <code>[[chunk-id]]</code>. <code><a href="../reference/dedoc.html">dedoc()</a></code> then uses the data in the <code>*.chunks.yml</code> file to replace these placeholders with original chunk (or inline code). In the event that chunk output has been deleted or modified beyond recognition, <strong>redoc</strong> tries to be smart about its placement, placing it near its original location. Depending on the policies selected via <code><a href="../reference/dedoc.html">dedoc()</a></code>’s <code>block_missing</code> or <code>inline_missing</code> arguments, the restored code may be wrapped in an HTML comment or not restored at all.</p>
 </div>
 <div id="customizing-and-developing-with-redoc" class="section level2">
