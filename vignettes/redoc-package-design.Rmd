@@ -45,7 +45,7 @@ These do three things:
 
 -  Converts sections with `<span>` and `<div>` tags of class `redoc` to hidden
    [custom styles](https://pandoc.org/MANUAL.html#custom-styles) with names
-   corresponding to their unique IDs. so that they are retained in the Word document.
+   corresponding to their unique IDs so that they are retained in the Word document.
 -  Inserts hidden text in the place of code sections that have no output.
 -  Converts [CriticMarkup](http://criticmarkup.com/) syntax to Word
    tracked-changes format.
