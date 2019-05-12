@@ -19,7 +19,7 @@ status](https://ci.appveyor.com/api/projects/status/github/noamross/redoc?branch
 status](https://www.r-pkg.org/badges/version/redoc)](https://cran.r-project.org/package=redoc)
 <!-- badges: end -->
 
-**redoc** is a package to enable a two-way R Markdown Microsoft Word
+**redoc** is a package to enable a two-way R Markdown-Microsoft Word
 workflow. It generates Word documents that can be de-rendered back into
 R Markdown, retaining edits on the Word document, including tracked
 changes.
