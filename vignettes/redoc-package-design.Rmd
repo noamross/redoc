@@ -65,7 +65,7 @@ document styles to color the `redoc`-class sections.
 
 ## De-Rendering Documents
 
-When the `dedoc()` function is run, it extracts the the `*.codelist.yml` file
+When the `dedoc()` function is run, it extracts the `*.codelist.yml` file
 from the `.docx` file.  
 
 Then pandoc is used to convert the `docx` back to markdown. A custom [lua filter](https://pandoc.org/lua-filters.html) converts any track-changes text
