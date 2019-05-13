@@ -9,7 +9,7 @@ navbar:
   - text: Package Design
     href: articles/redoc-package-design.html
   - text: Contributing
-    href: CONTRIBUTING.md
+    href: CONTRIBUTING.html
   - text: Release Notes
     href: news/index.html
   right:
