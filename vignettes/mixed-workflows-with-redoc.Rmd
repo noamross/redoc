@@ -21,10 +21,10 @@ R Markdown, retaining edits on the Word document, including tracked changes.
 
 ## Installation
 
-Install the **redoc** package with this command:
+Install the **redoc** package with the **remotes** (or **devtools**) package:
 
 ```{r install_me, eval = FALSE}
-source("https://install-github.me/noamross/redoc")
+remotes::install_github("noamross/redoc")
 ```
 
 Note that **redoc** requires a recent version of Pandoc (>= 2.1.2). If you
