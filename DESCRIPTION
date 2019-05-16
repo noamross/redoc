@@ -4,7 +4,7 @@ Title: Reversible Reproducible Documents
 Description: Implements a reversible 'R Markdown' to 'Microsoft Word' pipeline.
 Authors@R: person(given = "Noam",
                   family = "Ross",
-                  email = 'noam.ross@gmail.com',
+                  email = 'noam.ross+redoc@gmail.com',
                   role = c('aut', 'cre'),
                   comment = c(ORCID='0000-0002-2136-0000'))
 License: MIT + file LICENSE
