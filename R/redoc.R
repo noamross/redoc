@@ -123,7 +123,7 @@ redoc <- function(highlight_outputs = TRUE, wrap = 80,
     keep_md = keep_md,
     pre_knit = pre_knit,
     post_processor = post_processor,
-    base_format = word_document()
+    base_format = word_document(...)
   )
   output_format
 }
