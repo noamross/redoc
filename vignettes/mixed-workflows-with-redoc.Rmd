@@ -44,6 +44,13 @@ output: redoc::redoc
 ---
 ```
 
+The simplest way to get a working YAML header (and example document) is to
+create a new R Markdown file from the template. To do this in RStudio, select
+File > New File > R Markdown..., then in the pop-up window select *'From
+Template'* and **Reversible Microsoft Word Document** {redoc}. (Note that if you
+just installed the redoc package, you may have to restart RStudio for the
+template to appear.)
+
 `redoc()` output resembles typical R Markdown Word output, but has some key
 differences:
 
