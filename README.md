@@ -5,6 +5,8 @@
 
 <!-- badges: start -->
 
+[![Support this project on
+Patreon](https://img.shields.io/badge/patreon-donate-purple.svg)](https://www.patreon.com/noamross)
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Project Status: WIP - Initial development is in progress, but there
@@ -128,3 +130,12 @@ before filing an issue or pull request.
 Please note that this project is released with a [Contributor Code of
 Conduct](https://github.com/noamross/redoc/blob/master/.github/CODE_OF_CONDUCT.md).
 By participating in this project you agree to abide by its terms.
+
+## Support
+
+You can support me and this project on [my Patreon
+page](https://www.patreon.com/noamross). While I some of my open-sourcce
+work is supported through my day job or volunteering with OSS
+organizations, **redoc** is a strictly after-hours project for the
+community, and your support can help me carve out time and pay for some
+small hardware and software expenses.
