@@ -20,7 +20,7 @@ brktn <- function(x) {
 
 #' @importFrom stringi stri_join
 divwrap <- function(text, id, class = "redoc") {
-  stri_join("<div class=\"", class, "\" id=\"", id, "\">\n", text, "\n</div>")
+  stri_join("<div class=\"", class, "\" id=\"", id, "\">\n", text, "\n\n</div>")
 }
 
 #' @importFrom stringi stri_join
