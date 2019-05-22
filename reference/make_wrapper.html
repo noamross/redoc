@@ -218,7 +218,7 @@ with redoc" for more detail.</p>
 #&gt; </div><div class='output co'>#&gt;   |                                                                         |.................................................................| 100%
 #&gt;   ordinary text without R code
 #&gt; 
-#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: example.knit.md</span></div><div class='output co'>#&gt; /usr/bin/pandoc +RTS -K512m -RTS example.utf8.md --to docx+empty_paragraphs --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash+smart+fenced_divs+bracketed_spans --output example.docx --highlight-style tango --lua-filter /home/travis/R/Library/redoc/lua-filters/protect-empty.lua </div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: example.knit.md</span></div><div class='output co'>#&gt; /usr/bin/pandoc +RTS -K512m -RTS example.utf8.md --to docx+empty_paragraphs --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash+smart+fenced_divs+bracketed_spans --output example.docx --highlight-style tango --lua-filter /home/travis/R/Library/redoc/lua-filters/protect-empty.lua --eol=lf </div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Output created: example.docx</span></div><div class='input'>
 <span class='co'># This is how each of these functions are defined in the redoc package</span>
 <span class='no'>htmlcommentwrap</span> <span class='kw'>&lt;-</span> <span class='fu'>make_wrapper</span>(
