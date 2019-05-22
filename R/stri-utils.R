@@ -75,7 +75,7 @@ insert_at_prior_empty_line <- function(text, insertion, line) {
 }
 
 normalize_newlines <- function(text) {
-  stri_replace_all_fixed(text, c("\r\n", "\n\r", "\r"), "\n",
+  stri_replace_all_fixed(text, c("\r\n"), "\n",
     vectorize_all = FALSE
   )
 }

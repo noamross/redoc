@@ -52,7 +52,8 @@ redoc <- function(highlight_outputs = TRUE, wrap = 80,
       "--lua-filter",
       system.file("lua-filters", "protect-empty.lua",
         package = "redoc"
-      )
+      ),
+      "--eol=lf"
     )
   )
 
