@@ -1,5 +1,8 @@
 # devel
 
+*  Windows `\r\n` line endings are converted to just `\n` in all cases.
+   (Fixes #39, h/t @uweremerbollow)
+
 *  Bugfix: `...` arguments in `redoc()` are now passed to 
    rmarkdown::word_document (#35, thanks @scientificbruno)
 
