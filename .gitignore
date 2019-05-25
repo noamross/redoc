@@ -7,6 +7,6 @@ doc
 .DS_store
 inst/random
 docs
-TODO.md
+inst/TODO.md
 tests/testthat/artifacts
 testing

@@ -1,4 +1,4 @@
-#' RStudio Addin Functions
+#' RStudio Addins for Redoc Files
 #'
 #' @description
 #' These functions act on the RStudio text editor and can be used via the

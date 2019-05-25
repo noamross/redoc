@@ -17,7 +17,7 @@ add_criticmarkup_theme <- function(theme = "textmate", apply = FALSE,
   if (!requireNamespace("rstudioapi")) {
     stop("The 'rstudioapi' package is required for this function")
   }
-  theme = tolower(theme)
+  theme <- tolower(theme)
   rstudioapi::addTheme(
     system.file("themes", paste0("cm-", theme, ".rstheme"),
                 package = "redoc"),

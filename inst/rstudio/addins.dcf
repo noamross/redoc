@@ -12,3 +12,19 @@ Name: Dedoc to new file
 Description: Un-renders a docx file and opens a new file with its contents
 Binding: dedoc_to_new_file
 Interactive: true
+
+Name: CriticMarkup: accept all
+Description: Un-renders a docx file and opens a new file with its contents
+Binding: cm_accept_all_addin
+Interactive: true
+
+Name: CriticMarkup: reject all
+Description: Un-renders a docx file and opens a new file with its contents
+Binding: cm_reject_all_addin
+Interactive: true
+
+Name: CriticMarkup: delete comments
+Description: Un-renders a docx file and opens a new file with its contents
+Binding: cm_delete_comments_addin
+Interactive: true
+

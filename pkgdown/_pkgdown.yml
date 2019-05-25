@@ -34,6 +34,12 @@ reference:
       - roundtrip_active_file
       - dedoc_to_active_file
       - dedoc_to_new_file
+  - title: CriticMarkup Tools
+    desc: Track changes for R Markdown!
+    contents:
+      - add_criticmarkup_theme
+      - cm_process_file
+      - cm_accept_all
   - title: Developer Functions
     desc: Functions for making new, **redoc**-based R Markdown formats and
       developing and testing this package.

@@ -58,3 +58,10 @@ redoc_example_docx <- function() {
 redoc_example_edited_docx <- function() {
   system.file("examples", "example-edited.docx", package = "redoc")
 }
+
+#' @export
+#' @rdname redoc_examples
+#' @aliases redoc_examples
+redoc_example_criticmarkup <- function() {
+  system.file("examples", "example-criticmarkup.md", package = "redoc")
+}

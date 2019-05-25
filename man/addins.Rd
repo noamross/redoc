@@ -6,7 +6,7 @@
 \alias{redoc_addins}
 \alias{dedoc_to_active_file}
 \alias{dedoc_to_new_file}
-\title{RStudio Addin Functions}
+\title{RStudio Addins for Redoc Files}
 \usage{
 roundtrip_active_file()
 

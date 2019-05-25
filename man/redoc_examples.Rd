@@ -5,6 +5,7 @@
 \alias{redoc_examples}
 \alias{redoc_example_docx}
 \alias{redoc_example_edited_docx}
+\alias{redoc_example_criticmarkup}
 \title{Files for examples and testing}
 \usage{
 redoc_example_rmd()
@@ -12,6 +13,8 @@ redoc_example_rmd()
 redoc_example_docx()
 
 redoc_example_edited_docx()
+
+redoc_example_criticmarkup()
 }
 \description{
 Files for examples and testing
