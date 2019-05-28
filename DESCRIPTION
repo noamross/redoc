@@ -34,8 +34,6 @@ Suggests:
     pkgdown,
     rstudioapi
 Remotes:
-    davidgohel/officer,
-    brodieG/diffobj@development,
     r-lib/pkgdown
 SystemRequirements: pandoc (>= 2.1.2) - http://pandoc.org
 VignetteBuilder: knitr
