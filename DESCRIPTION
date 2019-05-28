@@ -15,10 +15,10 @@ URL: https://github.com/noamross/redoc
 BugReports: https://github.com/noamross/redoc/issues
 RoxygenNote: 6.1.1
 Imports: 
-    rmarkdown,
+    rmarkdown (>= 1.12),
     knitr,
-    officer,
-    diffobj,
+    officer (>= 0.3.2),
+    diffobj (>= 0.2.3),
     stringi,
     mime,
     xml2,
