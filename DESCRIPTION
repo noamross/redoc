@@ -17,7 +17,7 @@ RoxygenNote: 6.1.1
 Imports: 
     rmarkdown (>= 1.12),
     knitr,
-    officer,
+    officer (>= 0.3.2),
     diffobj (>= 0.2.3),
     stringi,
     mime,
@@ -34,8 +34,6 @@ Suggests:
     pkgdown,
     rstudioapi
 Remotes:
-    davidgohel/officer,
-    brodieG/diffobj@development,
     r-lib/pkgdown
 SystemRequirements: pandoc (>= 2.1.2) - http://pandoc.org
 VignetteBuilder: knitr
