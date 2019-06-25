@@ -8,7 +8,7 @@
 
 *  Bugfix: Markdown tables now render correctly (#40, h/t @scientificbruno)
 
-*  Document R Markdown template in RStudioo (#32 h/t @maelle, #36, thanks
+*  Document R Markdown template in RStudio (#32 h/t @maelle, #36, thanks
    @jaystern)
 
 # redoc 0.1.0.9000

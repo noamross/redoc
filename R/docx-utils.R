@@ -28,7 +28,7 @@ to_docx <- function(docx) {
 
 assert_redoc <- function(docx) {
   if (!is_redoc(docx)) {
-    stop(deparse(substitute(docx), " is not a reversible document"))
+    stop(deparse(substitute(docx)), " is not a reversible document")
   }
 }
 
