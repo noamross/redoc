@@ -15,7 +15,7 @@ function Div(elem)
           "openxml",
           '<w:p><w:pPr><w:pStyle w:val="' .. elem.identifier .. '"/>' ..
           '<w:rPr><w:vanish/></w:rPr></w:pPr><w:r><w:rPr><w:vanish/></w:rPr>' ..
-          '<w:t xml:space="preserve">RPLACEHOLDER</w:t></w:r></w:p>'
+           '<w:t xml:space="preserve"> </w:t></w:r></w:p>'
       )}
     end
     return elem
@@ -34,7 +34,7 @@ function Span(elem)
     elem.content = {
       pandoc.RawInline("openxml",
       '<w:r><w:rPr><w:rStyle w:val="' .. elem.identifier .. '"/>' ..
-      '<w:vanish/></w:rPr><w:t xml:space="preserve">RPLACEHOLDER</w:t></w:r>'
+      '<w:vanish/></w:rPr><w:t xml:space="preserve"> </w:t></w:r>'
       )}
     end
     return elem
