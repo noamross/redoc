@@ -131,8 +131,9 @@ used to create it.</p>
 
     <pre class="usage"><span class='fu'>redoc_diff</span>(<span class='no'>docx</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"original"</span>, <span class='kw'>current</span> <span class='kw'>=</span> <span class='st'>"current"</span>,
   <span class='kw'>track_changes</span> <span class='kw'>=</span> <span class='st'>"comments_only"</span>, <span class='kw'>block_missing</span> <span class='kw'>=</span> <span class='st'>"comment"</span>,
-  <span class='kw'>inline_missing</span> <span class='kw'>=</span> <span class='st'>"omit"</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>80</span>, <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>"sidebyside"</span>,
-  <span class='kw'>context</span> <span class='kw'>=</span> <span class='st'>"auto"</span>, <span class='kw'>tar.banner</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cur.banner</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>inline_missing</span> <span class='kw'>=</span> <span class='st'>"omit"</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"redoc.wrap"</span>, <span class='fl'>80</span>),
+  <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>"sidebyside"</span>, <span class='kw'>context</span> <span class='kw'>=</span> <span class='st'>"auto"</span>, <span class='kw'>tar.banner</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>cur.banner</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -155,7 +156,7 @@ used to create it.</p>
     <tr>
       <th>wrap</th>
       <td><p>Width to wrap text lines when converting from docx to markdown.
-If <code>NULL</code>, no wrapping.</p></td>
+If <code>NULL</code>, no wrapping. Set the default with <code>"redoc.wrap"</code> in <code><a href='https://rdrr.io/r/base/options.html'>options()</a></code>.</p></td>
     </tr>
     <tr>
       <th>mode, context, tar.banner, cur.banner, ...</th>

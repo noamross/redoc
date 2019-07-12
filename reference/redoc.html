@@ -127,10 +127,11 @@ be reversed using <code><a href='dedoc.html'>dedoc()</a></code> after editing in
     
     </div>
 
-    <pre class="usage"><span class='fu'>redoc</span>(<span class='kw'>highlight_outputs</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>80</span>, <span class='kw'>margins</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>line_numbers</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>comment_author</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keep_md</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>wrappers</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>htmlcommentwrap</span>, <span class='no'>latexwrap</span>, <span class='no'>rawblockwrap</span>, <span class='no'>rawspanwrap</span>,
-  <span class='no'>cmwrap</span>, <span class='no'>citationwrap</span>), <span class='kw'>diagnostics</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>redoc</span>(<span class='kw'>highlight_outputs</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"redoc.wrap"</span>, <span class='fl'>80</span>),
+  <span class='kw'>margins</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>line_numbers</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>comment_author</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>keep_md</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>wrappers</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>htmlcommentwrap</span>, <span class='no'>latexwrap</span>,
+  <span class='no'>rawblockwrap</span>, <span class='no'>rawspanwrap</span>, <span class='no'>cmwrap</span>, <span class='no'>citationwrap</span>), <span class='kw'>diagnostics</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -143,7 +144,7 @@ code in the final document</p></td>
     <tr>
       <th>wrap</th>
       <td><p>when round-tripping the document, at what width to wrap the
-markdown output? See <code><a href='dedoc.html'>dedoc()</a></code>.</p></td>
+markdown output? Set the default with <code>"redoc.wrap"</code> in <code><a href='https://rdrr.io/r/base/options.html'>options()</a></code>. See <code><a href='dedoc.html'>dedoc()</a></code>.</p></td>
     </tr>
     <tr>
       <th>margins</th>

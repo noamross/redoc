@@ -128,9 +128,9 @@ Markdown, including changes made to text in MS Word.</p>
     </div>
 
     <pre class="usage"><span class='fu'>dedoc</span>(<span class='no'>docx</span>, <span class='kw'>to</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"."</span>, <span class='kw'>track_changes</span> <span class='kw'>=</span> <span class='st'>"comments_only"</span>,
-  <span class='kw'>block_missing</span> <span class='kw'>=</span> <span class='st'>"comment"</span>, <span class='kw'>inline_missing</span> <span class='kw'>=</span> <span class='st'>"omit"</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>80</span>,
-  <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>orig_docx</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>orig_codefile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>block_missing</span> <span class='kw'>=</span> <span class='st'>"comment"</span>, <span class='kw'>inline_missing</span> <span class='kw'>=</span> <span class='st'>"omit"</span>,
+  <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"redoc.wrap"</span>, <span class='fl'>80</span>), <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>orig_docx</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>orig_codefile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -172,7 +172,8 @@ not restore the code at all.</p></td>
     </tr>
     <tr>
       <th>wrap</th>
-      <td><p>The width at which to wrap text. If <code>NA</code>, text is not wrapped</p></td>
+      <td><p>The width at which to wrap text. If <code>NA</code>, text is not wrapped.
+Set the default with <code>"redoc.wrap"</code> in <code><a href='https://rdrr.io/r/base/options.html'>options()</a></code>.</p></td>
     </tr>
     <tr>
       <th>overwrite</th>
