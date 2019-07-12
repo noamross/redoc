@@ -6,8 +6,9 @@
 \usage{
 redoc_diff(docx, target = "original", current = "current",
   track_changes = "comments_only", block_missing = "comment",
-  inline_missing = "omit", wrap = 80, mode = "sidebyside",
-  context = "auto", tar.banner = NULL, cur.banner = NULL, ...)
+  inline_missing = "omit", wrap = getOption("redoc.wrap", 80),
+  mode = "sidebyside", context = "auto", tar.banner = NULL,
+  cur.banner = NULL, ...)
 }
 \arguments{
 \item{docx}{Path to an MS Word \code{.docx} file originally generated with
@@ -20,7 +21,7 @@ redoc_diff(docx, target = "original", current = "current",
 \code{\link[=dedoc]{dedoc()}} to determine how to handle edits in the Word document.}
 
 \item{wrap}{Width to wrap text lines when converting from docx to markdown.
-If \code{NULL}, no wrapping.}
+If \code{NULL}, no wrapping. Set the default with \code{"redoc.wrap"} in \code{options()}.}
 
 \item{mode, context, tar.banner, cur.banner, ...}{Arguments passed to
 \code{\link[diffobj:diffFile]{diffobj::diffFile()}} to customize printing of the diff.}

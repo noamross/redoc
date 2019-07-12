@@ -6,7 +6,7 @@
 #' @param highlight_outputs whether to highlight outputs from chunks and inline
 #'   code in the final document
 #' @param wrap when round-tripping the document, at what width to wrap the
-#'   markdown output? See [dedoc()].
+#'   markdown output? Set the default with `"redoc.wrap"` in `options()`. See [dedoc()].
 #' @param margins page margin size.  Can be a single value or a named vector
 #'   with values, `top`, `bottom`, `left`, `right`, `gutter`, `header`, and
 #'   `footer`.  If NULL defaults to the reference document.
@@ -28,7 +28,7 @@
 #' @importFrom rmarkdown word_document
 #' @importFrom knitr knit_print knit_global opts_chunk opts_knit
 #' @export
-redoc <- function(highlight_outputs = TRUE, wrap = 80,
+redoc <- function(highlight_outputs = TRUE, wrap = getOption("redoc.wrap", 80),
                   margins = NULL, line_numbers = NULL,
                   comment_author = NULL, keep_md = FALSE,
                   wrappers = list(

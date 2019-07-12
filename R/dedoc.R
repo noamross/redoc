@@ -26,7 +26,8 @@
 #'  attempts to restore the code as close to its original location in the document
 #'  as possible. "comment" will do so but wrap it in HTML comments. "omit" will
 #'  not restore the code at all.
-#' @param wrap The width at which to wrap text. If `NA`, text is not wrapped
+#' @param wrap The width at which to wrap text. If `NA`, text is not wrapped.
+#'   Set the default with `"redoc.wrap"` in `options()`.
 #' @param overwrite Whether to overwrite an existing file
 #' @param orig_codefile,orig_docx The original `.codelist.yml` or Word document
 #'   created when the document was first knit.  Useful for debugging, or in
@@ -43,7 +44,7 @@ dedoc <- function(docx, to = NULL, dir = ".",
                   track_changes = "comments_only",
                   block_missing = "comment",
                   inline_missing = "omit",
-                  wrap = 80, overwrite = FALSE,
+                  wrap = getOption("redoc.wrap", 80), overwrite = FALSE,
                   orig_docx = NULL, orig_codefile = NULL,
                   verbose = FALSE) {
   if (!is_redoc(docx) && is.null(orig_codefile) && is.null(orig_docx)) {
@@ -271,7 +272,8 @@ merge_yaml_headers <- function(md, codelist) {
 
 convert_docx_to_md <- function(docx,
                                track_changes,
-                               wrap = 80, verbose, md_only) {
+                               wrap = getOption("redoc.wrap", 80),
+                               verbose, md_only) {
   docx <- normalizePath(docx)
   track_changes <- match.arg(track_changes, track_changes)
   if (track_changes == "criticmarkup") {

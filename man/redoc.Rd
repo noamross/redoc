@@ -4,17 +4,18 @@
 \alias{redoc}
 \title{R Markdown format for Reversible Reproducible Word Documents}
 \usage{
-redoc(highlight_outputs = TRUE, wrap = 80, margins = NULL,
-  line_numbers = NULL, comment_author = NULL, keep_md = FALSE,
-  wrappers = list(htmlcommentwrap, latexwrap, rawblockwrap, rawspanwrap,
-  cmwrap, citationwrap), diagnostics = TRUE, ...)
+redoc(highlight_outputs = TRUE, wrap = getOption("redoc.wrap", 80),
+  margins = NULL, line_numbers = NULL, comment_author = NULL,
+  keep_md = FALSE, wrappers = list(htmlcommentwrap, latexwrap,
+  rawblockwrap, rawspanwrap, cmwrap, citationwrap), diagnostics = TRUE,
+  ...)
 }
 \arguments{
 \item{highlight_outputs}{whether to highlight outputs from chunks and inline
 code in the final document}
 
 \item{wrap}{when round-tripping the document, at what width to wrap the
-markdown output? See \code{\link[=dedoc]{dedoc()}}.}
+markdown output? Set the default with \code{"redoc.wrap"} in \code{options()}. See \code{\link[=dedoc]{dedoc()}}.}
 
 \item{margins}{page margin size.  Can be a single value or a named vector
 with values, \code{top}, \code{bottom}, \code{left}, \code{right}, \code{gutter}, \code{header}, and

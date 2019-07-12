@@ -5,9 +5,9 @@
 \title{Convert an Reversible Document back to R Markdown}
 \usage{
 dedoc(docx, to = NULL, dir = ".", track_changes = "comments_only",
-  block_missing = "comment", inline_missing = "omit", wrap = 80,
-  overwrite = FALSE, orig_docx = NULL, orig_codefile = NULL,
-  verbose = FALSE)
+  block_missing = "comment", inline_missing = "omit",
+  wrap = getOption("redoc.wrap", 80), overwrite = FALSE,
+  orig_docx = NULL, orig_codefile = NULL, verbose = FALSE)
 }
 \arguments{
 \item{docx}{The `.docx`` file to convert}
@@ -35,7 +35,8 @@ attempts to restore the code as close to its original location in the document
 as possible. "comment" will do so but wrap it in HTML comments. "omit" will
 not restore the code at all.}
 
-\item{wrap}{The width at which to wrap text. If \code{NA}, text is not wrapped}
+\item{wrap}{The width at which to wrap text. If \code{NA}, text is not wrapped.
+Set the default with \code{"redoc.wrap"} in \code{options()}.}
 
 \item{overwrite}{Whether to overwrite an existing file}
 

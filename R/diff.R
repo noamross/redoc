@@ -16,7 +16,7 @@
 #' @param track_changes,block_missing,inline_missing Arguments passed to
 #'   [dedoc()] to determine how to handle edits in the Word document.
 #' @param wrap Width to wrap text lines when converting from docx to markdown.
-#'   If `NULL`, no wrapping.
+#'   If `NULL`, no wrapping. Set the default with `"redoc.wrap"` in `options()`.
 #' @param mode,context,tar.banner,cur.banner,... Arguments passed to
 #'   [diffobj::diffFile()] to customize printing of the diff.
 #' @return A [`Diff`][diffobj::diffPrint()] object, which will be displayed in the RStudio
@@ -30,7 +30,7 @@ redoc_diff <- function(docx,
                        track_changes = "comments_only",
                        block_missing = "comment",
                        inline_missing = "omit",
-                       wrap = 80,
+                       wrap = getOption("redoc.wrap", 80),
                        mode = "sidebyside", context = "auto",
                        tar.banner = NULL, cur.banner = NULL,
                        ...) {
