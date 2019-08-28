@@ -8,11 +8,13 @@
 
 <title>Convert an Reversible Document back to R Markdown — dedoc • redoc</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -34,11 +36,12 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Convert an Reversible Document back to R Markdown — dedoc" />
 
+<meta property="og:title" content="Convert an Reversible Document back to R Markdown — dedoc" />
 <meta property="og:description" content="Converts a document originally created with redoc() back to R
 Markdown, including changes made to text in MS Word." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -88,7 +91,6 @@ Markdown, including changes made to text in MS Word." />
   <a href="../news/index.html">Release Notes</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="../reference/index.html">Reference</a>
@@ -121,17 +123,15 @@ Markdown, including changes made to text in MS Word." />
     </div>
 
     <div class="ref-description">
-    
     <p>Converts a document originally created with <code><a href='redoc.html'>redoc()</a></code> back to R
 Markdown, including changes made to text in MS Word.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>dedoc</span>(<span class='no'>docx</span>, <span class='kw'>to</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"."</span>, <span class='kw'>track_changes</span> <span class='kw'>=</span> <span class='st'>"comments_only"</span>,
   <span class='kw'>block_missing</span> <span class='kw'>=</span> <span class='st'>"comment"</span>, <span class='kw'>inline_missing</span> <span class='kw'>=</span> <span class='st'>"omit"</span>,
   <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"redoc.wrap"</span>, <span class='fl'>80</span>), <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>orig_docx</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>orig_codefile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -193,21 +193,19 @@ of the input.</p></td>
       <td><p>whether to print pandoc progress text</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>R chunks may be lost in the editing process if using non-Microsoft
 word processors (e.g. LibreOffice or in copy-and-pasting text into a new document.</p>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#details">Details</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>

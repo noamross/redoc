@@ -8,11 +8,13 @@
 
 <title>Make a wrapper function — make_wrapper • redoc</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -34,8 +36,8 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Make a wrapper function — make_wrapper" />
 
+<meta property="og:title" content="Make a wrapper function — make_wrapper" />
 <meta property="og:description" content="Wrapper functions are passed to the wrapper= argument of
 redoc() to specify what text in R Markdown files should be
 captured and restored when de-rendering (in addition to code chunks, inline
@@ -53,6 +55,7 @@ Raw Spansrawspanwrap()&quot;rawspan&quot;inline
 
 " />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -102,7 +105,6 @@ Raw Spansrawspanwrap()&quot;rawspan&quot;inline
   <a href="../news/index.html">Release Notes</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="../reference/index.html">Reference</a>
@@ -135,7 +137,6 @@ Raw Spansrawspanwrap()&quot;rawspan&quot;inline
     </div>
 
     <div class="ref-description">
-    
     <p>Wrapper functions are passed to the <code>wrapper=</code> argument of
 <code><a href='redoc.html'>redoc()</a></code> to specify what text in R Markdown files should be
 captured and restored when de-rendering (in addition to code chunks, inline
@@ -152,11 +153,10 @@ wrapper functions and returns a function that can be passed to <code><a href='re
 </table>
 
 
-    
     </div>
 
     <pre class="usage"><span class='fu'>make_wrapper</span>(<span class='no'>label</span>, <span class='no'>regex</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"block"</span>, <span class='st'>"inline"</span>))</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -180,17 +180,15 @@ are wrapped in <code>span</code> elements and blocks are wrapped in <code>divs</
 treated differently in several ways, especially when restoring text in <code><a href='dedoc.html'>dedoc()</a></code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A function of class <code>redoc_wrapper</code></p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Some captured text can not be selected by regular expressions, in which case
 custom functions can be provided to parse out the relevant text. See the vignette "Developing
 with redoc" for more detail.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -256,11 +254,8 @@ with redoc" for more detail.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
