@@ -28,7 +28,7 @@
 #' @importFrom rmarkdown word_document
 #' @importFrom knitr knit_print knit_global opts_chunk opts_knit
 #' @export
-redoc <- function(highlight_outputs = TRUE, wrap = getOption("redoc.wrap", 80),
+redoc <- function(highlight_outputs = FALSE, wrap = getOption("redoc.wrap", 80),
                   margins = NULL, line_numbers = NULL,
                   comment_author = NULL, keep_md = FALSE,
                   wrappers = list(
