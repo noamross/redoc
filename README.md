@@ -62,10 +62,10 @@ key differences:
 
   - [Critic Markup](http://criticmarkup.com/spec.php#thebasicsyntax)
     edits will be converted to Word tracked changes.
-  - By default, parts of the documented generated programmatically will
-    be highlighted. (Change this with `highlight_outputs = FALSE`)
-  - The original `.Rmd` and all code is stored internally in Word
-    document for later retrieval.
+  - By default, parts of the document generated programmatically will be
+    highlighted. (Change this with `highlight_outputs = FALSE`)
+  - The original `.Rmd` and all code is stored internally in the output
+    Word document for later retrieval.
 
 Word files that have been created by `redoc()` can be reverted to `.Rmd`
 with the `dedoc()` function, *even after they are edited*. `dedoc()`
@@ -100,15 +100,15 @@ and
 **redoc** has three RStudio Addins to simplify workflow when working
 with R Markdown documents:
 
-  - “Render and Update” renders an R Markdown Document and the updates
-    the text after round-tripping in to Word format and back. This helps
+  - “Render and Update” renders an R Markdown Document and then updates
+    the text after round-tripping into Word format and back. This helps
     with cleaning up small syntax differences (e.g. white space, line
     wrapping).
   - “Dedoc to active file” and “Dedoc to new file” de-render a file and
-    place the contents in RStudio editor tabs, and also display a the
+    place the contents in RStudio editor tabs, and also display the
     changes from `redoc_diff()` in the RStudio viewer.
 
-The package also contains a `dedoc` R Markdown template.
+The package also contains a `redoc` R Markdown template.
 
 ## Related Work
 
@@ -120,8 +120,8 @@ The package also contains a `dedoc` R Markdown template.
 
 ## Contributing
 
-Want have feedback or want to contribute? Great\! Please take a look at
-the [contributing
+Have feedback or want to contribute? Great\! Please take a look at the
+[contributing
 guidelines](https://github.com/noamross/redoc/blob/master/.github/CONTRIBUTING.md)
 before filing an issue or pull request.
 
