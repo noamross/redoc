@@ -29,7 +29,7 @@ roundtrip_active_file <- function() {
   rstudioapi::documentSave(active_file$id)
   docfile <- rmarkdown::render(
     normalizePath(active_file$path),
-    output_format = redoc(roundtrip = TRUE),
+    output_format = redoc(),
     quiet = TRUE,
     clean = TRUE
   )
