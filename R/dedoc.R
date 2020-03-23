@@ -13,7 +13,7 @@
 #'   directory
 #' @param track_changes How to deal with tracked changes and comments in the
 #'   `.docx` file. `"accept"` accepts all changes, and `"reject"` rejects all of
-#'   them. The default, `"criticmarkup"`, converts the tracked changes to
+#'   them. `"criticmarkup"`, converts the tracked changes to
 #'   [Critic Markup syntax](http://criticmarkup.com/spec.php#thebasicsyntax).
 #'   The default, `"comments_only"` will only convert comments, as other changes can be
 #'   viewed with [redoc_diff()].
