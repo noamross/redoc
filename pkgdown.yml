@@ -1,7 +1,8 @@
 pandoc: '2.5'
-pkgdown: 1.3.0.9100
-pkgdown_sha: 5f6ce0c2f503737c5d875657ab29234f6600aaae
+pkgdown: 1.5.1.9000
+pkgdown_sha: c181e5c9ac09b28974a97f5e32deddc36690fcf2
 articles:
   mixed-workflows-with-redoc: mixed-workflows-with-redoc.html
   redoc-package-design: redoc-package-design.html
+last_built: 2020-05-14T14:40Z
 
