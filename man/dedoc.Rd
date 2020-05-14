@@ -22,7 +22,7 @@ directory}
 \code{.docx} file. \code{"accept"} accepts all changes, and \code{"reject"} rejects all of
 them. The default, \code{"criticmarkup"}, converts the tracked changes to
 \href{http://criticmarkup.com/spec.php#thebasicsyntax}{Critic Markup syntax}.
-"comments_only" will only convert comments, as other changes can be
+The default, \code{"comments_only"} will only convert comments, as other changes can be
 viewed with \code{\link[=redoc_diff]{redoc_diff()}}.
 \code{"all"} marks up tracked changes and comments in \code{<span>} tags and is
 useful for debugging.  See the
