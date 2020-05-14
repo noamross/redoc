@@ -22,10 +22,10 @@ workflow. It generates Word documents that can be de-rendered back into
 R Markdown, retaining edits on the Word document, including tracked
 changes.
 
-**redoc** is not yet stable; its core engine and API are still subject
+**redoc** is not yet stable (and currently in suspended mode); its core engine and API are still subject
 to change. It’s been overhauled a few times already\! I welcome your
 [contributions and
-feedback](https://noamross.github.io/redoc/CONTRIBUTING.html).
+feedback](https://noamross.github.io/redoc/CONTRIBUTING.html) (though it'll take a bit to get to them).
 
 ## Installation
 
