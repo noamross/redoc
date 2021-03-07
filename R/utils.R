@@ -15,7 +15,7 @@ na_rm <- function(x) {
 }
 
 readfile <- function(x) {
-  readChar(x, file.info(x)$size)
+  brio::read_file(x)
 }
 
 file_with_meta_ext <- function(file, meta_ext, ext = tools::file_ext(file)) {

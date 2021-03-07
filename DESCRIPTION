@@ -25,7 +25,8 @@ Imports:
     whoami,
     yaml,
     jsonlite,
-    sessioninfo
+    sessioninfo,
+    brio
 Suggests:
     spelling, 
     testthat,
