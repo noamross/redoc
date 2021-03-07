@@ -39,7 +39,7 @@ make_preknitter <- function(wrappers = list()) {
       file_with_meta_ext(pre_knit_input, "preprocessed")
     )
     write_yaml(rmd$code, codefile)
-    brio::write_lines(rmd$text, file = preprocessed_rmd_file)
+    brio::write_lines(rmd$text, path = preprocessed_rmd_file)
     assign("knit_input", preprocessed_rmd_file, envir = render_env)
     add_intermediates(c(codefile, preprocessed_rmd_file))
   }
