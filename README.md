@@ -13,8 +13,6 @@ Status](https://travis-ci.org/noamross/redoc.svg?branch=master)](https://travis-
 [![AppVeyor build
 status](https://ci.appveyor.com/api/projects/status/github/noamross/redoc?branch=master&svg=true)](https://ci.appveyor.com/project/noamross/redoc)
 [![codecov](https://codecov.io/gh/noamross/redoc/branch/master/graph/badge.svg)](https://codecov.io/gh/noamross/redoc)
-[![CRAN
-status](https://www.r-pkg.org/badges/version/redoc)](https://cran.r-project.org/package=redoc)
 <!-- badges: end -->
 
 **redoc** is a package to enable a two-way R Markdown-Microsoft Word
